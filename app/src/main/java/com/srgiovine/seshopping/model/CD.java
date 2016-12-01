@@ -1,6 +1,6 @@
 package com.srgiovine.seshopping.model;
 
-public class CD implements Purchasable {
+public class CD implements Item {
 
     private final long id;
     private final String title;
@@ -30,10 +30,6 @@ public class CD implements Purchasable {
         return musicUrl;
     }
 
-    public int price() {
-        return price;
-    }
-
     public String thumbnailImageUrl() {
         return thumbnailImageUrl;
     }
@@ -43,8 +39,8 @@ public class CD implements Purchasable {
     }
 
     @Override
-    public int purchasePrice() {
-        return price();
+    public int price() {
+        return price;
     }
 
     public static class Builder {

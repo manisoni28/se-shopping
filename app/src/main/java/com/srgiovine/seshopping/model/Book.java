@@ -1,6 +1,6 @@
 package com.srgiovine.seshopping.model;
 
-public class Book implements Purchasable {
+public class Book implements Item {
 
     private final long id;
     private final String title;
@@ -30,10 +30,6 @@ public class Book implements Purchasable {
         return id;
     }
 
-    public int price() {
-        return price;
-    }
-
     public String thumbnailImageUrl() {
         return thumbnailImageUrl;
     }
@@ -43,8 +39,8 @@ public class Book implements Purchasable {
     }
 
     @Override
-    public int purchasePrice() {
-        return price();
+    public int price() {
+        return price;
     }
 
     public static class Builder {
