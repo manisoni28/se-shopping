@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">SE Shopping</string>
-    <string name="title_activity_login">Login</string>
+    <string name="login"><u>Login</u></string>
+    <string name="signup"><u>Signup</u></string>
+    <string name="find"><u>Find</u></string>
+    <string name="cancel"><u>Cancel</u></string>
 </resources>

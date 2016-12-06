@@ -8,14 +8,18 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.srgiovine.seshopping.LoginActivity"
-            android:label="@string/title_activity_login">
+            android:name="com.srgiovine.seshopping.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.srgiovine.seshopping.MainActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
