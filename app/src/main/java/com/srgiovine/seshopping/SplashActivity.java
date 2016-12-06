@@ -84,8 +84,18 @@ public class SplashActivity extends Activity {
         signupFormDialog = new SignupFormDialog(this, signupDialogCallback);
         loginFormDialog = new LoginFormDialog(this, loginFormDialogCallback);
         forgotPasswordFormDialog = new ForgotPasswordFormDialog(this, forgotPasswordFormDialogCallback);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         handler.postDelayed(backgroundSwitcherRunnable, 5_000L);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        handler.removeCallbacks(backgroundSwitcherRunnable);
     }
 
     @Override
