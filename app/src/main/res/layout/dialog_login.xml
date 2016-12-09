@@ -30,7 +30,7 @@
             android:layout_centerHorizontal="true"
             android:fontFamily="cursive"
             android:text="Let's log you in!"
-            android:textColor="@android:color/white"
+            android:textColor="@color/textColorPrimary"
             android:textSize="28sp"
             android:textStyle="bold" />
 
@@ -47,8 +47,8 @@
             android:inputType="textEmailAddress"
             android:lineSpacingMultiplier="1.2"
             android:singleLine="true"
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white"
+            android:textColor="@color/textColorPrimary"
+            android:textColorHint="@color/textColorPrimary"
             android:textSize="20sp" />
 
         <EditText
@@ -64,8 +64,8 @@
             android:inputType="textPassword"
             android:lineSpacingMultiplier="1.2"
             android:singleLine="true"
-            android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white"
+            android:textColor="@color/textColorPrimary"
+            android:textColorHint="@color/textColorPrimary"
             android:textSize="20sp" />
 
         <View
@@ -75,7 +75,7 @@
             android:layout_below="@id/password"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:background="@android:color/white" />
+            android:background="@color/dividerColor" />
 
         <TextView
             android:id="@+id/cancel"
@@ -88,7 +88,7 @@
             android:fontFamily="monospace"
             android:lineSpacingMultiplier="1.2"
             android:text="@string/cancel"
-            android:textColor="@android:color/white"
+            android:textColor="@color/textColorPrimary"
             android:textSize="20sp" />
 
         <TextView
@@ -101,7 +101,7 @@
             android:fontFamily="monospace"
             android:lineSpacingMultiplier="1.2"
             android:text="@string/login"
-            android:textColor="@android:color/white"
+            android:textColor="@color/textColorPrimary"
             android:textSize="20sp" />
     </RelativeLayout>
 

@@ -25,7 +25,7 @@
             android:layout_centerHorizontal="true"
             android:fontFamily="cursive"
             android:text="Welcome to SE Shopping"
-            android:textColor="@android:color/white"
+            android:textColor="@color/textColorPrimary"
             android:textSize="28sp"
             android:textStyle="bold" />
 
@@ -37,7 +37,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="36dp"
             android:layout_marginTop="36dp"
-            android:background="@android:color/white" />
+            android:background="@color/dividerColor" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -50,7 +50,7 @@
             android:lineSpacingMultiplier="1.2"
             android:onClick="onLoginClicked"
             android:text="@string/login"
-            android:textColor="@android:color/white"
+            android:textColor="@color/textColorPrimary"
             android:textSize="20sp" />
 
         <TextView
@@ -63,7 +63,7 @@
             android:lineSpacingMultiplier="1.2"
             android:onClick="onSignupClicked"
             android:text="@string/signup"
-            android:textColor="@android:color/white"
+            android:textColor="@color/textColorPrimary"
             android:textSize="20sp" />
 
         <TextView
@@ -74,7 +74,7 @@
             android:fontFamily="monospace"
             android:onClick="onForgotPasswordClicked"
             android:text="Forgot password?"
-            android:textColor="@android:color/white"
+            android:textColor="@color/textColorPrimary"
             android:textSize="16sp" />
     </RelativeLayout>
 
