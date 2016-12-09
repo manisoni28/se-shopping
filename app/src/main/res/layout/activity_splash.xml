@@ -3,25 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ViewSwitcher
-        android:id="@+id/background_switcher"
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:inAnimation="@anim/fade_in"
-        android:outAnimation="@anim/fade_out">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/splash_background_1" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/splash_background_2" />
-    </ViewSwitcher>
+        android:scaleType="centerCrop"
+        android:src="@drawable/splash_background" />
 
     <RelativeLayout
         android:id="@+id/form_container"

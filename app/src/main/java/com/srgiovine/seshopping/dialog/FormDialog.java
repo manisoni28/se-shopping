@@ -27,6 +27,8 @@ public abstract class FormDialog {
         @Override
         public void run() {
             dialog.dismiss();
+            progressBar.setVisibility(View.GONE);
+            clearFormFields();
         }
     };
 
@@ -144,9 +146,7 @@ public abstract class FormDialog {
             return false;
         }
 
-        progressBar.setVisibility(View.GONE);
         setDialogVisible(false, onDismissRunnable);
-        clearFormFields();
 
         if (invokeCallback) {
             callback.onCancelled();
