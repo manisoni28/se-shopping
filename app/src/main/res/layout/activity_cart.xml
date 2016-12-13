@@ -9,12 +9,7 @@
     android:paddingTop="@dimen/activity_vertical_margin">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Empty"
-        android:textColor="@color/textColorPrimary"
-        android:textSize="26sp"
-        android:textStyle="bold" />
+        android:id="@+id/empty"
+        style="@style/List.Empty" />
 
 </RelativeLayout>

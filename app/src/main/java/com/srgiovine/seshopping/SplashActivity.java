@@ -24,7 +24,7 @@ public class SplashActivity extends Activity {
     private final FormDialog.Callback signupDialogCallback = new FormDialog.Callback() {
         @Override
         public void onSuccess() {
-            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+            startActivity(new Intent(SplashActivity.this, BrowseActivity.class));
             finish();
         }
 
@@ -37,7 +37,7 @@ public class SplashActivity extends Activity {
     private final FormDialog.Callback loginFormDialogCallback = new FormDialog.Callback() {
         @Override
         public void onSuccess() {
-            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+            startActivity(new Intent(SplashActivity.this, BrowseActivity.class));
             finish();
         }
 

@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +21,7 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
 
     private static final int ITEM_VIEW_TYPE_FILTER = 0;
     private static final int ITEM_VIEW_TYPE_SETTINGS = 1;
+    private static final int ITEM_VIEW_TYPE_SEPARATOR = 2;
 
     private final EventListener eventListener;
 
@@ -33,12 +35,10 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
 
     public void setItems(NavigationItem[] items) {
         this.items = Arrays.asList(items);
-    }
-
-    public void checkAllItems() {
         for (NavigationItem navigationItem : items) {
             checkedItems.put(navigationItem, true);
         }
+        notifyDataSetChanged();
     }
 
     @Override
@@ -52,6 +52,9 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
                 break;
             case ITEM_VIEW_TYPE_SETTINGS:
                 viewHolder = new SettingsItemViewHolder(inflater.inflate(R.layout.navigation_item_settings, parent, false));
+                break;
+            case ITEM_VIEW_TYPE_SEPARATOR:
+                viewHolder = new SeparatorItemViewHolder(inflater.inflate(R.layout.navigation_item_separator, parent, false));
                 break;
             default:
                 throw new IllegalArgumentException("Unhandled item view type " + viewType);
@@ -68,6 +71,8 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
             ((FilterItemViewHolder) holder).bind((FilterNavigationItem) item);
         } else if (item instanceof SettingsNavigationItem) {
             ((SettingsItemViewHolder) holder).bind((SettingsNavigationItem) item);
+        } else if (item instanceof SeparatorNavigationItem) {
+            holder.bind(item);
         } else {
             throw new IllegalArgumentException("Unknown item type " + item.name());
         }
@@ -81,10 +86,22 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
             return ITEM_VIEW_TYPE_FILTER;
         } else if (item instanceof SettingsNavigationItem) {
             return ITEM_VIEW_TYPE_SETTINGS;
+        } else if (item instanceof SeparatorNavigationItem) {
+            return ITEM_VIEW_TYPE_SEPARATOR;
         }
         throw new IllegalArgumentException("Unknown item type " + item);
     }
 
+    public List<NavigationItem> getCheckedNavigationItems() {
+        List<NavigationItem> checkedNavigationItems = new ArrayList<>();
+        for (Map.Entry<NavigationItem, Boolean> entry : checkedItems.entrySet()) {
+            if (entry.getValue()) {
+                checkedNavigationItems.add(entry.getKey());
+            }
+        }
+        return checkedNavigationItems;
+    }
+    
     @Override
     public int getItemCount() {
         return items.size();
@@ -96,7 +113,7 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
 
         T item;
 
-        ViewHolder(View itemView) {
+        private ViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
             name = (TextView) itemView.findViewById(R.id.name);
@@ -107,6 +124,10 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
             this.item = item;
             name.setText(item.name());
         }
+
+        @Override
+        public void onClick(View view) {
+        }
     }
 
     private class FilterItemViewHolder extends ViewHolder<FilterNavigationItem> {
@@ -114,7 +135,7 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
         private final ImageView icon;
         private final CheckBox checkBox;
 
-        FilterItemViewHolder(View itemView) {
+        private FilterItemViewHolder(View itemView) {
             super(itemView);
             icon = (ImageView) itemView.findViewById(R.id.icon);
             checkBox = (CheckBox) itemView.findViewById(R.id.checkbox);
@@ -157,6 +178,12 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
         @Override
         public void onClick(View view) {
             eventListener.onSettingsItemClicked(item);
+        }
+    }
+
+    private class SeparatorItemViewHolder extends ViewHolder<SeparatorNavigationItem> {
+        private SeparatorItemViewHolder(View itemView) {
+            super(itemView);
         }
     }
 

@@ -19,7 +19,7 @@ import com.srgiovine.seshopping.navigation.SettingsNavigationItem;
 
 import srgiovine.com.seshopping.R;
 
-public class MainActivity extends Activity {
+public class BrowseActivity extends Activity {
 
     private NavigationDrawerToggle navigationDrawerToggle;
 
@@ -41,7 +41,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_browse);
 
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         RecyclerView navigationDrawer = (RecyclerView) findViewById(R.id.navigation_drawer);
@@ -50,8 +50,6 @@ public class MainActivity extends Activity {
 
         navigationDrawerToggle = new NavigationDrawerToggle(this, drawerLayout);
         navigationAdapter.setItems(NavigationItemFactory.createNavigationItems());
-        navigationAdapter.checkAllItems();
-        navigationAdapter.notifyDataSetChanged();
 
         drawerLayout.addDrawerListener(navigationDrawerToggle);
     }
@@ -72,7 +70,7 @@ public class MainActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
+        inflater.inflate(R.menu.browse_menu, menu);
         return true;
     }
 

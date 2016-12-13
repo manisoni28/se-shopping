@@ -8,6 +8,7 @@ public final class NavigationItemFactory {
 
     public static NavigationItem[] createNavigationItems() {
         return new NavigationItem[]{
+                new SeparatorNavigationItem("Category Filters"),
                 new FilterNavigationItem("Mens", Category.Mens, R.drawable.ic_man),
                 new FilterNavigationItem("Womens", Category.Womens, R.drawable.ic_woman),
                 new FilterNavigationItem("Hats", Category.Hats, R.drawable.ic_hat),
@@ -17,6 +18,7 @@ public final class NavigationItemFactory {
                 new FilterNavigationItem("Purses", Category.Purses, R.drawable.ic_purse),
                 new FilterNavigationItem("Sunglasses", Category.Sunglasses, R.drawable.ic_glasses),
                 new FilterNavigationItem("Shoes", Category.Shoes, R.drawable.ic_shoe),
+                new SeparatorNavigationItem("Settings"),
                 new SettingsNavigationItem("Settings", R.drawable.ic_settings)
         };
     }

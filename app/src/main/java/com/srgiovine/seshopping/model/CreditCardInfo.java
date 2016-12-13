@@ -2,17 +2,15 @@ package com.srgiovine.seshopping.model;
 
 public class CreditCardInfo {
 
-    private final String number;
+    private final String cardNumber;
     private final Name cardHolderName;
-    private final int expirationMonth;
-    private final int expirationYear;
+    private final String expirationDate;
     private final int securityCode;
 
-    private CreditCardInfo(Name cardHolderName, String number, int expirationMonth, int expirationYear, int securityCode) {
+    private CreditCardInfo(Name cardHolderName, String cardNumber, String expirationDate, int securityCode) {
         this.cardHolderName = cardHolderName;
-        this.number = number;
-        this.expirationMonth = expirationMonth;
-        this.expirationYear = expirationYear;
+        this.cardNumber = cardNumber;
+        this.expirationDate = expirationDate;
         this.securityCode = securityCode;
     }
 
@@ -20,16 +18,12 @@ public class CreditCardInfo {
         return cardHolderName;
     }
 
-    public int expirationMonth() {
-        return expirationMonth;
+    public String expirationDate() {
+        return expirationDate;
     }
 
-    public int expirationYear() {
-        return expirationYear;
-    }
-
-    public String number() {
-        return number;
+    public String cardNumber() {
+        return cardNumber;
     }
 
     public int securityCode() {
@@ -43,9 +37,8 @@ public class CreditCardInfo {
     public static class Builder {
 
         private Name cardHolderName;
-        private String number;
-        private int expirationMonth;
-        private int expirationYear;
+        private String cardNumber;
+        private String expirationDate;
         private int securityCode;
 
         public Builder setCardHolderName(Name cardHolderName) {
@@ -53,18 +46,13 @@ public class CreditCardInfo {
             return this;
         }
 
-        public Builder setNumber(String number) {
-            this.number = number;
+        public Builder setCardNumber(String cardNumber) {
+            this.cardNumber = cardNumber;
             return this;
         }
 
-        public Builder setExpirationMonth(int expirationMonth) {
-            this.expirationMonth = expirationMonth;
-            return this;
-        }
-
-        public Builder setExpirationYear(int expirationYear) {
-            this.expirationYear = expirationYear;
+        public Builder setExpirationDate(String expirationDate) {
+            this.expirationDate = expirationDate;
             return this;
         }
 
@@ -74,7 +62,7 @@ public class CreditCardInfo {
         }
 
         public CreditCardInfo build() {
-            return new CreditCardInfo(cardHolderName, number, expirationMonth, expirationYear, securityCode);
+            return new CreditCardInfo(cardHolderName, cardNumber, expirationDate, securityCode);
         }
     }
 }

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import java.util.Collections;
 import java.util.List;
@@ -36,7 +35,6 @@ public class ForgotPasswordFormDialog extends FormDialog {
     @Override
     protected void onConfirmActionSuccess() {
         super.onConfirmActionSuccess();
-        Toast.makeText(contentView.getContext(), "Successfully found email", Toast.LENGTH_SHORT).show();
     }
 
     @Override

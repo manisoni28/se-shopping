@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">SE Shopping</string>
+    <string name="browse">Browse</string>
     <string name="options">Options</string>
     <string name="cart">Cart</string>
     <string name="settings">Settings</string>
@@ -7,4 +8,6 @@
     <string name="signup"><u>Signup</u></string>
     <string name="find"><u>Find</u></string>
     <string name="cancel"><u>Cancel</u></string>
+    <string name="edit"><u>Edit</u></string>
+    <string name="save"><u>Save</u></string>
 </resources>

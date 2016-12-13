@@ -11,14 +11,7 @@
 
         <TextView
             android:id="@+id/empty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Empty"
-            android:textColor="@color/textColorPrimary"
-            android:textSize="26sp"
-            android:textStyle="bold"
-            android:visibility="invisible" />
+            style="@style/List.Empty" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/results"

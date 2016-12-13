@@ -13,7 +13,7 @@ public class NavigationDrawerToggle extends ActionBarDrawerToggle {
     private final Activity activity;
 
     public NavigationDrawerToggle(Activity activity, DrawerLayout drawerLayout) {
-        super(activity, drawerLayout, R.string.options, R.string.app_name);
+        super(activity, drawerLayout, R.string.options, R.string.browse);
         this.activity = activity;
         activity.getActionBar().setDisplayHomeAsUpEnabled(true);
         activity.getActionBar().setHomeButtonEnabled(true);
@@ -25,7 +25,7 @@ public class NavigationDrawerToggle extends ActionBarDrawerToggle {
      */
     public void onDrawerClosed(View view) {
         super.onDrawerClosed(view);
-        activity.getActionBar().setTitle(R.string.app_name);
+        activity.getActionBar().setTitle(R.string.browse);
     }
 
     /**

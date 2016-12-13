@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import java.util.Arrays;
 import java.util.List;
@@ -38,7 +37,6 @@ public class LoginFormDialog extends FormDialog {
     @Override
     protected void onConfirmActionSuccess() {
         super.onConfirmActionSuccess();
-        Toast.makeText(contentView.getContext(), "Successfully logged in", Toast.LENGTH_SHORT).show();
     }
 
     @Override
