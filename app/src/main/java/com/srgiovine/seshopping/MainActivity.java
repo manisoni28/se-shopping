@@ -11,10 +11,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.srgiovine.seshopping.navigation.FilterNavigationItem;
 import com.srgiovine.seshopping.navigation.NavigationAdapter;
 import com.srgiovine.seshopping.navigation.NavigationDrawerToggle;
-import com.srgiovine.seshopping.navigation.NavigationItem;
 import com.srgiovine.seshopping.navigation.NavigationItemFactory;
+import com.srgiovine.seshopping.navigation.SettingsNavigationItem;
 
 import srgiovine.com.seshopping.R;
 
@@ -23,18 +24,15 @@ public class MainActivity extends Activity {
     private NavigationDrawerToggle navigationDrawerToggle;
 
     private final NavigationAdapter.EventListener navigationEventListener = new NavigationAdapter.EventListener() {
+
         @Override
-        public void onItemClicked(NavigationItem item) {
-            switch (item.type()) {
-                case LOGOUT:
-                    onLogout();
-                    break;
-                case FILTER:
-                    onFilterClicked(item);
-                    break;
-                default:
-                    throw new IllegalArgumentException("Unhandled item type " + item.type());
-            }
+        public void onFilterItemClicked(FilterNavigationItem item) {
+            onFilterClicked(item);
+        }
+
+        @Override
+        public void onSettingsItemClicked(SettingsNavigationItem item) {
+            onSettingsClicked();
         }
     };
 
@@ -51,7 +49,9 @@ public class MainActivity extends Activity {
         navigationDrawer.setAdapter(navigationAdapter);
 
         navigationDrawerToggle = new NavigationDrawerToggle(this, drawerLayout);
-        navigationAdapter.setItems(NavigationItemFactory.creteNavigationItems());
+        navigationAdapter.setItems(NavigationItemFactory.createNavigationItems());
+        navigationAdapter.checkAllItems();
+        navigationAdapter.notifyDataSetChanged();
 
         drawerLayout.addDrawerListener(navigationDrawerToggle);
     }
@@ -86,13 +86,11 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void onLogout() {
-        // TODO remove fake code
-        startActivity(new Intent(this, SplashActivity.class));
-        finish();
+    private void onSettingsClicked() {
+        startActivity(new Intent(this, SettingsActivity.class));
     }
 
-    private void onFilterClicked(NavigationItem item) {
+    private void onFilterClicked(FilterNavigationItem item) {
         // TODO update the filtered items
     }
 

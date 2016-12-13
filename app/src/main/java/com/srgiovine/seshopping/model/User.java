@@ -4,14 +4,16 @@ public class User {
 
     private final String email;
     private final String password;
-    private final String firstName;
-    private final String lastName;
+    private final Name name;
+    private final Address address;
+    private final CreditCardInfo creditCardInfo;
 
-    public User(String email, String password, String firstName, String lastName) {
+    private User(Address address, String email, String password, Name name, CreditCardInfo creditCardInfo) {
+        this.address = address;
         this.email = email;
         this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.name = name;
+        this.creditCardInfo = creditCardInfo;
     }
 
     public String email() {
@@ -22,12 +24,16 @@ public class User {
         return password;
     }
 
-    public String firstName() {
-        return firstName;
+    public Address address() {
+        return address;
     }
 
-    public String lastName() {
-        return lastName;
+    public CreditCardInfo creditCardInfo() {
+        return creditCardInfo;
+    }
+
+    public Name name() {
+        return name;
     }
 
     public static Builder builder() {
@@ -36,17 +42,19 @@ public class User {
 
     public static class Builder {
 
+        private Address address;
         private String email;
         private String password;
-        private String firstName;
-        private String lastName;
+        private Name name;
+        private CreditCardInfo creditCardInfo;
 
-        public Builder setEmail(String email) {
-            this.email = email;
+        public Builder setAddress(Address address) {
+            this.address = address;
             return this;
         }
 
-        public Builder setId(long id) {
+        public Builder setEmail(String email) {
+            this.email = email;
             return this;
         }
 
@@ -55,18 +63,18 @@ public class User {
             return this;
         }
 
-        public Builder setFirstName(String firstName) {
-            this.firstName = firstName;
+        public Builder setName(Name name) {
+            this.name = name;
             return this;
         }
 
-        public Builder setLastName(String lastName) {
-            this.lastName = lastName;
+        public Builder setCreditCardInfo(CreditCardInfo creditCardInfo) {
+            this.creditCardInfo = creditCardInfo;
             return this;
         }
 
-        public User createUser() {
-            return new User(email, password, firstName, lastName);
+        public User build() {
+            return new User(address, email, password, name, creditCardInfo);
         }
     }
 }

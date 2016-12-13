@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">SE Shopping</string>
-    <string name="options">Option</string>
+    <string name="options">Options</string>
     <string name="cart">Cart</string>
+    <string name="settings">Settings</string>
     <string name="login"><u>Login</u></string>
     <string name="signup"><u>Signup</u></string>
     <string name="find"><u>Find</u></string>
