@@ -27,17 +27,14 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
 
     private final Map<NavigationItem, Boolean> checkedItems = new HashMap<>();
 
-    private List<NavigationItem> items;
+    private final List<NavigationItem> items = new ArrayList<>();
 
     public NavigationAdapter(EventListener eventListener) {
         this.eventListener = eventListener;
     }
 
-    public void setItems(NavigationItem[] items) {
-        this.items = Arrays.asList(items);
-        for (NavigationItem navigationItem : items) {
-            checkedItems.put(navigationItem, true);
-        }
+    public void addItems(NavigationItem[] items) {
+        this.items.addAll(Arrays.asList(items));
         notifyDataSetChanged();
     }
 
@@ -101,7 +98,7 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
         }
         return checkedNavigationItems;
     }
-    
+
     @Override
     public int getItemCount() {
         return items.size();
@@ -164,7 +161,7 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
 
         private final ImageView icon;
 
-        SettingsItemViewHolder(View itemView) {
+        private SettingsItemViewHolder(View itemView) {
             super(itemView);
             icon = (ImageView) itemView.findViewById(R.id.icon);
         }

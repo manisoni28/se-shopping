@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_item_background"
+    android:paddingBottom="@dimen/navigation_item_vertical_padding"
+    android:paddingLeft="@dimen/navigation_item_horizontal_padding"
+    android:paddingRight="@dimen/navigation_item_horizontal_padding"
+    android:paddingTop="@dimen/navigation_item_vertical_padding">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:background="@color/colorPrimary"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_hat" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/image"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_toRightOf="@id/image"
+        android:ellipsize="end"
+        android:fontFamily="cursive"
+        android:singleLine="true"
+        android:text="Summer shorts"
+        android:textSize="26sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/name"
+        android:layout_alignRight="@id/name"
+        android:layout_below="@id/name"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:fontFamily="serif-monospace"
+        android:maxLines="2"
+        android:text="Ready for summer? Well, buy the perfect shorts for you!"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/image"
+        android:layout_alignRight="@id/image"
+        android:layout_marginRight="4dp"
+        android:fontFamily="sans-serif-condensed"
+        android:singleLine="true"
+        android:text="$24"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="2dp"
+        android:layout_alignBottom="@id/image"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_toRightOf="@id/image"
+        android:background="@color/colorPrimary" />
+
+</RelativeLayout>

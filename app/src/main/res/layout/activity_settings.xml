@@ -74,7 +74,7 @@
         <TextView
             android:id="@+id/credit_card_label"
             style="@style/Settings.Label"
-            android:text="Address" />
+            android:text="Credit Card" />
 
         <EditText
             android:id="@+id/card_number"
@@ -135,6 +135,14 @@
                 android:id="@+id/confirm"
                 style="@style/FormDialog.Button.Right"
                 android:text="@string/save" />
+
+            <TextView
+                android:id="@+id/logout"
+                style="@style/FormDialog.Button"
+                android:layout_below="@id/action_separator"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:text="@string/logout" />
         </RelativeLayout>
 
     </LinearLayout>

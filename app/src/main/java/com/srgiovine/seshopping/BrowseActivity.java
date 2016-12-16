@@ -49,7 +49,7 @@ public class BrowseActivity extends Activity {
         navigationDrawer.setAdapter(navigationAdapter);
 
         navigationDrawerToggle = new NavigationDrawerToggle(this, drawerLayout);
-        navigationAdapter.setItems(NavigationItemFactory.createNavigationItems());
+        navigationAdapter.addItems(NavigationItemFactory.createNavigationItems());
 
         drawerLayout.addDrawerListener(navigationDrawerToggle);
     }
