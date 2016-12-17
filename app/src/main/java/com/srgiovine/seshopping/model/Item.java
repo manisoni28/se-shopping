@@ -2,8 +2,8 @@ package com.srgiovine.seshopping.model;
 
 import android.support.annotation.DrawableRes;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Item {
 
@@ -11,9 +11,7 @@ public class Item {
 
     private final String description;
 
-    private final Category category;
-
-    private final Set<Gender> genders;
+    private final List<Category> categories;
 
     @DrawableRes
     private final int image;
@@ -23,23 +21,18 @@ public class Item {
 
     private final int price;
 
-    private Item(String name, String description, Category category, Set<Gender> genders, int price,
+    private Item(String name, String description, List<Category> categories, int price,
                  @DrawableRes int image, @DrawableRes int icon) {
         this.name = name;
         this.description = description;
-        this.category = category;
-        this.genders = genders;
+        this.categories = categories;
         this.price = price;
         this.image = image;
         this.icon = icon;
     }
 
-    public Category category() {
-        return category;
-    }
-
-    public Set<Gender> genders() {
-        return genders;
+    public List<Category> categories() {
+        return categories;
     }
 
     public String description() {
@@ -72,8 +65,7 @@ public class Item {
 
         private String name;
         private String description;
-        private Category category;
-        private final Set<Gender> genders = new HashSet<>();
+        private final List<Category> categories = new ArrayList<>();
 
         private int price;
 
@@ -93,13 +85,10 @@ public class Item {
             return this;
         }
 
-        public Builder setCategory(Category category) {
-            this.category = category;
-            return this;
-        }
-
-        public Builder addGender(Gender gender) {
-            genders.add(gender);
+        public Builder addCategory(Category category) {
+            if (!categories.contains(category)) {
+                categories.add(category);
+            }
             return this;
         }
 
@@ -119,7 +108,7 @@ public class Item {
         }
 
         public Item build() {
-            return new Item(name, description, category, genders, price, image, icon);
+            return new Item(name, description, categories, price, image, icon);
         }
     }
 }

@@ -89,16 +89,6 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
         throw new IllegalArgumentException("Unknown item type " + item);
     }
 
-    public List<NavigationItem> getCheckedNavigationItems() {
-        List<NavigationItem> checkedNavigationItems = new ArrayList<>();
-        for (Map.Entry<NavigationItem, Boolean> entry : checkedItems.entrySet()) {
-            if (entry.getValue()) {
-                checkedNavigationItems.add(entry.getKey());
-            }
-        }
-        return checkedNavigationItems;
-    }
-
     @Override
     public int getItemCount() {
         return items.size();
@@ -149,7 +139,7 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
         public void onClick(View view) {
             checkedItems.put(item, !isChecked());
             checkBox.setChecked(isChecked());
-            eventListener.onFilterItemClicked(item);
+            eventListener.onFilterItemClicked(item, isChecked());
         }
 
         private boolean isChecked() {
@@ -185,7 +175,7 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
     }
 
     public interface EventListener {
-        void onFilterItemClicked(FilterNavigationItem item);
+        void onFilterItemClicked(FilterNavigationItem item, boolean isChecked);
 
         void onSettingsItemClicked(SettingsNavigationItem item);
     }

@@ -11,6 +11,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.srgiovine.seshopping.browse.BrowseItemsAdapter;
+import com.srgiovine.seshopping.browse.BrowseItemsFactory;
+import com.srgiovine.seshopping.model.Item;
 import com.srgiovine.seshopping.navigation.FilterNavigationItem;
 import com.srgiovine.seshopping.navigation.NavigationAdapter;
 import com.srgiovine.seshopping.navigation.NavigationDrawerToggle;
@@ -26,8 +29,8 @@ public class BrowseActivity extends Activity {
     private final NavigationAdapter.EventListener navigationEventListener = new NavigationAdapter.EventListener() {
 
         @Override
-        public void onFilterItemClicked(FilterNavigationItem item) {
-            onFilterClicked(item);
+        public void onFilterItemClicked(FilterNavigationItem item, boolean isChecked) {
+            onFilterClicked(item, isChecked);
         }
 
         @Override
@@ -36,7 +39,16 @@ public class BrowseActivity extends Activity {
         }
     };
 
+    private final BrowseItemsAdapter.EventListener browseItemsEventListener = new BrowseItemsAdapter.EventListener() {
+        @Override
+        public void onItemClicked(Item item) {
+
+        }
+    };
+
     private final NavigationAdapter navigationAdapter = new NavigationAdapter(navigationEventListener);
+
+    private final BrowseItemsAdapter browseItemsAdapter = new BrowseItemsAdapter(browseItemsEventListener);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +61,15 @@ public class BrowseActivity extends Activity {
         navigationDrawer.setAdapter(navigationAdapter);
 
         navigationDrawerToggle = new NavigationDrawerToggle(this, drawerLayout);
+        drawerLayout.addDrawerListener(navigationDrawerToggle);
+
         navigationAdapter.addItems(NavigationItemFactory.createNavigationItems());
 
-        drawerLayout.addDrawerListener(navigationDrawerToggle);
+        RecyclerView browseItems = (RecyclerView) findViewById(R.id.browse_items);
+        browseItems.setLayoutManager(new LinearLayoutManager(this));
+        browseItems.setAdapter(browseItemsAdapter);
+
+        browseItemsAdapter.addItems(BrowseItemsFactory.createBrowseItems());
     }
 
     @Override
@@ -88,8 +106,8 @@ public class BrowseActivity extends Activity {
         startActivity(new Intent(this, SettingsActivity.class));
     }
 
-    private void onFilterClicked(FilterNavigationItem item) {
-        // TODO update the filtered items
+    private void onFilterClicked(FilterNavigationItem item, boolean isChecked) {
+        browseItemsAdapter.setCategoryVisible(item.category(), isChecked);
     }
 
     private void openCart() {
