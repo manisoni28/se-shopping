@@ -69,7 +69,13 @@ public class BrowseItemsAdapter extends RecyclerView.Adapter<BrowseItemsAdapter.
         }
 
         if (visibleCategories.isEmpty()) {
-            addItemsWithVisibleGender();
+            addItemsWithCategories(visibleGenderCategories);
+            notifyDataSetChanged();
+            return;
+        }
+
+        if (visibleGenderCategories.isEmpty()) {
+            addItemsWithCategories(visibleCategories);
             notifyDataSetChanged();
             return;
         }
@@ -82,14 +88,6 @@ public class BrowseItemsAdapter extends RecyclerView.Adapter<BrowseItemsAdapter.
         }
 
         notifyDataSetChanged();
-    }
-
-    private void addItemsWithVisibleGender() {
-        for (Item item : items) {
-            if (!Collections.disjoint(item.categories(), visibleGenderCategories)) {
-                visibleItems.add(item);
-            }
-        }
     }
 
     @Override
@@ -108,6 +106,14 @@ public class BrowseItemsAdapter extends RecyclerView.Adapter<BrowseItemsAdapter.
         return visibleItems.size();
     }
 
+    private void addItemsWithCategories(Set<Category> categories) {
+        for (Item item : items) {
+            if (!Collections.disjoint(item.categories(), categories)) {
+                visibleItems.add(item);
+            }
+        }
+    }
+    
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final ImageView icon;

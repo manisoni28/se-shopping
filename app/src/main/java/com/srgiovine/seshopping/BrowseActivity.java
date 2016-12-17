@@ -30,19 +30,19 @@ public class BrowseActivity extends Activity {
 
         @Override
         public void onFilterItemClicked(FilterNavigationItem item, boolean isChecked) {
-            onFilterClicked(item, isChecked);
+            BrowseActivity.this.onFilterItemClicked(item, isChecked);
         }
 
         @Override
         public void onSettingsItemClicked(SettingsNavigationItem item) {
-            onSettingsClicked();
+            BrowseActivity.this.onSettingsClicked();
         }
     };
 
     private final BrowseItemsAdapter.EventListener browseItemsEventListener = new BrowseItemsAdapter.EventListener() {
         @Override
         public void onItemClicked(Item item) {
-
+            BrowseActivity.this.onItemClicked(item);
         }
     };
 
@@ -102,11 +102,15 @@ public class BrowseActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void onItemClicked(Item item) {
+        
+    }
+
     private void onSettingsClicked() {
         startActivity(new Intent(this, SettingsActivity.class));
     }
 
-    private void onFilterClicked(FilterNavigationItem item, boolean isChecked) {
+    private void onFilterItemClicked(FilterNavigationItem item, boolean isChecked) {
         browseItemsAdapter.setCategoryVisible(item.category(), isChecked);
     }
 
