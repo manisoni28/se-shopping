@@ -1,6 +1,5 @@
 package com.srgiovine.seshopping;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +11,7 @@ import com.srgiovine.seshopping.dialog.SignupFormDialog;
 
 import srgiovine.com.seshopping.R;
 
-public class SplashActivity extends Activity {
+public class SplashActivity extends SEActivity {
 
     private View contentView;
     private View actionContainer;
@@ -101,4 +100,8 @@ public class SplashActivity extends Activity {
         actionContainer.animate().scaleY(visible ? 1f : 0f).alpha(visible ? 1f : 0f).start();
     }
 
+    @Override
+    boolean homeAsUpButtonEnabled() {
+        return false;
+    }
 }

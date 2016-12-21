@@ -1,6 +1,5 @@
 package com.srgiovine.seshopping;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -22,7 +21,7 @@ import com.srgiovine.seshopping.navigation.SettingsNavigationItem;
 
 import srgiovine.com.seshopping.R;
 
-public class BrowseActivity extends Activity {
+public class BrowseActivity extends SEActivity {
 
     private NavigationDrawerToggle navigationDrawerToggle;
 
@@ -103,7 +102,7 @@ public class BrowseActivity extends Activity {
     }
 
     private void onItemClicked(Item item) {
-        
+
     }
 
     private void onSettingsClicked() {
@@ -117,4 +116,5 @@ public class BrowseActivity extends Activity {
     private void openCart() {
         startActivity(new Intent(this, CartActivity.class));
     }
+
 }
