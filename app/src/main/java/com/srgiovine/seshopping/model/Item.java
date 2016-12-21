@@ -2,16 +2,15 @@ package com.srgiovine.seshopping.model;
 
 import android.support.annotation.DrawableRes;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Item {
 
     private final String name;
 
     private final String description;
 
-    private final List<Category> categories;
+    private final Gender gender;
+
+    private final Category category;
 
     @DrawableRes
     private final int image;
@@ -21,18 +20,23 @@ public class Item {
 
     private final int price;
 
-    private Item(String name, String description, List<Category> categories, int price,
+    private Item(String name, String description, Gender gender, Category category, int price,
                  @DrawableRes int image, @DrawableRes int icon) {
         this.name = name;
         this.description = description;
-        this.categories = categories;
+        this.gender = gender;
+        this.category = category;
         this.price = price;
         this.image = image;
         this.icon = icon;
     }
 
-    public List<Category> categories() {
-        return categories;
+    public Gender gender() {
+        return gender;
+    }
+
+    public Category category() {
+        return category;
     }
 
     public String description() {
@@ -65,7 +69,8 @@ public class Item {
 
         private String name;
         private String description;
-        private final List<Category> categories = new ArrayList<>();
+        private Gender gender;
+        private Category category;
 
         private int price;
 
@@ -85,10 +90,13 @@ public class Item {
             return this;
         }
 
-        public Builder addCategory(Category category) {
-            if (!categories.contains(category)) {
-                categories.add(category);
-            }
+        public Builder setGender(Gender gender) {
+            this.gender = gender;
+            return this;
+        }
+
+        public Builder setCategory(Category category) {
+            this.category = category;
             return this;
         }
 
@@ -108,7 +116,7 @@ public class Item {
         }
 
         public Item build() {
-            return new Item(name, description, categories, price, image, icon);
+            return new Item(name, description, gender, category, price, image, icon);
         }
     }
 }

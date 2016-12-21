@@ -8,11 +8,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.srgiovine.seshopping.model.Category;
+import com.srgiovine.seshopping.model.Gender;
 import com.srgiovine.seshopping.model.Item;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -21,13 +21,11 @@ import srgiovine.com.seshopping.R;
 
 public class BrowseItemsAdapter extends RecyclerView.Adapter<BrowseItemsAdapter.ViewHolder> {
 
-    private static final List<Category> GENDER_CATEGORIES = Arrays.asList(Category.Mens, Category.Womens);
-
     private final EventListener eventListener;
 
-    private final Set<Category> visibleCategories = new HashSet<>();
+    private final Set<Gender> visibleGenders = new HashSet<>();
 
-    private final Set<Category> visibleGenderCategories = new HashSet<>();
+    private final Set<Category> visibleCategories = new HashSet<>();
 
     private final List<Item> items = new ArrayList<>();
 
@@ -42,19 +40,20 @@ public class BrowseItemsAdapter extends RecyclerView.Adapter<BrowseItemsAdapter.
         invalidateVisibleItems();
     }
 
+    public void setGenderVisible(Gender gender, boolean isVisible) {
+        if (isVisible) {
+            visibleGenders.add(gender);
+        } else {
+            visibleGenders.remove(gender);
+        }
+        invalidateVisibleItems();
+    }
+
     public void setCategoryVisible(Category category, boolean isVisible) {
         if (isVisible) {
-            if (GENDER_CATEGORIES.contains(category)) {
-                visibleGenderCategories.add(category);
-            } else {
-                visibleCategories.add(category);
-            }
+            visibleCategories.add(category);
         } else {
-            if (GENDER_CATEGORIES.contains(category)) {
-                visibleGenderCategories.remove(category);
-            } else {
-                visibleCategories.remove(category);
-            }
+            visibleCategories.remove(category);
         }
         invalidateVisibleItems();
     }
@@ -62,27 +61,26 @@ public class BrowseItemsAdapter extends RecyclerView.Adapter<BrowseItemsAdapter.
     private void invalidateVisibleItems() {
         visibleItems.clear();
 
-        if (visibleCategories.isEmpty() && visibleGenderCategories.isEmpty()) {
+        if (visibleCategories.isEmpty() && visibleGenders.isEmpty()) {
             visibleItems.addAll(items);
             notifyDataSetChanged();
             return;
         }
 
         if (visibleCategories.isEmpty()) {
-            addItemsWithCategories(visibleGenderCategories);
+            addItemsInVisibleGenders();
             notifyDataSetChanged();
             return;
         }
 
-        if (visibleGenderCategories.isEmpty()) {
-            addItemsWithCategories(visibleCategories);
+        if (visibleGenders.isEmpty()) {
+            addItemsInVisibleCategories();
             notifyDataSetChanged();
             return;
         }
 
         for (Item item : items) {
-            if (!Collections.disjoint(item.categories(), visibleGenderCategories)
-                    && !Collections.disjoint(item.categories(), visibleCategories)) {
+            if (visibleGenders.contains(item.gender()) && visibleCategories.contains(item.category())) {
                 visibleItems.add(item);
             }
         }
@@ -106,9 +104,17 @@ public class BrowseItemsAdapter extends RecyclerView.Adapter<BrowseItemsAdapter.
         return visibleItems.size();
     }
 
-    private void addItemsWithCategories(Set<Category> categories) {
+    private void addItemsInVisibleGenders() {
         for (Item item : items) {
-            if (!Collections.disjoint(item.categories(), categories)) {
+            if (visibleGenders.contains(item.gender())) {
+                visibleItems.add(item);
+            }
+        }
+    }
+
+    private void addItemsInVisibleCategories() {
+        for (Item item : items) {
+            if (visibleCategories.contains(item.category())) {
                 visibleItems.add(item);
             }
         }
@@ -140,13 +146,9 @@ public class BrowseItemsAdapter extends RecyclerView.Adapter<BrowseItemsAdapter.
             description.setText(item.description());
 
             tags.removeAllViews();
-            for (Category category : item.categories()) {
-                addCategory(category);
-            }
-
-            TextView price = createTagView();
-            price.setText("$" + item.price());
-            tags.addView(price);
+            addTag(item.gender().name());
+            addTag(item.category().name());
+            addTag("$" + item.price());
         }
 
         @Override
@@ -154,9 +156,9 @@ public class BrowseItemsAdapter extends RecyclerView.Adapter<BrowseItemsAdapter.
             eventListener.onItemClicked(item);
         }
 
-        private void addCategory(Category category) {
+        private void addTag(String tag) {
             TextView textView = createTagView();
-            textView.setText(category.name());
+            textView.setText(tag);
             tags.addView(textView);
         }
 

@@ -18,11 +18,12 @@ import java.util.Map;
 
 import srgiovine.com.seshopping.R;
 
-public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.ViewHolder> {
+public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.ViewHolder<? extends NavigationItem>> {
 
-    private static final int ITEM_VIEW_TYPE_FILTER = 0;
-    private static final int ITEM_VIEW_TYPE_SETTINGS = 1;
-    private static final int ITEM_VIEW_TYPE_SEPARATOR = 2;
+    private static final int ITEM_VIEW_TYPE_GENDER = 0;
+    private static final int ITEM_VIEW_TYPE_CATEGORY = 1;
+    private static final int ITEM_VIEW_TYPE_SETTINGS = 2;
+    private static final int ITEM_VIEW_TYPE_SEPARATOR = 3;
 
     private final EventListener eventListener;
 
@@ -40,13 +41,16 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ViewHolder viewHolder;
+    public ViewHolder<? extends NavigationItem> onCreateViewHolder(ViewGroup parent, int viewType) {
+        ViewHolder<? extends NavigationItem> viewHolder;
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
         switch (viewType) {
-            case ITEM_VIEW_TYPE_FILTER:
-                viewHolder = new FilterItemViewHolder(inflater.inflate(R.layout.navigation_item_filter, parent, false));
+            case ITEM_VIEW_TYPE_GENDER:
+                viewHolder = new GenderFilterItemViewHolder(inflater.inflate(R.layout.navigation_item_filter, parent, false));
+                break;
+            case ITEM_VIEW_TYPE_CATEGORY:
+                viewHolder = new CategoryFilterItemViewHolder(inflater.inflate(R.layout.navigation_item_filter, parent, false));
                 break;
             case ITEM_VIEW_TYPE_SETTINGS:
                 viewHolder = new SettingsItemViewHolder(inflater.inflate(R.layout.navigation_item_settings, parent, false));
@@ -62,17 +66,25 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder<? extends NavigationItem> holder, int position) {
         NavigationItem item = items.get(position);
 
-        if (item instanceof FilterNavigationItem) {
-            ((FilterItemViewHolder) holder).bind((FilterNavigationItem) item);
-        } else if (item instanceof SettingsNavigationItem) {
-            ((SettingsItemViewHolder) holder).bind((SettingsNavigationItem) item);
-        } else if (item instanceof SeparatorNavigationItem) {
-            holder.bind(item);
-        } else {
-            throw new IllegalArgumentException("Unknown item type " + item.name());
+        int itemViewType = getItemViewType(position);
+        switch (itemViewType) {
+            case ITEM_VIEW_TYPE_GENDER:
+                ((GenderFilterItemViewHolder) holder).bind((GenderNavigationItem) item);
+                break;
+            case ITEM_VIEW_TYPE_CATEGORY:
+                ((CategoryFilterItemViewHolder) holder).bind((CategoryNavigationItem) item);
+                break;
+            case ITEM_VIEW_TYPE_SETTINGS:
+                ((SettingsItemViewHolder) holder).bind((SettingsNavigationItem) item);
+                break;
+            case ITEM_VIEW_TYPE_SEPARATOR:
+                ((SeparatorItemViewHolder) holder).bind((SeparatorNavigationItem) item);
+                break;
+            default:
+                throw new IllegalArgumentException("Unhandled item view type " + itemViewType);
         }
     }
 
@@ -80,8 +92,10 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
     public int getItemViewType(int position) {
         NavigationItem item = items.get(position);
 
-        if (item instanceof FilterNavigationItem) {
-            return ITEM_VIEW_TYPE_FILTER;
+        if (item instanceof GenderNavigationItem) {
+            return ITEM_VIEW_TYPE_GENDER;
+        } else if (item instanceof CategoryNavigationItem) {
+            return ITEM_VIEW_TYPE_CATEGORY;
         } else if (item instanceof SettingsNavigationItem) {
             return ITEM_VIEW_TYPE_SETTINGS;
         } else if (item instanceof SeparatorNavigationItem) {
@@ -118,22 +132,36 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
         }
     }
 
-    private class FilterItemViewHolder extends ViewHolder<FilterNavigationItem> implements CompoundButton.OnCheckedChangeListener {
+    private abstract class ViewHolderWithIcon<T extends NavigationItemWithIcon> extends ViewHolder<T> {
 
         private final ImageView icon;
-        private final CheckBox checkBox;
 
-        private FilterItemViewHolder(View itemView) {
+        private ViewHolderWithIcon(View itemView) {
             super(itemView);
             icon = (ImageView) itemView.findViewById(R.id.icon);
+        }
+
+        @Override
+        void bind(T item) {
+            super.bind(item);
+            icon.setImageResource(item.iconRes());
+        }
+    }
+
+    private abstract class ViewHolderWithIconAndCheckbox<T extends NavigationItemWithIcon> extends ViewHolderWithIcon<T>
+            implements CompoundButton.OnCheckedChangeListener {
+
+        private final CheckBox checkBox;
+
+        private ViewHolderWithIconAndCheckbox(View itemView) {
+            super(itemView);
             checkBox = (CheckBox) itemView.findViewById(R.id.checkbox);
             checkBox.setOnCheckedChangeListener(this);
         }
 
         @Override
-        void bind(FilterNavigationItem item) {
+        void bind(T item) {
             super.bind(item);
-            icon.setImageResource(item.iconRes());
             checkBox.setChecked(isChecked());
         }
 
@@ -145,27 +173,42 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
         @Override
         public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
             checkedItems.put(item, isChecked);
-            eventListener.onFilterItemClicked(item, isChecked);
+            onItemCheckedChanged(item, isChecked);
         }
 
         private boolean isChecked() {
             return checkedItems.containsKey(item) && checkedItems.get(item);
         }
+
+        abstract void onItemCheckedChanged(T item, boolean isChecked);
     }
 
-    private class SettingsItemViewHolder extends ViewHolder<SettingsNavigationItem> {
-
-        private final ImageView icon;
-
-        private SettingsItemViewHolder(View itemView) {
+    private class GenderFilterItemViewHolder extends ViewHolderWithIconAndCheckbox<GenderNavigationItem> {
+        private GenderFilterItemViewHolder(View itemView) {
             super(itemView);
-            icon = (ImageView) itemView.findViewById(R.id.icon);
         }
 
         @Override
-        void bind(SettingsNavigationItem item) {
-            super.bind(item);
-            icon.setImageResource(item.iconRes());
+        void onItemCheckedChanged(GenderNavigationItem item, boolean isChecked) {
+            eventListener.onGenderItemClicked(item, isChecked);
+        }
+    }
+
+    private class CategoryFilterItemViewHolder extends ViewHolderWithIconAndCheckbox<CategoryNavigationItem> {
+        private CategoryFilterItemViewHolder(View itemView) {
+            super(itemView);
+        }
+
+        @Override
+        void onItemCheckedChanged(CategoryNavigationItem item, boolean isChecked) {
+            eventListener.onCategoryItemClicked(item, isChecked);
+        }
+    }
+
+    private class SettingsItemViewHolder extends ViewHolderWithIcon<SettingsNavigationItem> {
+
+        private SettingsItemViewHolder(View itemView) {
+            super(itemView);
         }
 
         @Override
@@ -181,7 +224,9 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
     }
 
     public interface EventListener {
-        void onFilterItemClicked(FilterNavigationItem item, boolean isChecked);
+        void onGenderItemClicked(GenderNavigationItem item, boolean isChecked);
+
+        void onCategoryItemClicked(CategoryNavigationItem item, boolean isChecked);
 
         void onSettingsItemClicked(SettingsNavigationItem item);
     }

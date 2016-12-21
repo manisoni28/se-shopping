@@ -13,7 +13,8 @@ import android.view.MenuItem;
 import com.srgiovine.seshopping.browse.BrowseItemsAdapter;
 import com.srgiovine.seshopping.browse.BrowseItemsFactory;
 import com.srgiovine.seshopping.model.Item;
-import com.srgiovine.seshopping.navigation.FilterNavigationItem;
+import com.srgiovine.seshopping.navigation.CategoryNavigationItem;
+import com.srgiovine.seshopping.navigation.GenderNavigationItem;
 import com.srgiovine.seshopping.navigation.NavigationAdapter;
 import com.srgiovine.seshopping.navigation.NavigationDrawerToggle;
 import com.srgiovine.seshopping.navigation.NavigationItemFactory;
@@ -28,8 +29,13 @@ public class BrowseActivity extends SEActivity {
     private final NavigationAdapter.EventListener navigationEventListener = new NavigationAdapter.EventListener() {
 
         @Override
-        public void onFilterItemClicked(FilterNavigationItem item, boolean isChecked) {
-            BrowseActivity.this.onFilterItemClicked(item, isChecked);
+        public void onGenderItemClicked(GenderNavigationItem item, boolean isChecked) {
+            BrowseActivity.this.onGenderItemClicked(item, isChecked);
+        }
+
+        @Override
+        public void onCategoryItemClicked(CategoryNavigationItem item, boolean isChecked) {
+            BrowseActivity.this.onCategoryItemClicked(item, isChecked);
         }
 
         @Override
@@ -109,7 +115,11 @@ public class BrowseActivity extends SEActivity {
         startActivity(new Intent(this, SettingsActivity.class));
     }
 
-    private void onFilterItemClicked(FilterNavigationItem item, boolean isChecked) {
+    private void onGenderItemClicked(GenderNavigationItem item, boolean isChecked) {
+        browseItemsAdapter.setGenderVisible(item.gender(), isChecked);
+    }
+
+    private void onCategoryItemClicked(CategoryNavigationItem item, boolean isChecked) {
         browseItemsAdapter.setCategoryVisible(item.category(), isChecked);
     }
 
