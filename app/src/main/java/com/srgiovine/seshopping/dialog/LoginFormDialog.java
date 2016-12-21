@@ -49,7 +49,6 @@ public class LoginFormDialog extends FormDialog {
     protected boolean onValidateFormFieldInputs() {
         boolean formFieldsValid = super.onValidateFormFieldInputs();
         formFieldsValid &= onValidateEmailField(email);
-        formFieldsValid &= onValidatePasswordField(password);
         return formFieldsValid;
     }
 

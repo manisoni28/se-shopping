@@ -142,6 +142,7 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/add_to_cart"
             style="@style/Input.Details"
             android:layout_width="180dp"
             android:layout_below="@id/input_amount"
