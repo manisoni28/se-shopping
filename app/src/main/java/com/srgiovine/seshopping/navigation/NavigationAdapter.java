@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -117,7 +118,7 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
         }
     }
 
-    private class FilterItemViewHolder extends ViewHolder<FilterNavigationItem> {
+    private class FilterItemViewHolder extends ViewHolder<FilterNavigationItem> implements CompoundButton.OnCheckedChangeListener {
 
         private final ImageView icon;
         private final CheckBox checkBox;
@@ -126,6 +127,7 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
             super(itemView);
             icon = (ImageView) itemView.findViewById(R.id.icon);
             checkBox = (CheckBox) itemView.findViewById(R.id.checkbox);
+            checkBox.setOnCheckedChangeListener(this);
         }
 
         @Override
@@ -137,9 +139,13 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
 
         @Override
         public void onClick(View view) {
-            checkedItems.put(item, !isChecked());
-            checkBox.setChecked(isChecked());
-            eventListener.onFilterItemClicked(item, isChecked());
+            checkBox.setChecked(!isChecked());
+        }
+
+        @Override
+        public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+            checkedItems.put(item, isChecked);
+            eventListener.onFilterItemClicked(item, isChecked);
         }
 
         private boolean isChecked() {
