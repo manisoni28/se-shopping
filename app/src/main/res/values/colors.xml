@@ -6,6 +6,7 @@
 
     <color name="windowBackground">#8d6e63</color>
     <color name="textColorPrimary">@android:color/white</color>
+    <color name="textColorSecondary">#CDCDCD</color>
     <color name="navigationBarColor">@color/colorPrimary</color>
 
     <color name="dividerColor">@android:color/white</color>

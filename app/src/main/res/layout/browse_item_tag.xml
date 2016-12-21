@@ -3,7 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:layout_marginRight="4dp"
-    android:background="@drawable/item_background"
+    android:background="@drawable/tag_background"
     android:fontFamily="sans-serif-condensed"
     android:gravity="center_vertical"
     android:paddingLeft="4dp"

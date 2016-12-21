@@ -113,13 +113,12 @@ public class BrowseItemsAdapter extends RecyclerView.Adapter<BrowseItemsAdapter.
             }
         }
     }
-    
+
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final ImageView icon;
         private final TextView name;
         private final TextView description;
-        private final TextView price;
         private final ViewGroup tags;
 
         private Item item;
@@ -131,7 +130,6 @@ public class BrowseItemsAdapter extends RecyclerView.Adapter<BrowseItemsAdapter.
             icon = (ImageView) itemView.findViewById(R.id.image);
             name = (TextView) itemView.findViewById(R.id.name);
             description = (TextView) itemView.findViewById(R.id.description);
-            price = (TextView) itemView.findViewById(R.id.price);
             tags = (ViewGroup) itemView.findViewById(R.id.tags);
         }
 
@@ -140,12 +138,14 @@ public class BrowseItemsAdapter extends RecyclerView.Adapter<BrowseItemsAdapter.
             icon.setImageResource(item.icon());
             name.setText(item.name());
             description.setText(item.description());
-            price.setText("$" + item.price());
 
             tags.removeAllViews();
             for (Category category : item.categories()) {
-                addCategoryAsTag(category);
+                addCategory(category);
             }
+
+            TextView price = createTagView();
+            price.setText("$" + item.price());
             tags.addView(price);
         }
 
@@ -154,11 +154,15 @@ public class BrowseItemsAdapter extends RecyclerView.Adapter<BrowseItemsAdapter.
             eventListener.onItemClicked(item);
         }
 
-        private void addCategoryAsTag(Category category) {
+        private void addCategory(Category category) {
+            TextView textView = createTagView();
+            textView.setText(category.name());
+            tags.addView(textView);
+        }
+
+        private TextView createTagView() {
             LayoutInflater layoutInflater = LayoutInflater.from(itemView.getContext());
-            TextView tag = (TextView) layoutInflater.inflate(R.layout.browse_item_tag, tags, false);
-            tag.setText(category.name());
-            tags.addView(tag);
+            return (TextView) layoutInflater.inflate(R.layout.browse_item_tag, tags, false);
         }
     }
 

@@ -140,7 +140,7 @@ public final class BrowseItemsFactory {
                 Item.builder().setName("Pattina Tessuto + Saffiano Crossbody Nero+Bianco")
                         .setDescription("Italian elegance at its best. Almost no other label manages " +
                                 "to switch between modernity and tradition as successfully as Prada. " +
-                                "Miuccia Prada designs timelessly classic tote bags. ")
+                                "Miuccia Prada designs timelessly classic tote bags.")
                         .addCategory(Category.Womens)
                         .addCategory(Category.Purses)
                         .setPrice(986)

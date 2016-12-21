@@ -10,30 +10,30 @@
 
         <TextView
             android:id="@+id/login_label"
-            style="@style/Settings.Label"
+            style="@style/Label.Settings"
             android:text="Login" />
 
         <TextView
             android:id="@+id/email"
-            style="@style/Settings.Info" />
+            style="@style/Info.Settings" />
 
         <TextView
             android:id="@+id/account_holder_label"
-            style="@style/Settings.Label"
+            style="@style/Label.Settings"
             android:text="Account Holder" />
 
         <TextView
             android:id="@+id/name"
-            style="@style/Settings.Info" />
+            style="@style/Info.Settings" />
 
         <TextView
             android:id="@+id/address_label"
-            style="@style/Settings.Label"
+            style="@style/Label.Settings"
             android:text="Address" />
 
         <EditText
             android:id="@+id/street"
-            style="@style/Settings.Info.Input"
+            style="@style/Input.Settings"
             android:hint="Street"
             android:inputType="textPostalAddress" />
 
@@ -44,13 +44,13 @@
 
             <EditText
                 android:id="@+id/city"
-                style="@style/Settings.Info.Input.Horizontal"
+                style="@style/Input.Settings.Horizontal"
                 android:hint="City"
                 android:inputType="textPostalAddress" />
 
             <EditText
                 android:id="@+id/state"
-                style="@style/Settings.Info.Input.Horizontal"
+                style="@style/Input.Settings.Horizontal"
                 android:hint="State" />
         </LinearLayout>
 
@@ -61,24 +61,24 @@
 
             <EditText
                 android:id="@+id/zip"
-                style="@style/Settings.Info.Input.Horizontal"
+                style="@style/Input.Settings.Horizontal"
                 android:hint="Zip"
                 android:inputType="number" />
 
             <EditText
                 android:id="@+id/country"
-                style="@style/Settings.Info.Input.Horizontal"
+                style="@style/Input.Settings.Horizontal"
                 android:hint="Country" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/credit_card_label"
-            style="@style/Settings.Label"
+            style="@style/Label.Settings"
             android:text="Credit Card" />
 
         <EditText
             android:id="@+id/card_number"
-            style="@style/Settings.Info.Input"
+            style="@style/Input.Settings"
             android:hint="Card Number"
             android:inputType="number" />
 
@@ -89,13 +89,13 @@
 
             <EditText
                 android:id="@+id/first_name"
-                style="@style/Settings.Info.Input.Horizontal"
+                style="@style/Input.Settings.Horizontal"
                 android:hint="First Name"
                 android:inputType="textPersonName" />
 
             <EditText
                 android:id="@+id/last_name"
-                style="@style/Settings.Info.Input.Horizontal"
+                style="@style/Input.Settings.Horizontal"
                 android:hint="Last Name"
                 android:inputType="textPersonName" />
         </LinearLayout>
@@ -107,12 +107,12 @@
 
             <EditText
                 android:id="@+id/expiration_date"
-                style="@style/Settings.Info.Input.Horizontal"
+                style="@style/Input.Settings.Horizontal"
                 android:hint="Expiration" />
 
             <EditText
                 android:id="@+id/security_code"
-                style="@style/Settings.Info.Input.Horizontal"
+                style="@style/Input.Settings.Horizontal"
                 android:hint="CC"
                 android:imeOptions="actionDone"
                 android:inputType="number" />
