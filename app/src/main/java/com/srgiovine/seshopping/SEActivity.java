@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.srgiovine.seshopping.account.AccountManager;
+import com.srgiovine.seshopping.cart.CartManager;
 import com.srgiovine.seshopping.data.ItemRepository;
 
 public abstract class SEActivity extends Activity {
@@ -35,6 +36,10 @@ public abstract class SEActivity extends Activity {
 
     protected ItemRepository itemRepository() {
         return seApplication().itemRepository();
+    }
+
+    protected CartManager cartManager() {
+        return seApplication().cartManager();
     }
 
     protected boolean homeAsUpButtonEnabled() {

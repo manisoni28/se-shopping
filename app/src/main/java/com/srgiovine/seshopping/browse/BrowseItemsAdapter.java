@@ -83,13 +83,14 @@ class BrowseItemsAdapter extends RecyclerView.Adapter<BrowseItemsAdapter.ViewHol
         }
 
         private void addTag(String tag) {
-            TextView textView = createTagView();
-            textView.setText(tag);
+            TextView tagView = createTagView();
+            tagView.setText(tag);
+            tags.addView(tagView);
         }
 
         private TextView createTagView() {
             LayoutInflater layoutInflater = LayoutInflater.from(itemView.getContext());
-            return (TextView) layoutInflater.inflate(R.layout.browse_item_tag, tags, true);
+            return (TextView) layoutInflater.inflate(R.layout.browse_item_tag, tags, false);
         }
     }
 

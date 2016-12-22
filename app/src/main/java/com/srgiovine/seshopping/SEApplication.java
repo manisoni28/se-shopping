@@ -3,11 +3,12 @@ package com.srgiovine.seshopping;
 import android.app.Application;
 import android.content.SharedPreferences;
 
+import com.srgiovine.seshopping.account.AccountManager;
+import com.srgiovine.seshopping.cart.CartManager;
 import com.srgiovine.seshopping.data.ItemRepository;
 import com.srgiovine.seshopping.data.ItemRepositoryFactory;
 import com.srgiovine.seshopping.data.UserRepository;
 import com.srgiovine.seshopping.data.UserRepositoryFactory;
-import com.srgiovine.seshopping.account.AccountManager;
 
 public class SEApplication extends Application {
 
@@ -17,6 +18,8 @@ public class SEApplication extends Application {
 
     private ItemRepository itemRepository;
 
+    private CartManager cartManager;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -25,13 +28,18 @@ public class SEApplication extends Application {
 
         accountManager = AccountManager.create(userRepository, sharedPreferences);
         itemRepository = ItemRepositoryFactory.create();
+        cartManager = CartManager.create(itemRepository, sharedPreferences);
     }
 
-    public AccountManager accountManager() {
+    AccountManager accountManager() {
         return accountManager;
     }
 
-    public ItemRepository itemRepository() {
+    ItemRepository itemRepository() {
         return itemRepository;
+    }
+
+    CartManager cartManager() {
+        return cartManager;
     }
 }

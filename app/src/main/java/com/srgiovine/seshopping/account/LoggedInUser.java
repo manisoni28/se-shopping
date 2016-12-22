@@ -26,11 +26,6 @@ class LoggedInUser {
                 .apply();
     }
 
-    void restore() {
-        email = sharedPreferences.getString(EMAIL, null);
-        password = sharedPreferences.getString(PASSWORD, null);
-    }
-
     void logout() {
         save(null, null);
     }
@@ -45,5 +40,10 @@ class LoggedInUser {
 
     boolean isPresent() {
         return email != null;
+    }
+
+    private void restore() {
+        email = sharedPreferences.getString(EMAIL, null);
+        password = sharedPreferences.getString(PASSWORD, null);
     }
 }

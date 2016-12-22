@@ -7,7 +7,6 @@ import com.srgiovine.seshopping.model.User;
 import com.srgiovine.seshopping.task.BackgroundAsyncTask;
 import com.srgiovine.seshopping.task.BackgroundTask;
 import com.srgiovine.seshopping.task.Callback;
-import com.srgiovine.seshopping.task.SimpleCallback;
 
 public class AccountManager {
 
@@ -57,7 +56,7 @@ public class AccountManager {
         return loggedInUser.isPresent();
     }
 
-    private class AuthenticatUserCallback extends SimpleCallback<User> {
+    private class AuthenticatUserCallback implements Callback<User> {
 
         private final Callback<User> callback;
 
@@ -75,6 +74,11 @@ public class AccountManager {
         public void onFailed() {
             callback.onFailed();
         }
+
+        @Override
+        public void onCancelled() {
+            callback.onCancelled();
+        }
     }
 
     private class SignupUserCallback extends AuthenticatUserCallback {
@@ -90,8 +94,6 @@ public class AccountManager {
     }
 
     public static AccountManager create(UserRepository userRepository, SharedPreferences sharedPreferences) {
-        LoggedInUser loggedInUser = new LoggedInUser(sharedPreferences);
-        loggedInUser.restore();
-        return new AccountManager(loggedInUser, userRepository);
+        return new AccountManager(new LoggedInUser(sharedPreferences), userRepository);
     }
 }

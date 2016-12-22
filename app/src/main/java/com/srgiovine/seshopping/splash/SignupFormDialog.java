@@ -85,8 +85,8 @@ class SignupFormDialog extends FormDialog {
     }
 
     @Override
-    public void destroy() {
-        super.destroy();
+    public void onDestroy() {
+        super.onDestroy();
         if (signupTask != null) {
             signupTask.cancel();
             signupTask = null;

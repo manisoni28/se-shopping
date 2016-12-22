@@ -14,17 +14,17 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.srgiovine.seshopping.details.DetailsActivity;
 import com.srgiovine.seshopping.SEActivity;
-import com.srgiovine.seshopping.search.SearchActivity;
-import com.srgiovine.seshopping.settings.SettingsActivity;
 import com.srgiovine.seshopping.cart.CartActivity;
+import com.srgiovine.seshopping.details.DetailsActivity;
 import com.srgiovine.seshopping.model.Item;
 import com.srgiovine.seshopping.navigation.CategoryNavigationItem;
 import com.srgiovine.seshopping.navigation.GenderNavigationItem;
 import com.srgiovine.seshopping.navigation.NavigationAdapter;
 import com.srgiovine.seshopping.navigation.NavigationDrawerToggle;
 import com.srgiovine.seshopping.navigation.NavigationItemFactory;
+import com.srgiovine.seshopping.search.SearchActivity;
+import com.srgiovine.seshopping.settings.SettingsActivity;
 
 import srgiovine.com.seshopping.R;
 

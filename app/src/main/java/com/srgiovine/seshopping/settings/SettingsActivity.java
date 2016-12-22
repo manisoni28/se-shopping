@@ -6,8 +6,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.srgiovine.seshopping.SEActivity;
-import com.srgiovine.seshopping.splash.SplashActivity;
 import com.srgiovine.seshopping.model.User;
+import com.srgiovine.seshopping.splash.SplashActivity;
 import com.srgiovine.seshopping.task.BackgroundTask;
 import com.srgiovine.seshopping.task.Callback;
 import com.srgiovine.seshopping.task.SimpleCallback;
@@ -88,6 +88,7 @@ public class SettingsActivity extends SEActivity implements SettingsViewPresente
     @Override
     public void onLogoutClicked() {
         accountManager().logout();
+        cartManager().clearCart();
 
         Intent intent = new Intent(this, SplashActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

@@ -79,13 +79,13 @@ public class SplashActivity extends SEActivity {
     protected void onDestroy() {
         super.onDestroy();
         if (signupFormDialog != null) {
-            signupFormDialog.destroy();
+            signupFormDialog.onDestroy();
         }
         if (loginFormDialog != null) {
-            loginFormDialog.destroy();
+            loginFormDialog.onDestroy();
         }
         if (forgotPasswordFormDialog != null) {
-            forgotPasswordFormDialog.destroy();
+            forgotPasswordFormDialog.onDestroy();
         }
     }
 

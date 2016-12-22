@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.srgiovine.seshopping.model.Item;
 
+import java.util.Locale;
+
 import srgiovine.com.seshopping.R;
 
 class DetailsViewPresenter {
@@ -19,7 +21,7 @@ class DetailsViewPresenter {
     private final TextView description;
     private final ViewGroup categories;
     private final TextView price;
-    private final TextView amount;
+    private final TextView count;
 
     DetailsViewPresenter(View contentView, EventListener eventListener) {
         this.eventListener = eventListener;
@@ -28,21 +30,21 @@ class DetailsViewPresenter {
         description = (TextView) contentView.findViewById(R.id.description);
         categories = (ViewGroup) contentView.findViewById(R.id.categories);
         price = (TextView) contentView.findViewById(R.id.price);
-        amount = (TextView) contentView.findViewById(R.id.amount);
+        count = (TextView) contentView.findViewById(R.id.count);
 
-        contentView.findViewById(R.id.decrement_amount).setOnClickListener(new View.OnClickListener() {
+        contentView.findViewById(R.id.decrement_count).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onDecrementAmount();
+                onDecrementCount();
             }
         });
-        contentView.findViewById(R.id.increment_amount).setOnClickListener(new View.OnClickListener() {
+        contentView.findViewById(R.id.increment_count).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onIncrementAmount();
+                onIncrementCount();
             }
         });
-        contentView.findViewById(R.id.increment_amount).setOnClickListener(new View.OnClickListener() {
+        contentView.findViewById(R.id.add_to_cart).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onAddToCart();
@@ -54,36 +56,45 @@ class DetailsViewPresenter {
         actionBar.setTitle(item.name());
         image.setImageResource(item.image());
         description.setText(item.description());
-        price.setText(String.valueOf(item.price()));
+        price.setText(String.format(Locale.US, "$%d", item.price()));
         addCategory(item.gender().name());
         addCategory(item.category().name());
     }
 
     private void addCategory(String category) {
         LayoutInflater inflater = LayoutInflater.from(categories.getContext());
-        TextView categoryView = (TextView) inflater.inflate(R.layout.details_category_item, categories, true);
+        TextView categoryView = (TextView) inflater.inflate(R.layout.details_category_item, categories, false);
         categoryView.setText(category);
+        categories.addView(categoryView);
     }
 
     private void onAddToCart() {
-        eventListener.onAddToCartClicked(getAmountInt());
+        eventListener.onAddToCartClicked(getCountInt());
     }
 
-    private void onDecrementAmount() {
-        int newAmount = Math.max(1, getAmountInt() - 1);
-        amount.setText(String.valueOf(newAmount));
+    private void onDecrementCount() {
+        int countInt = getCountInt();
+        if (countInt > 1) {
+            setCountInt(countInt - 1);
+        }
     }
 
-    private void onIncrementAmount() {
-        int newAmount = Math.min(9, getAmountInt() + 1);
-        amount.setText(String.valueOf(newAmount));
+    private void onIncrementCount() {
+        int countInt = getCountInt();
+        if (countInt < 9) {
+            setCountInt(countInt + 1);
+        }
     }
 
-    private int getAmountInt() {
-        return Integer.valueOf(amount.getText().toString());
+    private void setCountInt(int countInt) {
+        count.setText(String.valueOf(countInt));
+    }
+
+    private int getCountInt() {
+        return Integer.valueOf(count.getText().toString());
     }
 
     interface EventListener {
-        void onAddToCartClicked(int amount);
+        void onAddToCartClicked(int count);
     }
 }

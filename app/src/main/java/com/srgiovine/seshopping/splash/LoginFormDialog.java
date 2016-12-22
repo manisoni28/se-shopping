@@ -68,8 +68,8 @@ class LoginFormDialog extends FormDialog {
     }
 
     @Override
-    public void destroy() {
-        super.destroy();
+    public void onDestroy() {
+        super.onDestroy();
         if (loginTask != null) {
             loginTask.cancel();
             loginTask = null;

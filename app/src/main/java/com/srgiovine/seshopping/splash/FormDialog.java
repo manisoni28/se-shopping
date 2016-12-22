@@ -78,7 +78,7 @@ abstract class FormDialog {
     }
 
     @CallSuper
-    public void destroy() {
+    public void onDestroy() {
         dismiss(false);
     }
 

@@ -8,11 +8,12 @@ import com.srgiovine.seshopping.task.BackgroundAsyncTask;
 import com.srgiovine.seshopping.task.BackgroundTask;
 import com.srgiovine.seshopping.task.Callback;
 
+// TODO replace with real implementation
 class FakeUserRepository implements UserRepository {
 
     @Override
-    public BackgroundTask createUser(User user, final Callback<User> callback) {
-        BackgroundAsyncTask<User> backgroundTask = new BackgroundAsyncTask<User>() {
+    public BackgroundTask createUser(User user, Callback<User> callback) {
+        BackgroundAsyncTask<User> backgroundTask = new BackgroundAsyncTask<User>(callback) {
             @Override
             protected User doInBackground() {
                 Name name = Name.builder()
