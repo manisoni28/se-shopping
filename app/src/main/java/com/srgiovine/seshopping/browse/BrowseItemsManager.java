@@ -2,12 +2,13 @@ package com.srgiovine.seshopping.browse;
 
 import android.view.View;
 
-import com.srgiovine.seshopping.data.ItemProvider;
+import com.srgiovine.seshopping.data.ItemRepository;
 import com.srgiovine.seshopping.model.Category;
 import com.srgiovine.seshopping.model.Gender;
 import com.srgiovine.seshopping.model.Item;
 import com.srgiovine.seshopping.task.BackgroundTask;
 import com.srgiovine.seshopping.task.Callback;
+import com.srgiovine.seshopping.task.SimpleCallback;
 
 import java.util.HashSet;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.Set;
 
 public class BrowseItemsManager {
 
-    private final ItemProvider itemProvider;
+    private final ItemRepository itemRepository;
 
     private final BrowseItemsAdapter adapter;
 
@@ -31,7 +32,7 @@ public class BrowseItemsManager {
 
     private BackgroundTask getItemsTask;
 
-    private final Callback<List<Item>> getItemsCallback = new Callback<List<Item>>() {
+    private final Callback<List<Item>> getItemsCallback = new SimpleCallback<List<Item>>() {
         @Override
         public void onSuccess(List<Item> result) {
             if (result.isEmpty()) {
@@ -51,10 +52,10 @@ public class BrowseItemsManager {
         }
     };
 
-    public BrowseItemsManager(BrowseItemsAdapter adapter, ItemProvider itemProvider,
+    public BrowseItemsManager(BrowseItemsAdapter adapter, ItemRepository itemRepository,
                               View resultsView, View loadingIndicator, View emptyIndicator) {
         this.adapter = adapter;
-        this.itemProvider = itemProvider;
+        this.itemRepository = itemRepository;
         this.resultsView = resultsView;
         this.loadingIndicator = loadingIndicator;
         this.emptyIndicator = emptyIndicator;
@@ -93,7 +94,7 @@ public class BrowseItemsManager {
         cancelBackgroundTasks();
         hideResults();
         setLoading(true);
-        itemProvider.getItems(genders, categories, getItemsCallback);
+        itemRepository.getItems(genders, categories, getItemsCallback);
     }
 
     private void showResults() {

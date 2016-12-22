@@ -1,4 +1,4 @@
-package com.srgiovine.seshopping.dialog;
+package com.srgiovine.seshopping.account.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -10,17 +10,23 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
+import com.srgiovine.seshopping.account.AccountManager;
+import com.srgiovine.seshopping.task.Callback;
+
 import java.util.List;
 
 import srgiovine.com.seshopping.R;
 
 public abstract class FormDialog {
 
-    protected View contentView;
+    View contentView;
+    AccountManager accountManager;
+    Context context;
+
     private Dialog dialog;
     private View formContainer;
     private ProgressBar progressBar;
-    private Callback callback;
+    private Callback<Void> callback;
     private boolean isShowing;
 
     private final Runnable onDismissRunnable = new Runnable() {
@@ -46,8 +52,10 @@ public abstract class FormDialog {
         }
     };
 
-    public FormDialog(Context context, final Callback callback) {
+    FormDialog(Context context, AccountManager accountManager, Callback<Void> callback) {
+        this.context = context;
         this.callback = callback;
+        this.accountManager = accountManager;
         contentView = LayoutInflater.from(context).inflate(layoutRes(), null);
         dialog = new Dialog(context, R.style.AppTheme_Dialog) {
             @Override
@@ -73,6 +81,7 @@ public abstract class FormDialog {
         setDialogVisible(true, null);
     }
 
+    @CallSuper
     public void destroy() {
         dismiss(false);
     }
@@ -97,7 +106,7 @@ public abstract class FormDialog {
     @CallSuper
     protected void onConfirmActionSuccess() {
         dismiss(false);
-        callback.onSuccess();
+        callback.onSuccess(null);
     }
 
     @CallSuper
@@ -110,7 +119,7 @@ public abstract class FormDialog {
         progressBar.setVisibility(View.VISIBLE);
     }
 
-    protected boolean onValidateEmailField(EditText email) {
+    boolean onValidateEmailField(EditText email) {
         String emailStr = email.getText().toString();
         if (!emailStr.contains("@")) {
             email.setError("Invalid email");
@@ -119,7 +128,7 @@ public abstract class FormDialog {
         return true;
     }
 
-    protected boolean onValidatePasswordField(EditText password) {
+    boolean onValidatePasswordField(EditText password) {
         String passwordStr = password.getText().toString();
         if (passwordStr.length() < 6) {
             password.setError("Must be at least 6 characters long");
@@ -141,14 +150,14 @@ public abstract class FormDialog {
         }
     }
 
-    private boolean dismiss(boolean invokeCallback) {
+    private boolean dismiss(boolean invokeCancelledCallback) {
         if (!isShowing) {
             return false;
         }
 
         setDialogVisible(false, onDismissRunnable);
 
-        if (invokeCallback) {
+        if (invokeCancelledCallback) {
             callback.onCancelled();
         }
 
@@ -174,9 +183,4 @@ public abstract class FormDialog {
     @LayoutRes
     protected abstract int layoutRes();
 
-    public interface Callback {
-        void onSuccess();
-
-        void onCancelled();
-    }
 }

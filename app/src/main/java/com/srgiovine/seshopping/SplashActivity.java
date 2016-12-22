@@ -4,25 +4,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.srgiovine.seshopping.dialog.ForgotPasswordFormDialog;
-import com.srgiovine.seshopping.dialog.FormDialog;
-import com.srgiovine.seshopping.dialog.LoginFormDialog;
-import com.srgiovine.seshopping.dialog.SignupFormDialog;
+import com.srgiovine.seshopping.account.dialog.ForgotPasswordFormDialog;
+import com.srgiovine.seshopping.account.dialog.LoginFormDialog;
+import com.srgiovine.seshopping.account.dialog.SignupFormDialog;
+import com.srgiovine.seshopping.task.Callback;
+import com.srgiovine.seshopping.task.SimpleCallback;
 
 import srgiovine.com.seshopping.R;
 
 public class SplashActivity extends SEActivity {
 
-    private View contentView;
     private View actionContainer;
 
     private SignupFormDialog signupFormDialog;
     private LoginFormDialog loginFormDialog;
     private ForgotPasswordFormDialog forgotPasswordFormDialog;
 
-    private final FormDialog.Callback signupDialogCallback = new FormDialog.Callback() {
+    private final Callback<Void> signupDialogCallback = new SimpleCallback<Void>() {
         @Override
-        public void onSuccess() {
+        public void onSuccess(Void v) {
             startActivity(new Intent(SplashActivity.this, BrowseActivity.class));
             finish();
         }
@@ -33,9 +33,9 @@ public class SplashActivity extends SEActivity {
         }
     };
 
-    private final FormDialog.Callback loginFormDialogCallback = new FormDialog.Callback() {
+    private final Callback<Void> loginFormDialogCallback = new SimpleCallback<Void>() {
         @Override
-        public void onSuccess() {
+        public void onSuccess(Void v) {
             startActivity(new Intent(SplashActivity.this, BrowseActivity.class));
             finish();
         }
@@ -46,9 +46,9 @@ public class SplashActivity extends SEActivity {
         }
     };
 
-    private final FormDialog.Callback forgotPasswordFormDialogCallback = new FormDialog.Callback() {
+    private final Callback<Void> forgotPasswordFormDialogCallback = new SimpleCallback<Void>() {
         @Override
-        public void onSuccess() {
+        public void onSuccess(Void v) {
             setActionbarContainerVisible(true);
         }
 
@@ -61,22 +61,33 @@ public class SplashActivity extends SEActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        contentView = getLayoutInflater().inflate(R.layout.activity_splash, null);
-        setContentView(contentView);
+        if (accountManager().loggedInUserExist()) {
+            startActivity(new Intent(SplashActivity.this, BrowseActivity.class));
+            finish();
+            return;
+        }
+
+        setContentView(R.layout.activity_splash);
 
         actionContainer = findViewById(R.id.form_container);
 
-        signupFormDialog = new SignupFormDialog(this, signupDialogCallback);
-        loginFormDialog = new LoginFormDialog(this, loginFormDialogCallback);
-        forgotPasswordFormDialog = new ForgotPasswordFormDialog(this, forgotPasswordFormDialogCallback);
+        signupFormDialog = new SignupFormDialog(this, accountManager(), signupDialogCallback);
+        loginFormDialog = new LoginFormDialog(this, accountManager(), loginFormDialogCallback);
+        forgotPasswordFormDialog = new ForgotPasswordFormDialog(this, accountManager(), forgotPasswordFormDialogCallback);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        signupFormDialog.destroy();
-        loginFormDialog.destroy();
-        forgotPasswordFormDialog.destroy();
+        if (signupFormDialog != null) {
+            signupFormDialog.destroy();
+        }
+        if (loginFormDialog != null) {
+            loginFormDialog.destroy();
+        }
+        if (forgotPasswordFormDialog != null) {
+            forgotPasswordFormDialog.destroy();
+        }
     }
 
     public void onSignupClicked(View view) {

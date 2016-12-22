@@ -1,10 +1,9 @@
 package com.srgiovine.seshopping.data;
 
-import android.os.AsyncTask;
-
 import com.srgiovine.seshopping.model.Category;
 import com.srgiovine.seshopping.model.Gender;
 import com.srgiovine.seshopping.model.Item;
+import com.srgiovine.seshopping.task.BackgroundAsyncTask;
 import com.srgiovine.seshopping.task.BackgroundTask;
 import com.srgiovine.seshopping.task.Callback;
 
@@ -15,34 +14,29 @@ import java.util.Set;
 
 import srgiovine.com.seshopping.R;
 
-class FakeItemProvider implements ItemProvider {
+class FakeItemRepository implements ItemRepository {
 
     @Override
     public BackgroundTask getItems(Set<Gender> genders, Set<Category> categories, Callback<List<Item>> callback) {
-        GetItemsAsyncTask asyncTask = new GetItemsAsyncTask(callback, genders, categories);
+        GetItemsBackgroundTask asyncTask = new GetItemsBackgroundTask(callback, genders, categories);
         asyncTask.execute();
         return asyncTask;
     }
 
-    private static class GetItemsAsyncTask extends AsyncTask<Void, Void, List<Item>> implements BackgroundTask {
+    private static class GetItemsBackgroundTask extends BackgroundAsyncTask<List<Item>> {
 
         private final Callback<List<Item>> callback;
         private final Set<Gender> genders;
         private final Set<Category> categories;
 
-        private GetItemsAsyncTask(Callback<List<Item>> callback, Set<Gender> genders, Set<Category> categories) {
+        private GetItemsBackgroundTask(Callback<List<Item>> callback, Set<Gender> genders, Set<Category> categories) {
             this.callback = callback;
             this.genders = genders;
             this.categories = categories;
         }
 
         @Override
-        protected List<Item> doInBackground(Void... voids) {
-            try {
-                Thread.sleep(1_500L);
-            } catch (InterruptedException ie) {
-            }
-
+        protected List<Item> doInBackground() {
             if (genders.isEmpty() && categories.isEmpty()) {
                 return allItems();
             }
@@ -62,11 +56,6 @@ class FakeItemProvider implements ItemProvider {
         protected void onPostExecute(List<Item> items) {
             super.onPostExecute(items);
             callback.onSuccess(items);
-        }
-
-        @Override
-        public void cancel() {
-            cancel(true);
         }
 
         private List<Item> allItems() {

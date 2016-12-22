@@ -5,7 +5,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.srgiovine.seshopping.data.ItemProvider;
+import com.srgiovine.seshopping.data.ItemRepository;
+import com.srgiovine.seshopping.account.AccountManager;
 
 abstract class SEActivity extends Activity {
 
@@ -28,8 +29,12 @@ abstract class SEActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    ItemProvider itemProvider() {
-        return seApplication().itemProvider();
+    AccountManager accountManager() {
+        return seApplication().accountManager();
+    }
+
+    ItemRepository itemRepository() {
+        return seApplication().itemRepository();
     }
 
     boolean homeAsUpButtonEnabled() {

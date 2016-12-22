@@ -9,7 +9,7 @@ import com.srgiovine.seshopping.task.Callback;
 import java.util.List;
 import java.util.Set;
 
-public interface ItemProvider {
+public interface ItemRepository {
 
     BackgroundTask getItems(Set<Gender> genders, Set<Category> categories, Callback<List<Item>> callback);
 

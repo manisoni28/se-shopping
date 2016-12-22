@@ -1,9 +1,15 @@
-package com.srgiovine.seshopping.dialog;
+package com.srgiovine.seshopping.account.dialog;
 
 import android.content.Context;
-import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.srgiovine.seshopping.account.AccountManager;
+import com.srgiovine.seshopping.model.User;
+import com.srgiovine.seshopping.task.BackgroundTask;
+import com.srgiovine.seshopping.task.Callback;
+import com.srgiovine.seshopping.task.SimpleCallback;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,8 +21,22 @@ public class LoginFormDialog extends FormDialog {
     private EditText email;
     private EditText password;
 
-    public LoginFormDialog(Context context, Callback callback) {
-        super(context, callback);
+    private BackgroundTask loginTask;
+
+    private final Callback<User> loginCallback = new SimpleCallback<User>() {
+        @Override
+        public void onSuccess(User user) {
+            LoginFormDialog.this.onConfirmActionSuccess();
+        }
+
+        @Override
+        public void onFailed() {
+            LoginFormDialog.this.onConfirmActionFailed();
+        }
+    };
+
+    public LoginFormDialog(Context context, AccountManager accountManager, Callback<Void> callback) {
+        super(context, accountManager, callback);
 
         email = (EditText) contentView.findViewById(R.id.email);
         password = (EditText) contentView.findViewById(R.id.password);
@@ -25,18 +45,13 @@ public class LoginFormDialog extends FormDialog {
     @Override
     protected void onTakeConfirmAction() {
         super.onTakeConfirmAction();
-        // TODO remove fake code
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                onConfirmActionSuccess();
-            }
-        }, 2_000L);
+        loginTask = accountManager.login(email.getText().toString(), password.getText().toString(), loginCallback);
     }
 
     @Override
     protected void onConfirmActionSuccess() {
         super.onConfirmActionSuccess();
+        Toast.makeText(context, "Login success", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -50,6 +65,15 @@ public class LoginFormDialog extends FormDialog {
         boolean formFieldsValid = super.onValidateFormFieldInputs();
         formFieldsValid &= onValidateEmailField(email);
         return formFieldsValid;
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        if (loginTask != null) {
+            loginTask.cancel();
+            loginTask = null;
+        }
     }
 
     @Override

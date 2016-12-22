@@ -114,7 +114,7 @@ public class BrowseActivity extends SEActivity implements NavigationAdapter.Even
         View loadingIndicator = findViewById(R.id.progress);
         View emptyIndicator = findViewById(R.id.empty);
 
-        browseItemsManager = new BrowseItemsManager(browseItemsAdapter, itemProvider(),
+        browseItemsManager = new BrowseItemsManager(browseItemsAdapter, itemRepository(),
                 resultsView, loadingIndicator, emptyIndicator);
         browseItemsManager.initialize();
     }
