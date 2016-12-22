@@ -8,6 +8,8 @@ public interface UserRepository {
 
     BackgroundTask createUser(User user, Callback<User> callback);
 
+    BackgroundTask updateUser(User user, Callback<User> callback);
+
     BackgroundTask getUser(String email, String password, Callback<User> callback);
 
 }

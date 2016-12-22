@@ -3,7 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-    <dimen name="navigation_item_vertical_padding">8dp</dimen>
+    <dimen name="navigation_item_vertical_padding">12dp</dimen>
     <dimen name="navigation_item_horizontal_padding">6dp</dimen>
-    <dimen name="navigation_item_icon_size">48dp</dimen>
+    <dimen name="navigation_item_icon_size">36dp</dimen>
 </resources>

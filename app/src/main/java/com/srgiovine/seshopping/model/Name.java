@@ -1,5 +1,7 @@
 package com.srgiovine.seshopping.model;
 
+import java.util.Arrays;
+
 public class Name {
 
     private final String first;
@@ -18,8 +20,36 @@ public class Name {
         return last;
     }
 
+    @Override
+    public String toString() {
+        return first + " " + last;
+    }
+
     public static Builder builder() {
         return new Builder();
+    }
+
+    public static Name fromFullName(String fullName) {
+        String[] nameChunks = fullName.split(" ");
+
+        String[] firstChunks = Arrays.copyOfRange(nameChunks, 0, nameChunks.length - 1);
+        String[] lastChunks = Arrays.copyOfRange(nameChunks, nameChunks.length - 1, nameChunks.length);
+
+        return builder()
+                .setFirst(join(" ", firstChunks))
+                .setLast(join(" ", lastChunks))
+                .build();
+    }
+
+    private static String join(String delimeter, String... strings) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < strings.length; i++) {
+            builder.append(strings[i]);
+            if (i < strings.length - 1) {
+                builder.append(delimeter);
+            }
+        }
+        return builder.toString();
     }
 
     public static class Builder {

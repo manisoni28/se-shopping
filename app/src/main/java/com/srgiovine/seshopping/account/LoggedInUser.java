@@ -5,30 +5,42 @@ import android.content.SharedPreferences;
 class LoggedInUser {
 
     private static final String EMAIL = "user.email";
+    private static final String PASSWORD = "user.password";
 
     private final SharedPreferences sharedPreferences;
 
     private String email;
+    private String password;
 
     LoggedInUser(SharedPreferences sharedPreferences) {
         this.sharedPreferences = sharedPreferences;
     }
 
-    void save(String email) {
+    void save(String email, String password) {
         this.email = email;
-        sharedPreferences.edit().putString(EMAIL, email).apply();
+        this.password = password;
+
+        sharedPreferences.edit()
+                .putString(EMAIL, email)
+                .putString(PASSWORD, password)
+                .apply();
     }
 
     void restore() {
-        this.email = sharedPreferences.getString(EMAIL, null);
+        email = sharedPreferences.getString(EMAIL, null);
+        password = sharedPreferences.getString(PASSWORD, null);
     }
 
     void logout() {
-        save(null);
+        save(null, null);
     }
 
     String email() {
         return email;
+    }
+
+    String password() {
+        return password;
     }
 
     boolean isPresent() {

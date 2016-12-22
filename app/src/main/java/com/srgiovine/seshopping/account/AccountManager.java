@@ -33,6 +33,14 @@ public class AccountManager {
         return backgroundTask;
     }
 
+    public BackgroundTask getLoggedInUser(Callback<User> callback) {
+        return userRepository.getUser(loggedInUser.email(), loggedInUser.password(), callback);
+    }
+
+    public BackgroundTask updateUser(User user, Callback<User> callback) {
+        return userRepository.updateUser(user, callback);
+    }
+
     public BackgroundTask signup(User user, Callback<User> callback) {
         return userRepository.createUser(user, new SignupUserCallback(callback));
     }
@@ -59,7 +67,7 @@ public class AccountManager {
 
         @Override
         public void onSuccess(User user) {
-            loggedInUser.save(user.email());
+            loggedInUser.save(user.email(), user.password());
             callback.onSuccess(user);
         }
 

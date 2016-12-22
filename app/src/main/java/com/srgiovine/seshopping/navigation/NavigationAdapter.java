@@ -48,13 +48,13 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
 
         switch (viewType) {
             case ITEM_VIEW_TYPE_GENDER:
-                viewHolder = new GenderFilterItemViewHolder(inflater.inflate(R.layout.navigation_item_filter, parent, false));
+                viewHolder = new GenderFilterItemViewHolder(inflater.inflate(R.layout.navigation_item_with_icon_and_checkbox, parent, false));
                 break;
             case ITEM_VIEW_TYPE_CATEGORY:
-                viewHolder = new CategoryFilterItemViewHolder(inflater.inflate(R.layout.navigation_item_filter, parent, false));
+                viewHolder = new CategoryFilterItemViewHolder(inflater.inflate(R.layout.navigation_item_with_icon_and_checkbox, parent, false));
                 break;
             case ITEM_VIEW_TYPE_SETTINGS:
-                viewHolder = new SettingsItemViewHolder(inflater.inflate(R.layout.navigation_item_settings, parent, false));
+                viewHolder = new SettingsItemViewHolder(inflater.inflate(R.layout.navigation_item_with_icon, parent, false));
                 break;
             case ITEM_VIEW_TYPE_SEPARATOR:
                 viewHolder = new SeparatorItemViewHolder(inflater.inflate(R.layout.navigation_item_separator, parent, false));
