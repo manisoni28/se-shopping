@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 import com.srgiovine.seshopping.model.Category;
 import com.srgiovine.seshopping.model.Gender;
 import com.srgiovine.seshopping.model.Item;
+import com.srgiovine.seshopping.task.BackgroundTask;
+import com.srgiovine.seshopping.task.Callback;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,7 +61,7 @@ class FakeItemProvider implements ItemProvider {
         @Override
         protected void onPostExecute(List<Item> items) {
             super.onPostExecute(items);
-            callback.success(items);
+            callback.onSuccess(items);
         }
 
         @Override

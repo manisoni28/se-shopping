@@ -6,6 +6,8 @@ import com.srgiovine.seshopping.data.ItemProvider;
 import com.srgiovine.seshopping.model.Category;
 import com.srgiovine.seshopping.model.Gender;
 import com.srgiovine.seshopping.model.Item;
+import com.srgiovine.seshopping.task.BackgroundTask;
+import com.srgiovine.seshopping.task.Callback;
 
 import java.util.HashSet;
 import java.util.List;
@@ -27,13 +29,13 @@ public class BrowseItemsManager {
 
     private final Set<Category> categories = new HashSet<>();
 
-    private ItemProvider.BackgroundTask getItemsTask;
+    private BackgroundTask getItemsTask;
 
-    private final ItemProvider.Callback<List<Item>> getItemsCallback = new ItemProvider.Callback<List<Item>>() {
+    private final Callback<List<Item>> getItemsCallback = new Callback<List<Item>>() {
         @Override
-        public void success(List<Item> result) {
+        public void onSuccess(List<Item> result) {
             if (result.isEmpty()) {
-                failed();
+                onFailed();
                 return;
             }
 
@@ -43,7 +45,7 @@ public class BrowseItemsManager {
         }
 
         @Override
-        public void failed() {
+        public void onFailed() {
             setLoading(false);
             setEmpty(true);
         }
