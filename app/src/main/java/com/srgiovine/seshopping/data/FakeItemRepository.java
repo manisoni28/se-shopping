@@ -141,7 +141,8 @@ class FakeItemRepository implements ItemRepository {
 
     private static final Item[] ITEMS = new Item[]{
             // HATS
-            Item.builder().setName("Warm Beanie")
+            Item.builder().setId(1L)
+                    .setName("Warm Beanie")
                     .setDescription("A knitted winter hat, or watch cap (sometimes called a beanie " +
                             "in other parts of the world); the spelling \"touque\", although not " +
                             "recognized by the Canadian Oxford Dictionary")
@@ -151,7 +152,8 @@ class FakeItemRepository implements ItemRepository {
                     .setImage(R.drawable.hat_female)
                     .setIcon(R.drawable.hat_female_icon)
                     .build(),
-            Item.builder().setName("Lincoln's O'l Hat")
+            Item.builder().setId(2L)
+                    .setName("Lincoln's O'l Hat")
                     .setDescription("Abraham Lincoln was our tallest president. At 6-foot-4, " +
                             "he would stand out even today, and he certainly towered over " +
                             "the men and women of his era.")
@@ -161,7 +163,8 @@ class FakeItemRepository implements ItemRepository {
                     .setImage(R.drawable.hat_male)
                     .setIcon(R.drawable.hat_male_icon)
                     .build(),
-            Item.builder().setName("Pokemon Trainer Essential")
+            Item.builder().setId(3L)
+                    .setName("Pokemon Trainer Essential")
                     .setDescription("Pokémon Trainer is the term commonly used for a person who catches, " +
                             "occasionally names, and trains several different kinds and types of Pokémon. " +
                             "Pokémon Trainers generally start their journey at the age of 10.")
@@ -173,7 +176,8 @@ class FakeItemRepository implements ItemRepository {
                     .build(),
 
             // SwEATERS
-            Item.builder().setName("Anti-Xmas-Novelty Holiday Sweater")
+            Item.builder().setId(4L)
+                    .setName("Anti-Xmas-Novelty Holiday Sweater")
                     .setDescription("Give the reindeer a rest: Try these elegant takes on the " +
                             "traditional for a classic and festive look.")
                     .setGender(Gender.Womens)
@@ -182,7 +186,8 @@ class FakeItemRepository implements ItemRepository {
                     .setImage(R.drawable.sweater_female)
                     .setIcon(R.drawable.sweater_female_icon)
                     .build(),
-            Item.builder().setName("Shetland Wool Sweater, Crew")
+            Item.builder().setId(5L)
+                    .setName("Shetland Wool Sweater, Crew")
                     .setDescription("Provides years of rugged wear and midweight warmth." +
                             "Earthy colors will stay rich and true through many washings.")
                     .setGender(Gender.Mens)
@@ -191,7 +196,8 @@ class FakeItemRepository implements ItemRepository {
                     .setImage(R.drawable.sweater_male)
                     .setIcon(R.drawable.sweater_male_icon)
                     .build(),
-            Item.builder().setName("Classic Cashmere Sweater, Open Cardigan")
+            Item.builder().setId(6L)
+                    .setName("Classic Cashmere Sweater, Open Cardigan")
                     .setDescription("You’ll appreciate the exceptional warmth and softness of " +
                             "this authentic cashmere open cardigan sweater so much so, " +
                             "you’ll soon want more than one.")
@@ -203,7 +209,8 @@ class FakeItemRepository implements ItemRepository {
                     .build(),
 
             // T SHIRTS
-            Item.builder().setName("Nasty Woman Shirt")
+            Item.builder().setId(7L)
+                    .setName("Nasty Woman Shirt")
                     .setDescription("By getting this exclusive “Nasty Woman” shirt, you're " +
                             "joining Samantha Bee and countless other smart, fearless " +
                             "women and men in supporting Planned")
@@ -213,7 +220,8 @@ class FakeItemRepository implements ItemRepository {
                     .setImage(R.drawable.tshirt_female)
                     .setIcon(R.drawable.tshirt_female_icon)
                     .build(),
-            Item.builder().setName("Men's Cotton Poplin Field Shirt")
+            Item.builder().setId(8L)
+                    .setName("Men's Cotton Poplin Field Shirt")
                     .setDescription("Made of lightweight, breathable cloth that lets heat " +
                             "escape for cool comfort, our men's long sleeve poplin field " +
                             "shirt is a go-to when temperatures go up.")
@@ -223,7 +231,8 @@ class FakeItemRepository implements ItemRepository {
                     .setImage(R.drawable.tshirt_male)
                     .setIcon(R.drawable.tshirt_male_icon)
                     .build(),
-            Item.builder().setName("Happy Orange Bee")
+            Item.builder().setId(9L)
+                    .setName("Happy Orange Bee")
                     .setDescription("Honey Bee is a cozy ring spun cotton t-shirt designed " +
                             "by Humans. Pick up this tee and support one of our global artists today.")
                     .setGender(Gender.Womens)
@@ -234,7 +243,8 @@ class FakeItemRepository implements ItemRepository {
                     .build(),
 
             // JEANS
-            Item.builder().setName("Mid Rise Distressed Jean Legging")
+            Item.builder().setId(10L)
+                    .setName("Mid Rise Distressed Jean Legging")
                     .setDescription("These stretch-kissed jean leggings boast super distressed " +
                             "details that give you a flirty on-trend look. ")
                     .setGender(Gender.Womens)
@@ -243,7 +253,8 @@ class FakeItemRepository implements ItemRepository {
                     .setImage(R.drawable.jeans_female)
                     .setIcon(R.drawable.jeans_female_icon)
                     .build(),
-            Item.builder().setName("Wrangler Five Star Premium Denim Relaxed Fit Jean")
+            Item.builder().setId(11L)
+                    .setName("Wrangler Five Star Premium Denim Relaxed Fit Jean")
                     .setDescription("Of all the words we could write about this jean, " +
                             "\"perfect\" just about sums it up.")
                     .setGender(Gender.Mens)
@@ -254,7 +265,8 @@ class FakeItemRepository implements ItemRepository {
                     .build(),
 
             // Purses
-            Item.builder().setName("MICHAEL Michael Kors Jet Set East West Top Zip Tote")
+            Item.builder().setId(12L)
+                    .setName("MICHAEL Michael Kors Jet Set East West Top Zip Tote")
                     .setDescription("Before you jet off to Joburg, be sure to bring along this " +
                             "fabulously sleek silhouette from MICHAEL Michael Kors. Sumptuous leather, " +
                             "luxe hardware and elegant contours make it the ultimate travel " +
@@ -265,7 +277,8 @@ class FakeItemRepository implements ItemRepository {
                     .setImage(R.drawable.purse_mk)
                     .setIcon(R.drawable.purse_mk_icon)
                     .build(),
-            Item.builder().setName("Pattina Tessuto + Saffiano Crossbody Nero+Bianco")
+            Item.builder().setId(13L)
+                    .setName("Pattina Tessuto + Saffiano Crossbody Nero+Bianco")
                     .setDescription("Italian elegance at its best. Almost no other label manages " +
                             "to switch between modernity and tradition as successfully as Prada. " +
                             "Miuccia Prada designs timelessly classic tote bags.")
@@ -277,7 +290,8 @@ class FakeItemRepository implements ItemRepository {
                     .build(),
 
             // SUNGLASSES
-            Item.builder().setName("Burberry Sunglasses, BE4216")
+            Item.builder().setId(14L)
+                    .setName("Burberry Sunglasses, BE4216")
                     .setDescription("The first name in British fashion, Burberry eyewear l" +
                             "everages the strength of its 150-year heritage, balancing " +
                             "classic and modern design.")
@@ -287,7 +301,8 @@ class FakeItemRepository implements ItemRepository {
                     .setImage(R.drawable.sunglasses_burberry)
                     .setIcon(R.drawable.sunglasses_burberry_icon)
                     .build(),
-            Item.builder().setName("Michael Kors Sunglasses, MK5004 CHELSEA")
+            Item.builder().setId(15L)
+                    .setName("Michael Kors Sunglasses, MK5004 CHELSEA")
                     .setDescription("Eyewear by Michael Kors is perfect for any mood. Feel chic, " +
                             "luxurious, sleek and sophisticated in his timeless designs.")
                     .setGender(Gender.Womens)
@@ -298,7 +313,8 @@ class FakeItemRepository implements ItemRepository {
                     .build(),
 
             // SHOES
-            Item.builder().setName("Kate Middleton's Jimmy Choo Pumps")
+            Item.builder().setId(16L)
+                    .setName("Kate Middleton's Jimmy Choo Pumps")
                     .setDescription("Middleton started wearing the brand a few years ago, " +
                             "flashing a bit of the \"Vamp\" platform sandal in silver as early as 2013")
                     .setGender(Gender.Womens)
@@ -307,7 +323,8 @@ class FakeItemRepository implements ItemRepository {
                     .setImage(R.drawable.shoes_female)
                     .setIcon(R.drawable.shoes_female_icon)
                     .build(),
-            Item.builder().setName("Warth Chelsea Woody Shoes")
+            Item.builder().setId(17L)
+                    .setName("Warth Chelsea Woody Shoes")
                     .setDescription("The timeless Chelsea gets a modern update in these super-soft " +
                             "leather boots with a stripped-back design and subtle detailing. " +
                             "A tonal rivet and tough woven edge reinforce the upper.")

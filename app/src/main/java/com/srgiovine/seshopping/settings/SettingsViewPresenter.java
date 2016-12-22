@@ -1,7 +1,5 @@
-package com.srgiovine.seshopping.util;
+package com.srgiovine.seshopping.settings;
 
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -13,7 +11,7 @@ import com.srgiovine.seshopping.model.User;
 
 import srgiovine.com.seshopping.R;
 
-public class SettingsViewPresenter {
+class SettingsViewPresenter {
 
     private final TextView email;
     private final TextView name;
@@ -34,25 +32,23 @@ public class SettingsViewPresenter {
 
     private String userPassword;
 
-    private ProgressDialog loadingIndicator;
+    SettingsViewPresenter(View contentView, final EventListener eventListener) {
+        email = (TextView) contentView.findViewById(R.id.email);
+        name = (TextView) contentView.findViewById(R.id.name);
 
-    public SettingsViewPresenter(View rootView, final EventListener eventListener) {
-        email = (TextView) rootView.findViewById(R.id.email);
-        name = (TextView) rootView.findViewById(R.id.name);
+        street = (EditText) contentView.findViewById(R.id.street);
+        city = (EditText) contentView.findViewById(R.id.city);
+        state = (EditText) contentView.findViewById(R.id.state);
+        zip = (EditText) contentView.findViewById(R.id.zip);
+        country = (EditText) contentView.findViewById(R.id.country);
 
-        street = (EditText) rootView.findViewById(R.id.street);
-        city = (EditText) rootView.findViewById(R.id.city);
-        state = (EditText) rootView.findViewById(R.id.state);
-        zip = (EditText) rootView.findViewById(R.id.zip);
-        country = (EditText) rootView.findViewById(R.id.country);
+        creditCardNumber = (EditText) contentView.findViewById(R.id.card_number);
+        cardHolderName = (EditText) contentView.findViewById(R.id.card_holder_name);
+        expirationDate = (EditText) contentView.findViewById(R.id.expiration_date);
+        securityCode = (EditText) contentView.findViewById(R.id.security_code);
 
-        creditCardNumber = (EditText) rootView.findViewById(R.id.card_number);
-        cardHolderName = (EditText) rootView.findViewById(R.id.card_holder_name);
-        expirationDate = (EditText) rootView.findViewById(R.id.expiration_date);
-        securityCode = (EditText) rootView.findViewById(R.id.security_code);
-
-        edit = rootView.findViewById(R.id.edit);
-        save = rootView.findViewById(R.id.save);
+        edit = contentView.findViewById(R.id.edit);
+        save = contentView.findViewById(R.id.save);
 
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +64,7 @@ public class SettingsViewPresenter {
             }
         });
 
-        rootView.findViewById(R.id.logout).setOnClickListener(new View.OnClickListener() {
+        contentView.findViewById(R.id.logout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 eventListener.onLogoutClicked();
@@ -78,23 +74,7 @@ public class SettingsViewPresenter {
         setEditMode(false);
     }
 
-    public void showLoadingIndicator(Context context, String message) {
-        loadingIndicator = new ProgressDialog(context);
-        loadingIndicator.setMessage(message);
-        loadingIndicator.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        loadingIndicator.setIndeterminate(true);
-        loadingIndicator.setCancelable(false);
-        loadingIndicator.show();
-    }
-
-    public void dismissLoadingIndicator() {
-        if (loadingIndicator != null) {
-            loadingIndicator.dismiss();
-            loadingIndicator = null;
-        }
-    }
-
-    public void showUserInfo(User user) {
+    void displayUserInfo(User user) {
         userPassword = user.password();
 
         email.setText(user.email());
@@ -118,7 +98,7 @@ public class SettingsViewPresenter {
         }
     }
 
-    public void setEditMode(boolean editMode) {
+    void setEditMode(boolean editMode) {
         edit.setEnabled(!editMode);
         save.setEnabled(editMode);
 
@@ -126,15 +106,15 @@ public class SettingsViewPresenter {
         setEditable(editMode, creditCardNumber, cardHolderName, expirationDate, securityCode);
     }
 
-    public boolean validateAddress() {
+    boolean validateAddress() {
         return validateAllOrNoFieldsFilled(street, city, state, zip, country);
     }
 
-    public boolean validateCreditCardInfo() {
+    boolean validateCreditCardInfo() {
         return validateAllOrNoFieldsFilled(creditCardNumber, cardHolderName, expirationDate, securityCode);
     }
 
-    public User buildUser() {
+    User buildUser() {
         Name nameObj = Name.fromFullName(name.getText().toString());
 
         Address addressObj = Address.builder()
@@ -192,7 +172,7 @@ public class SettingsViewPresenter {
         return valid;
     }
 
-    public interface EventListener {
+    interface EventListener {
         void onEditClicked();
 
         void onSaveClicked();

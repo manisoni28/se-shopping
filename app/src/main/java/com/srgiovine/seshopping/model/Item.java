@@ -4,6 +4,8 @@ import android.support.annotation.DrawableRes;
 
 public class Item {
 
+    private final long id;
+
     private final String name;
 
     private final String description;
@@ -20,8 +22,9 @@ public class Item {
 
     private final int price;
 
-    private Item(String name, String description, Gender gender, Category category, int price,
+    private Item(long id, String name, String description, Gender gender, Category category, int price,
                  @DrawableRes int image, @DrawableRes int icon) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.gender = gender;
@@ -29,6 +32,10 @@ public class Item {
         this.price = price;
         this.image = image;
         this.icon = icon;
+    }
+
+    public long id() {
+        return id;
     }
 
     public Gender gender() {
@@ -67,6 +74,7 @@ public class Item {
 
     public static class Builder {
 
+        private long id;
         private String name;
         private String description;
         private Gender gender;
@@ -79,6 +87,11 @@ public class Item {
 
         @DrawableRes
         private int icon;
+
+        public Builder setId(long id) {
+            this.id = id;
+            return this;
+        }
 
         public Builder setName(String name) {
             this.name = name;
@@ -116,7 +129,7 @@ public class Item {
         }
 
         public Item build() {
-            return new Item(name, description, gender, category, price, image, icon);
+            return new Item(id, name, description, gender, category, price, image, icon);
         }
     }
 }

@@ -1,10 +1,10 @@
-package com.srgiovine.seshopping;
+package com.srgiovine.seshopping.search;
 
 import android.app.ActionBar;
 import android.widget.EditText;
 
+import com.srgiovine.seshopping.browse.BrowseActivity;
 import com.srgiovine.seshopping.browse.BrowseItemsManager;
-import com.srgiovine.seshopping.browse.SearchItemsManager;
 
 import srgiovine.com.seshopping.R;
 
@@ -19,23 +19,23 @@ public class SearchActivity extends BrowseActivity {
     }
 
     @Override
-    void onInitializeBrowseItemsManager(BrowseItemsManager browseItemsManager) {
+    protected void onInitializeBrowseItemsManager(BrowseItemsManager browseItemsManager) {
         browseItemsManager.initializeWithNoItems();
         initializeSearchField();
     }
 
     @Override
-    int layoutRes() {
+    protected int layoutRes() {
         return R.layout.activity_search;
     }
 
     @Override
-    int optionsMenuRes() {
+    protected int optionsMenuRes() {
         return R.menu.search_menu;
     }
 
     @Override
-    boolean hasNavigationDrawer() {
+    protected boolean hasNavigationDrawer() {
         return false;
     }
 

@@ -14,13 +14,13 @@ import java.util.List;
 
 import srgiovine.com.seshopping.R;
 
-public class BrowseItemsAdapter extends RecyclerView.Adapter<BrowseItemsAdapter.ViewHolder> {
+class BrowseItemsAdapter extends RecyclerView.Adapter<BrowseItemsAdapter.ViewHolder> {
 
     private final EventListener eventListener;
 
     private final List<Item> items = new ArrayList<>();
 
-    public BrowseItemsAdapter(EventListener eventListener) {
+    BrowseItemsAdapter(EventListener eventListener) {
         this.eventListener = eventListener;
     }
 
@@ -85,16 +85,15 @@ public class BrowseItemsAdapter extends RecyclerView.Adapter<BrowseItemsAdapter.
         private void addTag(String tag) {
             TextView textView = createTagView();
             textView.setText(tag);
-            tags.addView(textView);
         }
 
         private TextView createTagView() {
             LayoutInflater layoutInflater = LayoutInflater.from(itemView.getContext());
-            return (TextView) layoutInflater.inflate(R.layout.browse_item_tag, tags, false);
+            return (TextView) layoutInflater.inflate(R.layout.browse_item_tag, tags, true);
         }
     }
 
-    public interface EventListener {
+    interface EventListener {
         void onItemClicked(Item item);
     }
 }

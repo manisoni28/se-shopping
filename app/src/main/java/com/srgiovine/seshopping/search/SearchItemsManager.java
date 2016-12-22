@@ -1,4 +1,4 @@
-package com.srgiovine.seshopping.browse;
+package com.srgiovine.seshopping.search;
 
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
@@ -8,7 +8,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 
-public class SearchItemsManager implements TextWatcher {
+import com.srgiovine.seshopping.browse.BrowseItemsManager;
+
+class SearchItemsManager implements TextWatcher {
 
     private static final long SEARCH_DELAY_AFTER_TEXT_CHANGED_MILLIS = 500L;
 
@@ -20,18 +22,18 @@ public class SearchItemsManager implements TextWatcher {
 
     private SearchRunnable searchRunnable;
 
-    public SearchItemsManager(BrowseItemsManager browseItemsManager, EditText searchField) {
+    SearchItemsManager(BrowseItemsManager browseItemsManager, EditText searchField) {
         this.browseItemsManager = browseItemsManager;
         this.searchField = searchField;
     }
 
-    public void initialize() {
+    void initialize() {
         searchField.requestFocus();
         searchField.addTextChangedListener(this);
         searchField.setOnTouchListener(new ClearSearchFieldOnTouchListener());
     }
 
-    public void onDestroy() {
+    void onDestroy() {
         handler.removeCallbacks(searchRunnable);
     }
 

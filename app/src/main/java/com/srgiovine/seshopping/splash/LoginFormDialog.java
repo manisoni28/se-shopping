@@ -1,4 +1,4 @@
-package com.srgiovine.seshopping.account.dialog;
+package com.srgiovine.seshopping.splash;
 
 import android.content.Context;
 import android.support.design.widget.Snackbar;
@@ -16,7 +16,7 @@ import java.util.List;
 
 import srgiovine.com.seshopping.R;
 
-public class LoginFormDialog extends FormDialog {
+class LoginFormDialog extends FormDialog {
 
     private EditText email;
     private EditText password;
@@ -35,7 +35,7 @@ public class LoginFormDialog extends FormDialog {
         }
     };
 
-    public LoginFormDialog(Context context, AccountManager accountManager, Callback<Void> callback) {
+    LoginFormDialog(Context context, AccountManager accountManager, Callback<Void> callback) {
         super(context, accountManager, callback);
 
         email = (EditText) contentView.findViewById(R.id.email);

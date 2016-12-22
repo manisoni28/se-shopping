@@ -1,4 +1,4 @@
-package com.srgiovine.seshopping;
+package com.srgiovine.seshopping.browse;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -14,8 +14,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.srgiovine.seshopping.browse.BrowseItemsAdapter;
-import com.srgiovine.seshopping.browse.BrowseItemsManager;
+import com.srgiovine.seshopping.details.DetailsActivity;
+import com.srgiovine.seshopping.SEActivity;
+import com.srgiovine.seshopping.search.SearchActivity;
+import com.srgiovine.seshopping.settings.SettingsActivity;
+import com.srgiovine.seshopping.cart.CartActivity;
 import com.srgiovine.seshopping.model.Item;
 import com.srgiovine.seshopping.navigation.CategoryNavigationItem;
 import com.srgiovine.seshopping.navigation.GenderNavigationItem;
@@ -85,7 +88,9 @@ public class BrowseActivity extends SEActivity implements NavigationAdapter.Even
 
     @Override
     public void onItemClicked(Item item) {
-
+        Intent intent = new Intent(this, DetailsActivity.class);
+        intent.putExtra(DetailsActivity.EXTRA_ITEM_ID, item.id());
+        startActivity(intent);
     }
 
     @Override
@@ -103,21 +108,21 @@ public class BrowseActivity extends SEActivity implements NavigationAdapter.Even
         browseItemsManager.setItemsWithCategoryVisible(item.category(), isChecked);
     }
 
-    void onInitializeBrowseItemsManager(BrowseItemsManager browseItemsManager) {
+    protected void onInitializeBrowseItemsManager(BrowseItemsManager browseItemsManager) {
         browseItemsManager.initializeWithNoFilters();
     }
 
     @LayoutRes
-    int layoutRes() {
+    protected int layoutRes() {
         return R.layout.activity_browse;
     }
 
     @MenuRes
-    int optionsMenuRes() {
+    protected int optionsMenuRes() {
         return R.menu.browse_menu;
     }
 
-    boolean hasNavigationDrawer() {
+    protected boolean hasNavigationDrawer() {
         return true;
     }
 

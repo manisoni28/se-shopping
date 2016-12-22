@@ -53,8 +53,8 @@ public class BrowseItemsManager {
         }
     };
 
-    public BrowseItemsManager(BrowseItemsAdapter adapter, ItemRepository itemRepository,
-                              View resultsView, View loadingIndicator, View emptyIndicator) {
+    BrowseItemsManager(BrowseItemsAdapter adapter, ItemRepository itemRepository,
+                       View resultsView, View loadingIndicator, View emptyIndicator) {
         this.adapter = adapter;
         this.itemRepository = itemRepository;
         this.resultsView = resultsView;
@@ -67,16 +67,16 @@ public class BrowseItemsManager {
         setEmpty(true);
     }
 
-    public void initializeWithNoFilters() {
+    void initializeWithNoFilters() {
         updateAdapterWithFilteredItems();
     }
 
-    void showItemsWithName(String name) {
+    public void showItemsWithName(String name) {
         onPreStartBackgroundTask();
         getItemsTask = itemRepository.getItemsWithName(name, getItemsCallback);
     }
 
-    public void setItemsWithGenderVisible(Gender gender, boolean visible) {
+    void setItemsWithGenderVisible(Gender gender, boolean visible) {
         if (visible) {
             genders.add(gender);
         } else {
@@ -85,7 +85,7 @@ public class BrowseItemsManager {
         updateAdapterWithFilteredItems();
     }
 
-    public void setItemsWithCategoryVisible(Category category, boolean visible) {
+    void setItemsWithCategoryVisible(Category category, boolean visible) {
         if (visible) {
             categories.add(category);
         } else {
@@ -94,7 +94,7 @@ public class BrowseItemsManager {
         updateAdapterWithFilteredItems();
     }
 
-    public void onDestroy() {
+    void onDestroy() {
         cancelBackgroundTasks();
     }
 

@@ -1,15 +1,16 @@
-package com.srgiovine.seshopping;
+package com.srgiovine.seshopping.settings;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.srgiovine.seshopping.SEActivity;
+import com.srgiovine.seshopping.splash.SplashActivity;
 import com.srgiovine.seshopping.model.User;
 import com.srgiovine.seshopping.task.BackgroundTask;
 import com.srgiovine.seshopping.task.Callback;
 import com.srgiovine.seshopping.task.SimpleCallback;
-import com.srgiovine.seshopping.util.SettingsViewPresenter;
 
 import srgiovine.com.seshopping.R;
 
@@ -23,13 +24,11 @@ public class SettingsActivity extends SEActivity implements SettingsViewPresente
     private final Callback<User> getLoggedInUserCallback = new SimpleCallback<User>() {
         @Override
         public void onSuccess(User result) {
-            viewPresenter.showUserInfo(result);
-            viewPresenter.dismissLoadingIndicator();
+            viewPresenter.displayUserInfo(result);
         }
 
         @Override
         public void onFailed() {
-            viewPresenter.dismissLoadingIndicator();
             Toast.makeText(SettingsActivity.this, "Unable to retrieve your info",
                     Toast.LENGTH_SHORT).show();
         }
@@ -38,13 +37,11 @@ public class SettingsActivity extends SEActivity implements SettingsViewPresente
     private final Callback<User> updateUserCallback = new SimpleCallback<User>() {
         @Override
         public void onSuccess(User result) {
-            viewPresenter.showUserInfo(result);
-            viewPresenter.dismissLoadingIndicator();
+            viewPresenter.displayUserInfo(result);
         }
 
         @Override
         public void onFailed() {
-            viewPresenter.dismissLoadingIndicator();
             Toast.makeText(SettingsActivity.this, "Unable to update your info",
                     Toast.LENGTH_SHORT).show();
         }
@@ -57,7 +54,6 @@ public class SettingsActivity extends SEActivity implements SettingsViewPresente
         setContentView(contentView);
 
         viewPresenter = new SettingsViewPresenter(contentView, this);
-        viewPresenter.showLoadingIndicator(this, "Retrieving your info...");
         getLoggedInUserTask = accountManager().getLoggedInUser(getLoggedInUserCallback);
     }
 
@@ -72,7 +68,6 @@ public class SettingsActivity extends SEActivity implements SettingsViewPresente
             updateUserTask.cancel();
             updateUserTask = null;
         }
-        viewPresenter.dismissLoadingIndicator();
     }
 
     @Override
@@ -86,7 +81,6 @@ public class SettingsActivity extends SEActivity implements SettingsViewPresente
         boolean creditCardInfoIsValid = viewPresenter.validateCreditCardInfo();
         if (addressIsValid && creditCardInfoIsValid) {
             viewPresenter.setEditMode(false);
-            viewPresenter.showLoadingIndicator(this, "Saving your info...");
             updateUserTask = accountManager().updateUser(viewPresenter.buildUser(), updateUserCallback);
         }
     }

@@ -1,12 +1,11 @@
-package com.srgiovine.seshopping;
+package com.srgiovine.seshopping.splash;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.srgiovine.seshopping.account.dialog.ForgotPasswordFormDialog;
-import com.srgiovine.seshopping.account.dialog.LoginFormDialog;
-import com.srgiovine.seshopping.account.dialog.SignupFormDialog;
+import com.srgiovine.seshopping.SEActivity;
+import com.srgiovine.seshopping.browse.BrowseActivity;
 import com.srgiovine.seshopping.task.Callback;
 import com.srgiovine.seshopping.task.SimpleCallback;
 
@@ -112,7 +111,7 @@ public class SplashActivity extends SEActivity {
     }
 
     @Override
-    boolean homeAsUpButtonEnabled() {
+    protected boolean homeAsUpButtonEnabled() {
         return false;
     }
 }

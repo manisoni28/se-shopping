@@ -9,7 +9,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.srgiovine.seshopping.SplashActivity"
+            android:name="com.srgiovine.seshopping.splash.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -19,23 +19,23 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.srgiovine.seshopping.BrowseActivity"
+            android:name="com.srgiovine.seshopping.browse.BrowseActivity"
             android:label="@string/browse"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.srgiovine.seshopping.DetailsActivity"
+            android:name="com.srgiovine.seshopping.details.DetailsActivity"
             android:label="@string/details"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.srgiovine.seshopping.SearchActivity"
+            android:name="com.srgiovine.seshopping.search.SearchActivity"
             android:label="@string/search"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.srgiovine.seshopping.CartActivity"
+            android:name="com.srgiovine.seshopping.cart.CartActivity"
             android:label="@string/cart"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.srgiovine.seshopping.SettingsActivity"
+            android:name="com.srgiovine.seshopping.settings.SettingsActivity"
             android:label="@string/settings"
             android:screenOrientation="portrait" />
     </application>

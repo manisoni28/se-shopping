@@ -1,4 +1,4 @@
-package com.srgiovine.seshopping.account.dialog;
+package com.srgiovine.seshopping.splash;
 
 import android.content.Context;
 import android.support.design.widget.Snackbar;
@@ -17,7 +17,7 @@ import java.util.List;
 
 import srgiovine.com.seshopping.R;
 
-public class SignupFormDialog extends FormDialog {
+class SignupFormDialog extends FormDialog {
 
     private EditText firstName;
     private EditText lastName;
@@ -38,7 +38,7 @@ public class SignupFormDialog extends FormDialog {
         }
     };
 
-    public SignupFormDialog(Context context, AccountManager accountManager, Callback<Void> callback) {
+    SignupFormDialog(Context context, AccountManager accountManager, Callback<Void> callback) {
         super(context, accountManager, callback);
 
         firstName = (EditText) contentView.findViewById(R.id.first_name);

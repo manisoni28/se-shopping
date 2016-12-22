@@ -1,4 +1,4 @@
-package com.srgiovine.seshopping.account.dialog;
+package com.srgiovine.seshopping.splash;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -17,7 +17,7 @@ import java.util.List;
 
 import srgiovine.com.seshopping.R;
 
-public abstract class FormDialog {
+abstract class FormDialog {
 
     View contentView;
     AccountManager accountManager;
@@ -38,20 +38,6 @@ public abstract class FormDialog {
         }
     };
 
-    private final View.OnClickListener cancelOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            FormDialog.this.dismiss(true);
-        }
-    };
-
-    private final View.OnClickListener confirmOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            onConfirmButtonPressed();
-        }
-    };
-
     FormDialog(Context context, AccountManager accountManager, Callback<Void> callback) {
         this.context = context;
         this.callback = callback;
@@ -69,11 +55,21 @@ public abstract class FormDialog {
 
         formContainer = contentView.findViewById(R.id.form_container);
         progressBar = (ProgressBar) formContainer.findViewById(R.id.progress);
-        formContainer.findViewById(R.id.cancel).setOnClickListener(cancelOnClickListener);
-        formContainer.findViewById(R.id.confirm).setOnClickListener(confirmOnClickListener);
+        formContainer.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss(true);
+            }
+        });
+        formContainer.findViewById(R.id.confirm).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onConfirmButtonPressed();
+            }
+        });
     }
 
-    public void show() {
+    void show() {
         if (isShowing) {
             return;
         }

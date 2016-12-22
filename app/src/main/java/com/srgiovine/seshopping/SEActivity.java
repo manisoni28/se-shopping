@@ -5,10 +5,10 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.srgiovine.seshopping.data.ItemRepository;
 import com.srgiovine.seshopping.account.AccountManager;
+import com.srgiovine.seshopping.data.ItemRepository;
 
-abstract class SEActivity extends Activity {
+public abstract class SEActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,15 +29,15 @@ abstract class SEActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    AccountManager accountManager() {
+    protected AccountManager accountManager() {
         return seApplication().accountManager();
     }
 
-    ItemRepository itemRepository() {
+    protected ItemRepository itemRepository() {
         return seApplication().itemRepository();
     }
 
-    boolean homeAsUpButtonEnabled() {
+    protected boolean homeAsUpButtonEnabled() {
         return true;
     }
 

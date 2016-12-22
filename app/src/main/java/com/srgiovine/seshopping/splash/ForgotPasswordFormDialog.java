@@ -1,4 +1,4 @@
-package com.srgiovine.seshopping.account.dialog;
+package com.srgiovine.seshopping.splash;
 
 import android.content.Context;
 import android.support.design.widget.Snackbar;
@@ -15,7 +15,7 @@ import java.util.List;
 
 import srgiovine.com.seshopping.R;
 
-public class ForgotPasswordFormDialog extends FormDialog {
+class ForgotPasswordFormDialog extends FormDialog {
 
     private EditText email;
 
@@ -33,7 +33,7 @@ public class ForgotPasswordFormDialog extends FormDialog {
         }
     };
 
-    public ForgotPasswordFormDialog(Context context, AccountManager accountManager, Callback<Void> callback) {
+    ForgotPasswordFormDialog(Context context, AccountManager accountManager, Callback<Void> callback) {
         super(context, accountManager, callback);
 
         email = (EditText) contentView.findViewById(R.id.email);
