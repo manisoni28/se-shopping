@@ -13,20 +13,20 @@
             style="@style/ProgressBar" />
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/name"
             style="@style/FormDialog.Title"
             android:text="Let's log you in!" />
 
         <EditText
             android:id="@+id/email"
-            style="@style/FormDialog.Input"
-            android:layout_below="@id/title"
+            style="@style/Input.FormDialog"
+            android:layout_below="@id/name"
             android:hint="Email"
             android:inputType="textEmailAddress" />
 
         <EditText
             android:id="@+id/password"
-            style="@style/FormDialog.Input"
+            style="@style/Input.FormDialog"
             android:layout_below="@id/email"
             android:hint="Password"
             android:imeOptions="actionDone"

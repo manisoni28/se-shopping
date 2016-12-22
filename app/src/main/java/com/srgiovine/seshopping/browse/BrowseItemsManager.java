@@ -41,6 +41,7 @@ public class BrowseItemsManager {
             }
 
             setLoading(false);
+            setEmpty(false);
             adapter.setItems(result);
             showResults();
         }
@@ -61,12 +62,22 @@ public class BrowseItemsManager {
         this.emptyIndicator = emptyIndicator;
     }
 
-    public void initialize() {
+    public void initializeWithNoItems() {
+        setLoading(false);
+        setEmpty(true);
+    }
+
+    public void initializeWithNoFilters() {
         updateAdapterWithFilteredItems();
     }
 
-    public void setGenderVisible(Gender gender, boolean isVisible) {
-        if (isVisible) {
+    void showItemsWithName(String name) {
+        onPreStartBackgroundTask();
+        getItemsTask = itemRepository.getItemsWithName(name, getItemsCallback);
+    }
+
+    public void setItemsWithGenderVisible(Gender gender, boolean visible) {
+        if (visible) {
             genders.add(gender);
         } else {
             genders.remove(gender);
@@ -74,8 +85,8 @@ public class BrowseItemsManager {
         updateAdapterWithFilteredItems();
     }
 
-    public void setCategoryVisible(Category category, boolean isVisible) {
-        if (isVisible) {
+    public void setItemsWithCategoryVisible(Category category, boolean visible) {
+        if (visible) {
             categories.add(category);
         } else {
             categories.remove(category);
@@ -83,18 +94,27 @@ public class BrowseItemsManager {
         updateAdapterWithFilteredItems();
     }
 
-    public void cancelBackgroundTasks() {
+    public void onDestroy() {
+        cancelBackgroundTasks();
+    }
+
+    private void updateAdapterWithFilteredItems() {
+        onPreStartBackgroundTask();
+        getItemsTask = itemRepository.getItemsWithGendersAndCategories(genders, categories, getItemsCallback);
+    }
+
+    private void onPreStartBackgroundTask() {
+        cancelBackgroundTasks();
+        hideResults();
+        setLoading(true);
+        setEmpty(false);
+    }
+
+    private void cancelBackgroundTasks() {
         if (getItemsTask != null) {
             getItemsTask.cancel();
             getItemsTask = null;
         }
-    }
-
-    private void updateAdapterWithFilteredItems() {
-        cancelBackgroundTasks();
-        hideResults();
-        setLoading(true);
-        itemRepository.getItems(genders, categories, getItemsCallback);
     }
 
     private void showResults() {

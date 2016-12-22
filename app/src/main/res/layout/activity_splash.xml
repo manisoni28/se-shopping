@@ -20,7 +20,7 @@
         android:paddingTop="@dimen/activity_vertical_margin">
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -34,7 +34,7 @@
             android:id="@+id/action_separator"
             android:layout_width="2dp"
             android:layout_height="20dp"
-            android:layout_below="@id/title"
+            android:layout_below="@id/name"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="36dp"
             android:layout_marginTop="36dp"

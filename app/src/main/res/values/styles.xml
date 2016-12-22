@@ -55,18 +55,29 @@
     <style name="Input">
         <item name="android:singleLine">true</item>
         <item name="android:textColor">@color/textColorPrimary</item>
-        <item name="android:textColorHint">@color/textColorPrimary</item>
+        <item name="android:textColorHint">@color/textColorSecondary</item>
+        <item name="android:layout_marginRight">@dimen/activity_horizontal_margin</item>
+        <item name="android:layout_marginLeft">@dimen/activity_horizontal_margin</item>
         <item name="android:imeOptions">actionNext</item>
-        <item name="android:enabled">false</item>
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:focusable">false</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">monospace</item>
+    </style>
+
+    <style name="Input.FormDialog">
+        <item name="android:lineSpacingMultiplier">1.2</item>
+    </style>
+
+    <style name="Input.Search">
+        <item name="android:drawableRight">@drawable/ic_clear_search_field</item>
+        <item name="android:hint">@string/search</item>
+        <item name="android:imeOptions">actionSearch</item>
     </style>
 
     <style name="Input.Settings">
-        <item name="android:layout_marginRight">@dimen/activity_horizontal_margin</item>
-        <item name="android:layout_marginLeft">@dimen/activity_horizontal_margin</item>
-        <item name="android:layout_width">match_parent</item>
+        <item name="android:enabled">false</item>
+        <item name="android:focusable">false</item>
     </style>
 
     <style name="Input.Settings.Horizontal">
@@ -126,19 +137,6 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="FormDialog.Input">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginLeft">@dimen/activity_horizontal_margin</item>
-        <item name="android:layout_marginRight">@dimen/activity_horizontal_margin</item>
-        <item name="android:fontFamily">monospace</item>
-        <item name="android:imeOptions">actionNext</item>
-        <item name="android:lineSpacingMultiplier">1.2</item>
-        <item name="android:singleLine">true</item>
-        <item name="android:textColor">@color/textColorPrimary</item>
-        <item name="android:textColorHint">@color/textColorPrimary</item>
-        <item name="android:textSize">20sp</item>
-    </style>
 
     <style name="FormDialog.Separator">
         <item name="android:layout_width">2dp</item>

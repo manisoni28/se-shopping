@@ -3,6 +3,9 @@ package com.srgiovine.seshopping;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.MenuRes;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,49 +27,58 @@ import srgiovine.com.seshopping.R;
 
 public class BrowseActivity extends SEActivity implements NavigationAdapter.EventListener, BrowseItemsAdapter.EventListener {
 
+    @Nullable
     private NavigationDrawerToggle navigationDrawerToggle;
 
-    private BrowseItemsManager browseItemsManager;
+    protected BrowseItemsManager browseItemsManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_browse);
-        setupNavigationDrawer();
+        setContentView(layoutRes());
         setupBrowseListView();
+        if (hasNavigationDrawer()) {
+            setupNavigationDrawer();
+        }
     }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        navigationDrawerToggle.syncState();
+        if (navigationDrawerToggle != null) {
+            navigationDrawerToggle.syncState();
+        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        browseItemsManager.cancelBackgroundTasks();
+        browseItemsManager.onDestroy();
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        navigationDrawerToggle.onConfigurationChanged(newConfig);
+        if (navigationDrawerToggle != null) {
+            navigationDrawerToggle.onConfigurationChanged(newConfig);
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.browse_menu, menu);
+        inflater.inflate(optionsMenuRes(), menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (navigationDrawerToggle.onOptionsItemSelected(item)) {
+        if (navigationDrawerToggle != null && navigationDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         } else if (R.id.action_open_cart == item.getItemId()) {
             onCartClicked();
+        } else if (R.id.action_search == item.getItemId()) {
+            onSearchClicked();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -83,12 +95,38 @@ public class BrowseActivity extends SEActivity implements NavigationAdapter.Even
 
     @Override
     public void onGenderItemClicked(GenderNavigationItem item, boolean isChecked) {
-        browseItemsManager.setGenderVisible(item.gender(), isChecked);
+        browseItemsManager.setItemsWithGenderVisible(item.gender(), isChecked);
     }
 
     @Override
     public void onCategoryItemClicked(CategoryNavigationItem item, boolean isChecked) {
-        browseItemsManager.setCategoryVisible(item.category(), isChecked);
+        browseItemsManager.setItemsWithCategoryVisible(item.category(), isChecked);
+    }
+
+    void onInitializeBrowseItemsManager(BrowseItemsManager browseItemsManager) {
+        browseItemsManager.initializeWithNoFilters();
+    }
+
+    @LayoutRes
+    int layoutRes() {
+        return R.layout.activity_browse;
+    }
+
+    @MenuRes
+    int optionsMenuRes() {
+        return R.menu.browse_menu;
+    }
+
+    boolean hasNavigationDrawer() {
+        return true;
+    }
+
+    private void onSearchClicked() {
+        startActivity(new Intent(this, SearchActivity.class));
+    }
+
+    private void onCartClicked() {
+        startActivity(new Intent(this, CartActivity.class));
     }
 
     private void setupNavigationDrawer() {
@@ -116,11 +154,7 @@ public class BrowseActivity extends SEActivity implements NavigationAdapter.Even
 
         browseItemsManager = new BrowseItemsManager(browseItemsAdapter, itemRepository(),
                 resultsView, loadingIndicator, emptyIndicator);
-        browseItemsManager.initialize();
-    }
-
-    private void onCartClicked() {
-        startActivity(new Intent(this, CartActivity.class));
+        onInitializeBrowseItemsManager(browseItemsManager);
     }
 
 }

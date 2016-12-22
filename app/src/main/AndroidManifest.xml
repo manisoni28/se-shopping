@@ -27,6 +27,10 @@
             android:label="@string/details"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.srgiovine.seshopping.SearchActivity"
+            android:label="@string/search"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.srgiovine.seshopping.CartActivity"
             android:label="@string/cart"
             android:screenOrientation="portrait" />

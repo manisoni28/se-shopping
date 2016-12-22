@@ -9,6 +9,7 @@ import com.srgiovine.seshopping.task.Callback;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -17,19 +18,64 @@ import srgiovine.com.seshopping.R;
 class FakeItemRepository implements ItemRepository {
 
     @Override
-    public BackgroundTask getItems(Set<Gender> genders, Set<Category> categories, Callback<List<Item>> callback) {
-        GetItemsBackgroundTask asyncTask = new GetItemsBackgroundTask(callback, genders, categories);
-        asyncTask.execute();
-        return asyncTask;
+    public BackgroundTask getItemsWithName(String name, Callback<List<Item>> callback) {
+        GetItemsWithTitleBackgroundTask backgroundTask = new GetItemsWithTitleBackgroundTask(callback, name);
+        backgroundTask.execute();
+        return backgroundTask;
     }
 
-    private static class GetItemsBackgroundTask extends BackgroundAsyncTask<List<Item>> {
+    @Override
+    public BackgroundTask getItemsWithGendersAndCategories(Set<Gender> genders, Set<Category> categories,
+                                                           Callback<List<Item>> callback) {
+        GetItemsWithGendersAndCategoriesBackgroundTask backgroundTask
+                = new GetItemsWithGendersAndCategoriesBackgroundTask(callback, genders, categories);
+        backgroundTask.execute();
+        return backgroundTask;
+    }
+
+    private static class GetItemsWithTitleBackgroundTask extends BackgroundAsyncTask<List<Item>> {
+
+        private final Callback<List<Item>> callback;
+        private final String name;
+
+        private GetItemsWithTitleBackgroundTask(Callback<List<Item>> callback, String name) {
+            this.callback = callback;
+            this.name = name;
+        }
+
+        @Override
+        protected List<Item> doInBackground() {
+            if (name.isEmpty()) {
+                return Collections.emptyList();
+            }
+
+            List<Item> items = new ArrayList<>();
+
+            String name = this.name.toLowerCase();
+            for (Item item : ITEMS) {
+                if (item.name().toLowerCase().contains(name)) {
+                    items.add(item);
+                }
+            }
+
+            return items;
+        }
+
+        @Override
+        protected void onPostExecute(List<Item> items) {
+            super.onPostExecute(items);
+            callback.onSuccess(items);
+        }
+    }
+
+    private static class GetItemsWithGendersAndCategoriesBackgroundTask extends BackgroundAsyncTask<List<Item>> {
 
         private final Callback<List<Item>> callback;
         private final Set<Gender> genders;
         private final Set<Category> categories;
 
-        private GetItemsBackgroundTask(Callback<List<Item>> callback, Set<Gender> genders, Set<Category> categories) {
+        private GetItemsWithGendersAndCategoriesBackgroundTask(Callback<List<Item>> callback,
+                                                               Set<Gender> genders, Set<Category> categories) {
             this.callback = callback;
             this.genders = genders;
             this.categories = categories;

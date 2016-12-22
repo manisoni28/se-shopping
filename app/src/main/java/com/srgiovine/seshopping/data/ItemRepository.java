@@ -11,6 +11,9 @@ import java.util.Set;
 
 public interface ItemRepository {
 
-    BackgroundTask getItems(Set<Gender> genders, Set<Category> categories, Callback<List<Item>> callback);
+    BackgroundTask getItemsWithName(String title, Callback<List<Item>> callback);
+
+    BackgroundTask getItemsWithGendersAndCategories(Set<Gender> genders, Set<Category> categories,
+                                                    Callback<List<Item>> callback);
 
 }
