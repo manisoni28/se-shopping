@@ -9,79 +9,43 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.srgiovine.seshopping.browse.BrowseItemsAdapter;
-import com.srgiovine.seshopping.browse.BrowseItemsFactory;
+import com.srgiovine.seshopping.browse.BrowseItemsManager;
 import com.srgiovine.seshopping.model.Item;
 import com.srgiovine.seshopping.navigation.CategoryNavigationItem;
 import com.srgiovine.seshopping.navigation.GenderNavigationItem;
 import com.srgiovine.seshopping.navigation.NavigationAdapter;
 import com.srgiovine.seshopping.navigation.NavigationDrawerToggle;
 import com.srgiovine.seshopping.navigation.NavigationItemFactory;
-import com.srgiovine.seshopping.navigation.SettingsNavigationItem;
 
 import srgiovine.com.seshopping.R;
 
-public class BrowseActivity extends SEActivity {
+public class BrowseActivity extends SEActivity implements NavigationAdapter.EventListener, BrowseItemsAdapter.EventListener {
 
     private NavigationDrawerToggle navigationDrawerToggle;
 
-    private final NavigationAdapter.EventListener navigationEventListener = new NavigationAdapter.EventListener() {
-
-        @Override
-        public void onGenderItemClicked(GenderNavigationItem item, boolean isChecked) {
-            BrowseActivity.this.onGenderItemClicked(item, isChecked);
-        }
-
-        @Override
-        public void onCategoryItemClicked(CategoryNavigationItem item, boolean isChecked) {
-            BrowseActivity.this.onCategoryItemClicked(item, isChecked);
-        }
-
-        @Override
-        public void onSettingsItemClicked(SettingsNavigationItem item) {
-            BrowseActivity.this.onSettingsClicked();
-        }
-    };
-
-    private final BrowseItemsAdapter.EventListener browseItemsEventListener = new BrowseItemsAdapter.EventListener() {
-        @Override
-        public void onItemClicked(Item item) {
-            BrowseActivity.this.onItemClicked(item);
-        }
-    };
-
-    private final NavigationAdapter navigationAdapter = new NavigationAdapter(navigationEventListener);
-
-    private final BrowseItemsAdapter browseItemsAdapter = new BrowseItemsAdapter(browseItemsEventListener);
+    private BrowseItemsManager browseItemsManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse);
-
-        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        RecyclerView navigationDrawer = (RecyclerView) findViewById(R.id.navigation_drawer);
-        navigationDrawer.setLayoutManager(new LinearLayoutManager(this));
-        navigationDrawer.setAdapter(navigationAdapter);
-
-        navigationDrawerToggle = new NavigationDrawerToggle(this, drawerLayout);
-        drawerLayout.addDrawerListener(navigationDrawerToggle);
-
-        navigationAdapter.addItems(NavigationItemFactory.createNavigationItems());
-
-        RecyclerView browseItems = (RecyclerView) findViewById(R.id.browse_items);
-        browseItems.setLayoutManager(new LinearLayoutManager(this));
-        browseItems.setAdapter(browseItemsAdapter);
-
-        browseItemsAdapter.addItems(BrowseItemsFactory.createBrowseItems());
+        setupNavigationDrawer();
+        setupBrowseListView();
     }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
         navigationDrawerToggle.syncState();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        browseItemsManager.cancelBackgroundTasks();
     }
 
     @Override
@@ -102,28 +66,60 @@ public class BrowseActivity extends SEActivity {
         if (navigationDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         } else if (R.id.action_open_cart == item.getItemId()) {
-            openCart();
+            onCartClicked();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void onItemClicked(Item item) {
+    @Override
+    public void onItemClicked(Item item) {
 
     }
 
-    private void onSettingsClicked() {
+    @Override
+    public void onSettingsItemClicked() {
         startActivity(new Intent(this, SettingsActivity.class));
     }
 
-    private void onGenderItemClicked(GenderNavigationItem item, boolean isChecked) {
-        browseItemsAdapter.setGenderVisible(item.gender(), isChecked);
+    @Override
+    public void onGenderItemClicked(GenderNavigationItem item, boolean isChecked) {
+        browseItemsManager.setGenderVisible(item.gender(), isChecked);
     }
 
-    private void onCategoryItemClicked(CategoryNavigationItem item, boolean isChecked) {
-        browseItemsAdapter.setCategoryVisible(item.category(), isChecked);
+    @Override
+    public void onCategoryItemClicked(CategoryNavigationItem item, boolean isChecked) {
+        browseItemsManager.setCategoryVisible(item.category(), isChecked);
     }
 
-    private void openCart() {
+    private void setupNavigationDrawer() {
+        NavigationAdapter navigationAdapter = new NavigationAdapter(this);
+
+        RecyclerView navigationDrawer = (RecyclerView) findViewById(R.id.navigation_drawer);
+        navigationDrawer.setLayoutManager(new LinearLayoutManager(this));
+        navigationDrawer.setAdapter(navigationAdapter);
+        navigationAdapter.setItems(NavigationItemFactory.createNavigationItems());
+
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navigationDrawerToggle = new NavigationDrawerToggle(this, drawerLayout);
+        drawerLayout.addDrawerListener(navigationDrawerToggle);
+    }
+
+    private void setupBrowseListView() {
+        BrowseItemsAdapter browseItemsAdapter = new BrowseItemsAdapter(this);
+
+        RecyclerView resultsView = (RecyclerView) findViewById(R.id.browse_items);
+        resultsView.setLayoutManager(new LinearLayoutManager(this));
+        resultsView.setAdapter(browseItemsAdapter);
+
+        View loadingIndicator = findViewById(R.id.progress);
+        View emptyIndicator = findViewById(R.id.empty);
+
+        browseItemsManager = new BrowseItemsManager(browseItemsAdapter, itemProvider(),
+                resultsView, loadingIndicator, emptyIndicator);
+        browseItemsManager.initialize();
+    }
+
+    private void onCartClicked() {
         startActivity(new Intent(this, CartActivity.class));
     }
 

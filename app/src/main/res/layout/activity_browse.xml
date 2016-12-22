@@ -14,6 +14,10 @@
             style="@style/List.Empty"
             android:visibility="invisible" />
 
+        <ProgressBar
+            android:id="@+id/progress"
+            style="@style/ProgressBar" />
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/browse_items"
             android:layout_width="match_parent"

@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.srgiovine.seshopping.data.ItemProvider;
+
 abstract class SEActivity extends Activity {
 
     @Override
@@ -26,7 +28,15 @@ abstract class SEActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    ItemProvider itemProvider() {
+        return seApplication().itemProvider();
+    }
+
     boolean homeAsUpButtonEnabled() {
         return true;
+    }
+
+    private SEApplication seApplication() {
+        return (SEApplication) getApplication();
     }
 }

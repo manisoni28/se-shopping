@@ -35,7 +35,8 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
         this.eventListener = eventListener;
     }
 
-    public void addItems(NavigationItem[] items) {
+    public void setItems(NavigationItem[] items) {
+        this.items.clear();
         this.items.addAll(Arrays.asList(items));
         notifyDataSetChanged();
     }
@@ -213,7 +214,7 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
 
         @Override
         public void onClick(View view) {
-            eventListener.onSettingsItemClicked(item);
+            eventListener.onSettingsItemClicked();
         }
     }
 
@@ -228,6 +229,6 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
 
         void onCategoryItemClicked(CategoryNavigationItem item, boolean isChecked);
 
-        void onSettingsItemClicked(SettingsNavigationItem item);
+        void onSettingsItemClicked();
     }
 }
