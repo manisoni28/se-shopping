@@ -44,12 +44,6 @@ class FakeUserRepository implements UserRepository {
                         .setCreditCardInfo(creditCardInfo)
                         .build();
             }
-
-            @Override
-            protected void onPostExecute(User user) {
-                super.onPostExecute(user);
-                callback.onSuccess(user);
-            }
         };
         backgroundTask.execute();
         return backgroundTask;

@@ -17,7 +17,21 @@ public abstract class BackgroundAsyncTask<T> extends AsyncTask<Void, Void, T> im
         } catch (InterruptedException ie) {
         }
 
-        return doInBackground();
+        try {
+            return doInBackground();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    protected void onPostExecute(T result) {
+        super.onPostExecute(result);
+        if (result == null) {
+            callback.onFailed();
+        } else {
+            callback.onSuccess(result);
+        }
     }
 
     @Override

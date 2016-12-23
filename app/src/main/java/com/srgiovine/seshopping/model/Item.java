@@ -14,13 +14,13 @@ public class Item {
 
     private final Category category;
 
+    private final int price;
+    
     @DrawableRes
     private final int image;
 
     @DrawableRes
     private final int icon;
-
-    private final int price;
 
     private Item(long id, String name, String description, Gender gender, Category category, int price,
                  @DrawableRes int image, @DrawableRes int icon) {

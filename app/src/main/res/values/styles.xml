@@ -48,7 +48,9 @@
 
     <style name="Info.Settings" />
 
-    <style name="Info.Details" />
+    <style name="Info.Details">
+        <item name="android:textSize">16sp</item>
+    </style>
 
     <style name="Info.Cart" />
 

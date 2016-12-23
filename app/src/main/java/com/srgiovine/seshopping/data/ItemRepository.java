@@ -15,7 +15,7 @@ public interface ItemRepository {
 
     BackgroundTask getItemsWithIds(Set<Long> itemIds, Callback<List<Item>> callback);
 
-    BackgroundTask getItemsWithName(String title, Callback<List<Item>> callback);
+    BackgroundTask getItemsWithName(String name, Callback<List<Item>> callback);
 
     BackgroundTask getItemsWithGendersAndCategories(Set<Gender> genders, Set<Category> categories,
                                                     Callback<List<Item>> callback);

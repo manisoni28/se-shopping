@@ -27,7 +27,7 @@ public class SEApplication extends Application {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS_NAME, MODE_PRIVATE);
 
         accountManager = AccountManager.create(userRepository, sharedPreferences);
-        itemRepository = ItemRepositoryFactory.create();
+        itemRepository = ItemRepositoryFactory.create(this);
         cartManager = CartManager.create(accountManager, itemRepository, sharedPreferences);
     }
 
