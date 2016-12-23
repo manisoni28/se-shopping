@@ -3,7 +3,6 @@ package com.srgiovine.seshopping.splash;
 import android.content.Context;
 import android.support.design.widget.Snackbar;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.srgiovine.seshopping.account.AccountManager;
 import com.srgiovine.seshopping.model.User;
@@ -46,12 +45,6 @@ class LoginFormDialog extends FormDialog {
     protected void onTakeConfirmAction() {
         super.onTakeConfirmAction();
         loginTask = accountManager.login(email.getText().toString(), password.getText().toString(), loginCallback);
-    }
-
-    @Override
-    protected void onConfirmActionSuccess() {
-        super.onConfirmActionSuccess();
-        Toast.makeText(context, "Login success", Toast.LENGTH_SHORT).show();
     }
 
     @Override

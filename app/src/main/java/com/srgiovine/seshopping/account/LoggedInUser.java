@@ -14,6 +14,7 @@ class LoggedInUser {
 
     LoggedInUser(SharedPreferences sharedPreferences) {
         this.sharedPreferences = sharedPreferences;
+        restore();
     }
 
     void save(String email, String password) {

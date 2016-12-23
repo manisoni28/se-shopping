@@ -21,7 +21,7 @@ public class AccountManager {
 
     public BackgroundTask requestPasswordRecovery(String email, Callback<Void> callback) {
         // TODO replace with real code
-        BackgroundAsyncTask<Void> backgroundTask = new BackgroundAsyncTask<Void>() {
+        BackgroundAsyncTask<Void> backgroundTask = new BackgroundAsyncTask<Void>(callback) {
             @Override
             protected Void doInBackground() {
                 return null;

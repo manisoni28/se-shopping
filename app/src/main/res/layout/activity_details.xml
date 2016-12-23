@@ -12,10 +12,9 @@
         <ImageView
             android:id="@+id/image"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="160dp"
             android:background="@color/colorPrimary"
-            android:scaleType="centerInside"
-            android:src="@drawable/hat_female" />
+            android:scaleType="centerInside" />
 
         <View
             android:layout_width="match_parent"
