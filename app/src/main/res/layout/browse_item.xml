@@ -14,8 +14,7 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:background="@drawable/tag_background"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_hat" />
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/name"

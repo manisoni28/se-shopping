@@ -4,27 +4,27 @@ import android.view.View;
 
 import srgiovine.com.seshopping.R;
 
-public abstract class ViewItemsManager {
+public class ItemsLoaderView {
 
     private final View emptyIndicator;
     private final View loadingIndicator;
     private final View items;
 
-    protected ViewItemsManager(View contentView) {
+    public ItemsLoaderView(View contentView) {
         emptyIndicator = contentView.findViewById(R.id.empty);
         loadingIndicator = contentView.findViewById(R.id.loading_indicator);
         items = contentView.findViewById(R.id.items);
     }
 
-    protected void showEmptyIndicator() {
+    public void showEmptyIndicator() {
         setVisibilities(View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
     }
 
-    protected void showLoadingIndicator() {
+    public void showLoadingIndicator() {
         setVisibilities(View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
     }
 
-    protected void showItems() {
+    public void showItems() {
         setVisibilities(View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
     }
 

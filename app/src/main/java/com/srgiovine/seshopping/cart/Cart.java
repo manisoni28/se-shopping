@@ -40,6 +40,16 @@ class Cart {
         return true;
     }
 
+    boolean updateItemCount(long itemId, @IntRange(from = 0) int count) {
+        try {
+            itemCountMap.put(String.valueOf(itemId), count);
+            save();
+        } catch (JSONException e) {
+            return false;
+        }
+        return true;
+    }
+
     void removeItem(long itemId) {
         itemCountMap.remove(String.valueOf(itemId));
         save();

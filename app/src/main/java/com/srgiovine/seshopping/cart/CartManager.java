@@ -30,6 +30,10 @@ public class CartManager {
         return cart.addItem(itemId, count);
     }
 
+    public boolean updateItemCount(long itemId, @IntRange(from = 0) int count) {
+        return cart.updateItemCount(itemId, count);
+    }
+
     public void removeItemFromCart(long itemId) {
         cart.removeItem(itemId);
     }

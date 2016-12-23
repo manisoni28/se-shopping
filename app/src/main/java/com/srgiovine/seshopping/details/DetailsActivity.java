@@ -9,6 +9,7 @@ import com.srgiovine.seshopping.model.Item;
 import com.srgiovine.seshopping.task.BackgroundTask;
 import com.srgiovine.seshopping.task.Callback;
 import com.srgiovine.seshopping.task.SimpleCallback;
+import com.srgiovine.seshopping.util.CounterView;
 
 import srgiovine.com.seshopping.R;
 
@@ -39,7 +40,7 @@ public class DetailsActivity extends SEActivity implements DetailsViewPresenter.
         View contentView = getLayoutInflater().inflate(R.layout.activity_details, null);
         setContentView(contentView);
 
-        viewPresenter = new DetailsViewPresenter(contentView, this);
+        viewPresenter = new DetailsViewPresenter(contentView, new CounterView(contentView), this);
         getItemTask = itemRepository().getItemById(itemId(), getItemCallback);
     }
 

@@ -25,6 +25,7 @@ import com.srgiovine.seshopping.navigation.NavigationDrawerToggle;
 import com.srgiovine.seshopping.navigation.NavigationItemFactory;
 import com.srgiovine.seshopping.search.SearchActivity;
 import com.srgiovine.seshopping.settings.SettingsActivity;
+import com.srgiovine.seshopping.util.ItemsLoaderView;
 
 import srgiovine.com.seshopping.R;
 
@@ -157,10 +158,8 @@ public class BrowseActivity extends SEActivity implements NavigationAdapter.Even
         resultsView.setLayoutManager(new LinearLayoutManager(this));
         resultsView.setAdapter(browseItemsAdapter);
 
-        View loadingIndicator = findViewById(R.id.progress);
-        View emptyIndicator = findViewById(R.id.empty);
-
-        browseItemsManager = new BrowseItemsManager(contentView, browseItemsAdapter, itemRepository());
+        browseItemsManager = new BrowseItemsManager(browseItemsAdapter, itemRepository(),
+                new ItemsLoaderView(contentView));
         onInitializeBrowseItemsManager(browseItemsManager);
     }
 

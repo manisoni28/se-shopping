@@ -1,7 +1,5 @@
 package com.srgiovine.seshopping.browse;
 
-import android.view.View;
-
 import com.srgiovine.seshopping.data.ItemRepository;
 import com.srgiovine.seshopping.model.Category;
 import com.srgiovine.seshopping.model.Gender;
@@ -9,17 +7,19 @@ import com.srgiovine.seshopping.model.Item;
 import com.srgiovine.seshopping.task.BackgroundTask;
 import com.srgiovine.seshopping.task.Callback;
 import com.srgiovine.seshopping.task.SimpleCallback;
-import com.srgiovine.seshopping.util.ViewItemsManager;
+import com.srgiovine.seshopping.util.ItemsLoaderView;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class BrowseItemsManager extends ViewItemsManager {
+public class BrowseItemsManager {
 
     private final ItemRepository itemRepository;
 
     private final BrowseItemsAdapter adapter;
+
+    private final ItemsLoaderView itemsLoaderView;
 
     private final Set<Gender> genders = new HashSet<>();
 
@@ -36,23 +36,23 @@ public class BrowseItemsManager extends ViewItemsManager {
             }
 
             adapter.setItems(result);
-            showItems();
+            itemsLoaderView.showItems();
         }
 
         @Override
         public void onFailed() {
-            showEmptyIndicator();
+            itemsLoaderView.showEmptyIndicator();
         }
     };
 
-    BrowseItemsManager(View contentView, BrowseItemsAdapter adapter, ItemRepository itemRepository) {
-        super(contentView);
+    BrowseItemsManager(BrowseItemsAdapter adapter, ItemRepository itemRepository, ItemsLoaderView itemsLoaderView) {
         this.adapter = adapter;
         this.itemRepository = itemRepository;
+        this.itemsLoaderView = itemsLoaderView;
     }
 
     public void initializeWithNoItems() {
-        showEmptyIndicator();
+        itemsLoaderView.showEmptyIndicator();
     }
 
     void initializeWithNoFilters() {
@@ -92,7 +92,7 @@ public class BrowseItemsManager extends ViewItemsManager {
     }
 
     private void onPreStartBackgroundTask() {
-        showLoadingIndicator();
+        itemsLoaderView.showLoadingIndicator();
         cancelBackgroundTasks();
     }
 

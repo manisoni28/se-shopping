@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.srgiovine.seshopping.model.Item;
+import com.srgiovine.seshopping.util.CounterView;
 
 import java.util.Locale;
 
@@ -17,33 +18,22 @@ class DetailsViewPresenter {
 
     private final EventListener eventListener;
 
+    private final CounterView counterView;
+
     private final ImageView image;
     private final TextView description;
     private final ViewGroup categories;
     private final TextView price;
-    private final TextView count;
 
-    DetailsViewPresenter(View contentView, EventListener eventListener) {
+    DetailsViewPresenter(View contentView, CounterView counterView, EventListener eventListener) {
         this.eventListener = eventListener;
+        this.counterView = counterView;
 
         image = (ImageView) contentView.findViewById(R.id.image);
         description = (TextView) contentView.findViewById(R.id.description);
         categories = (ViewGroup) contentView.findViewById(R.id.categories);
         price = (TextView) contentView.findViewById(R.id.price);
-        count = (TextView) contentView.findViewById(R.id.count);
 
-        contentView.findViewById(R.id.decrement_count).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onDecrementCount();
-            }
-        });
-        contentView.findViewById(R.id.increment_count).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onIncrementCount();
-            }
-        });
         contentView.findViewById(R.id.add_to_cart).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,29 +59,7 @@ class DetailsViewPresenter {
     }
 
     private void onAddToCart() {
-        eventListener.onAddToCartClicked(getCountInt());
-    }
-
-    private void onDecrementCount() {
-        int countInt = getCountInt();
-        if (countInt > 1) {
-            setCountInt(countInt - 1);
-        }
-    }
-
-    private void onIncrementCount() {
-        int countInt = getCountInt();
-        if (countInt < 9) {
-            setCountInt(countInt + 1);
-        }
-    }
-
-    private void setCountInt(int countInt) {
-        count.setText(String.valueOf(countInt));
-    }
-
-    private int getCountInt() {
-        return Integer.valueOf(count.getText().toString());
+        eventListener.onAddToCartClicked(counterView.getCountInt());
     }
 
     interface EventListener {
