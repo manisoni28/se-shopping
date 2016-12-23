@@ -103,7 +103,7 @@
             <EditText
                 android:id="@+id/expiration_date"
                 style="@style/Input.Settings.Horizontal"
-                android:hint="Expiration Date" />
+                android:hint="Exp Date" />
 
             <EditText
                 android:id="@+id/security_code"

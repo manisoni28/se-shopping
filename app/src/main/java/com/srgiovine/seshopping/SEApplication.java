@@ -28,7 +28,7 @@ public class SEApplication extends Application {
 
         accountManager = AccountManager.create(userRepository, sharedPreferences);
         itemRepository = ItemRepositoryFactory.create();
-        cartManager = CartManager.create(itemRepository, sharedPreferences);
+        cartManager = CartManager.create(accountManager, itemRepository, sharedPreferences);
     }
 
     AccountManager accountManager() {

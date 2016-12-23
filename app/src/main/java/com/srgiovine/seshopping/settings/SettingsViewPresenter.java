@@ -125,11 +125,13 @@ class SettingsViewPresenter {
                 .setCountry(country.getText().toString())
                 .build();
 
+        int securityCodeInt = securityCode.getText().length() == 0 ? 0 :
+                Integer.valueOf(securityCode.getText().toString());
         CreditCardInfo creditCardInfo = CreditCardInfo.builder()
                 .setCardHolderName(Name.fromFullName(cardHolderName.getText().toString()))
                 .setCardNumber(creditCardNumber.getText().toString())
                 .setExpirationDate(expirationDate.getText().toString())
-                .setSecurityCode(Integer.valueOf(securityCode.getText().toString()))
+                .setSecurityCode(securityCodeInt)
                 .build();
 
         return User.builder()

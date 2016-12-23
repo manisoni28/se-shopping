@@ -2,22 +2,26 @@ package com.srgiovine.seshopping.cart;
 
 import com.srgiovine.seshopping.model.Item;
 
-public class CartItem {
+class CartItem {
 
     private final Item item;
 
-    private final int count;
+    private int count;
 
     CartItem(int count, Item item) {
         this.count = count;
         this.item = item;
     }
 
-    public int count() {
+    int count() {
         return count;
     }
 
-    public Item item() {
+    Item item() {
         return item;
+    }
+
+    void setCount(int count) {
+        this.count = count;
     }
 }

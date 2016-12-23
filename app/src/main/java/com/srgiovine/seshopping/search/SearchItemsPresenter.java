@@ -8,13 +8,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 
-import com.srgiovine.seshopping.browse.BrowseItemsManager;
+import com.srgiovine.seshopping.browse.BrowseItemsPresenter;
 
-class SearchItemsManager implements TextWatcher {
+class SearchItemsPresenter implements TextWatcher {
 
     private static final long SEARCH_DELAY_AFTER_TEXT_CHANGED_MILLIS = 500L;
 
-    private final BrowseItemsManager browseItemsManager;
+    private final BrowseItemsPresenter browseItemsPresenter;
 
     private final EditText searchField;
 
@@ -22,8 +22,8 @@ class SearchItemsManager implements TextWatcher {
 
     private SearchRunnable searchRunnable;
 
-    SearchItemsManager(BrowseItemsManager browseItemsManager, EditText searchField) {
-        this.browseItemsManager = browseItemsManager;
+    SearchItemsPresenter(BrowseItemsPresenter browseItemsPresenter, EditText searchField) {
+        this.browseItemsPresenter = browseItemsPresenter;
         this.searchField = searchField;
     }
 
@@ -62,7 +62,7 @@ class SearchItemsManager implements TextWatcher {
 
         @Override
         public void run() {
-            browseItemsManager.showItemsWithName(name);
+            browseItemsPresenter.showItemsWithName(name);
         }
     }
 

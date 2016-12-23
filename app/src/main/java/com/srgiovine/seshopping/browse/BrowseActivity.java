@@ -31,7 +31,7 @@ import srgiovine.com.seshopping.R;
 
 public class BrowseActivity extends SEActivity implements NavigationAdapter.EventListener, BrowseItemsAdapter.EventListener {
 
-    protected BrowseItemsManager browseItemsManager;
+    protected BrowseItemsPresenter browseItemsPresenter;
 
     @Nullable
     private NavigationDrawerToggle navigationDrawerToggle;
@@ -43,7 +43,7 @@ public class BrowseActivity extends SEActivity implements NavigationAdapter.Even
         super.onCreate(savedInstanceState);
         contentView = getLayoutInflater().inflate(layoutRes(), null);
         setContentView(contentView);
-        setupBrowseListView();
+        setupBrowseItemsView();
         if (hasNavigationDrawer()) {
             setupNavigationDrawer();
         }
@@ -60,7 +60,7 @@ public class BrowseActivity extends SEActivity implements NavigationAdapter.Even
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        browseItemsManager.onDestroy();
+        browseItemsPresenter.onDestroy();
     }
 
     @Override
@@ -104,16 +104,16 @@ public class BrowseActivity extends SEActivity implements NavigationAdapter.Even
 
     @Override
     public void onGenderItemClicked(GenderNavigationItem item, boolean isChecked) {
-        browseItemsManager.setItemsWithGenderVisible(item.gender(), isChecked);
+        browseItemsPresenter.setItemsWithGenderVisible(item.gender(), isChecked);
     }
 
     @Override
     public void onCategoryItemClicked(CategoryNavigationItem item, boolean isChecked) {
-        browseItemsManager.setItemsWithCategoryVisible(item.category(), isChecked);
+        browseItemsPresenter.setItemsWithCategoryVisible(item.category(), isChecked);
     }
 
-    protected void onInitializeBrowseItemsManager(BrowseItemsManager browseItemsManager) {
-        browseItemsManager.initializeWithNoFilters();
+    protected void onInitializeBrowseItemsManager(BrowseItemsPresenter browseItemsPresenter) {
+        browseItemsPresenter.initializeWithNoFilters();
     }
 
     @LayoutRes
@@ -151,16 +151,16 @@ public class BrowseActivity extends SEActivity implements NavigationAdapter.Even
         drawerLayout.addDrawerListener(navigationDrawerToggle);
     }
 
-    private void setupBrowseListView() {
+    private void setupBrowseItemsView() {
         BrowseItemsAdapter browseItemsAdapter = new BrowseItemsAdapter(this);
 
-        RecyclerView resultsView = (RecyclerView) findViewById(R.id.items);
-        resultsView.setLayoutManager(new LinearLayoutManager(this));
-        resultsView.setAdapter(browseItemsAdapter);
+        RecyclerView itemsView = (RecyclerView) findViewById(R.id.items);
+        itemsView.setLayoutManager(new LinearLayoutManager(this));
+        itemsView.setAdapter(browseItemsAdapter);
 
-        browseItemsManager = new BrowseItemsManager(browseItemsAdapter, itemRepository(),
+        browseItemsPresenter = new BrowseItemsPresenter(browseItemsAdapter, itemRepository(),
                 new ItemsLoaderView(contentView));
-        onInitializeBrowseItemsManager(browseItemsManager);
+        onInitializeBrowseItemsManager(browseItemsPresenter);
     }
 
 }

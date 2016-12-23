@@ -13,7 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class BrowseItemsManager {
+public class BrowseItemsPresenter {
 
     private final ItemRepository itemRepository;
 
@@ -29,13 +29,13 @@ public class BrowseItemsManager {
 
     private final Callback<List<Item>> getItemsCallback = new SimpleCallback<List<Item>>() {
         @Override
-        public void onSuccess(List<Item> result) {
-            if (result.isEmpty()) {
+        public void onSuccess(List<Item> items) {
+            if (items.isEmpty()) {
                 onFailed();
                 return;
             }
 
-            adapter.setItems(result);
+            adapter.setItems(items);
             itemsLoaderView.showItems();
         }
 
@@ -45,7 +45,8 @@ public class BrowseItemsManager {
         }
     };
 
-    BrowseItemsManager(BrowseItemsAdapter adapter, ItemRepository itemRepository, ItemsLoaderView itemsLoaderView) {
+    BrowseItemsPresenter(BrowseItemsAdapter adapter, ItemRepository itemRepository,
+                         ItemsLoaderView itemsLoaderView) {
         this.adapter = adapter;
         this.itemRepository = itemRepository;
         this.itemsLoaderView = itemsLoaderView;

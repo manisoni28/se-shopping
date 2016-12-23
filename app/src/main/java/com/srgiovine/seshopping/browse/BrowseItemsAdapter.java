@@ -59,7 +59,7 @@ class BrowseItemsAdapter extends RecyclerView.Adapter<BrowseItemsAdapter.ViewHol
             super(itemView);
             itemView.setOnClickListener(this);
 
-            icon = (ImageView) itemView.findViewById(R.id.image);
+            icon = (ImageView) itemView.findViewById(R.id.icon);
             name = (TextView) itemView.findViewById(R.id.name);
             description = (TextView) itemView.findViewById(R.id.description);
             tags = (ViewGroup) itemView.findViewById(R.id.tags);

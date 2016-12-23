@@ -8,6 +8,13 @@
         </shape>
     </item>
 
+    <item android:state_enabled="false">
+        <shape>
+            <solid android:color="@color/buttonDisabledColor" />
+            <corners android:radius="12dp" />
+        </shape>
+    </item>
+
     <item>
         <shape>
             <solid android:color="@color/colorPrimary" />

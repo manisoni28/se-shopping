@@ -8,6 +8,7 @@
     <color name="textColorPrimary">@android:color/white</color>
     <color name="textColorSecondary">#CDCDCD</color>
     <color name="navigationBarColor">@color/colorPrimary</color>
+    <color name="buttonDisabledColor">#796053</color>
 
     <color name="dividerColor">@android:color/white</color>
     <color name="navigationDrawerBackground">#cd8d6e63</color>

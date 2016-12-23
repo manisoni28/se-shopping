@@ -4,23 +4,23 @@ import android.app.ActionBar;
 import android.widget.EditText;
 
 import com.srgiovine.seshopping.browse.BrowseActivity;
-import com.srgiovine.seshopping.browse.BrowseItemsManager;
+import com.srgiovine.seshopping.browse.BrowseItemsPresenter;
 
 import srgiovine.com.seshopping.R;
 
 public class SearchActivity extends BrowseActivity {
 
-    private SearchItemsManager searchItemsManager;
+    private SearchItemsPresenter searchItemsPresenter;
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        searchItemsManager.onDestroy();
+        searchItemsPresenter.onDestroy();
     }
 
     @Override
-    protected void onInitializeBrowseItemsManager(BrowseItemsManager browseItemsManager) {
-        browseItemsManager.initializeWithNoItems();
+    protected void onInitializeBrowseItemsManager(BrowseItemsPresenter browseItemsPresenter) {
+        browseItemsPresenter.initializeWithNoItems();
         initializeSearchField();
     }
 
@@ -48,7 +48,7 @@ public class SearchActivity extends BrowseActivity {
                 ActionBar.LayoutParams.MATCH_PARENT,
                 ActionBar.LayoutParams.MATCH_PARENT));
 
-        searchItemsManager = new SearchItemsManager(browseItemsManager, searchField);
-        searchItemsManager.initialize();
+        searchItemsPresenter = new SearchItemsPresenter(browseItemsPresenter, searchField);
+        searchItemsPresenter.initialize();
     }
 }
