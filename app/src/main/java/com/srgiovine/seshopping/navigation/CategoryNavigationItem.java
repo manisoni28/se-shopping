@@ -8,7 +8,7 @@ public class CategoryNavigationItem extends NavigationItemWithIcon {
 
     private final Category category;
 
-    public CategoryNavigationItem(String name, Category category, @DrawableRes int iconRes) {
+    CategoryNavigationItem(String name, Category category, @DrawableRes int iconRes) {
         super(name, iconRes);
         this.category = category;
     }

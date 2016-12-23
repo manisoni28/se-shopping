@@ -1,20 +1,20 @@
 package com.srgiovine.seshopping.util;
 
 import android.support.annotation.IntRange;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 
 import srgiovine.com.seshopping.R;
 
-public class CounterView {
+public class CounterViewPresenter {
 
     private final TextView count;
 
-    @Nullable
-    private EventListener eventListener;
+    private final EventListener eventListener;
 
-    public CounterView(View contentView) {
+    public CounterViewPresenter(View contentView, EventListener eventListener) {
+        this.eventListener = eventListener;
+
         count = (TextView) contentView.findViewById(R.id.count);
 
         contentView.findViewById(R.id.decrement_count).setOnClickListener(new View.OnClickListener() {
@@ -31,19 +31,15 @@ public class CounterView {
         });
     }
 
-    public void setCount(@IntRange(from = 1, to = 9) int countInt) {
-        int currentCountInt = getCountInt();
-        if (countInt != currentCountInt && countInt > 0 && countInt < 10) {
+    public void setCount(@IntRange(from = 1) int countInt) {
+        int currentCountInt = getCount();
+        if (countInt != currentCountInt && countInt > 0) {
             setCountInternal(countInt);
             onCountUpdated(countInt);
         }
     }
 
-    public void setEventListener(@Nullable EventListener eventListener) {
-        this.eventListener = eventListener;
-    }
-
-    public int getCountInt() {
+    public int getCount() {
         if (count.getText().length() == 0) {
             return 0;
         }
@@ -52,17 +48,15 @@ public class CounterView {
     }
 
     private void onDecrementCount() {
-        setCount(getCountInt() - 1);
+        setCount(getCount() - 1);
     }
 
     private void onIncrementCount() {
-        setCount(getCountInt() + 1);
+        setCount(getCount() + 1);
     }
 
     private void onCountUpdated(int newCount) {
-        if (eventListener != null) {
-            eventListener.onCountUpdated(newCount);
-        }
+        eventListener.onCountUpdated(newCount);
     }
 
     private void setCountInternal(int countInt) {

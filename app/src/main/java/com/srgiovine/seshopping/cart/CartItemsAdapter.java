@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.srgiovine.seshopping.util.CounterView;
+import com.srgiovine.seshopping.util.CounterViewPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,14 +69,14 @@ class CartItemsAdapter extends RecyclerView.Adapter<CartItemsAdapter.ViewHolder>
         eventListener.onTotalPriceChanged(total);
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements CounterView.EventListener {
+    class ViewHolder extends RecyclerView.ViewHolder implements CounterViewPresenter.EventListener {
 
         private final ImageView icon;
         private final TextView name;
         private final TextView price;
         private final TextView totalPrice;
 
-        private final CounterView counterView;
+        private final CounterViewPresenter counterViewPresenter;
 
         private CartItem item;
 
@@ -94,8 +94,7 @@ class CartItemsAdapter extends RecyclerView.Adapter<CartItemsAdapter.ViewHolder>
                 }
             });
 
-            counterView = new CounterView(itemView);
-            counterView.setEventListener(this);
+            counterViewPresenter = new CounterViewPresenter(itemView, this);
         }
 
         @Override
@@ -115,7 +114,7 @@ class CartItemsAdapter extends RecyclerView.Adapter<CartItemsAdapter.ViewHolder>
             price.setText(String.format(Locale.US, "Price: $%s", item.item().price()));
             updateTotalPrice();
 
-            counterView.setCount(item.count());
+            counterViewPresenter.setCount(item.count());
         }
 
         private void updateTotalPrice() {

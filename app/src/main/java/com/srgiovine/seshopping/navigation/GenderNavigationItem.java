@@ -8,7 +8,7 @@ public class GenderNavigationItem extends NavigationItemWithIcon {
 
     private final Gender gender;
 
-    public GenderNavigationItem(String name, Gender gender, @DrawableRes int iconRes) {
+    GenderNavigationItem(String name, Gender gender, @DrawableRes int iconRes) {
         super(name, iconRes);
         this.gender = gender;
     }

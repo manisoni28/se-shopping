@@ -39,11 +39,11 @@ public class CartManager {
         return itemRepository.getItemsWithIds(cart.ids(), new GetItemsWithIdsCallback(callback));
     }
 
-    public boolean addItemToCart(long itemId, @IntRange(from = 0) int count) {
+    public boolean addItemToCart(long itemId, @IntRange(from = 1) int count) {
         return cart.addItem(itemId, count);
     }
 
-    boolean updateItemCount(long itemId, @IntRange(from = 0) int count) {
+    boolean updateItemCount(long itemId, @IntRange(from = 1) int count) {
         return cart.updateItemCount(itemId, count);
     }
 

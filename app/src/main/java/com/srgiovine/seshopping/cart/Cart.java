@@ -28,7 +28,7 @@ class Cart {
         restore();
     }
 
-    boolean addItem(long itemId, @IntRange(from = 0) int count) {
+    boolean addItem(long itemId, @IntRange(from = 1) int count) {
         String itemIdStr = String.valueOf(itemId);
         int currentCount = itemCountMap.optInt(itemIdStr);
         try {
@@ -40,7 +40,7 @@ class Cart {
         return true;
     }
 
-    boolean updateItemCount(long itemId, @IntRange(from = 0) int count) {
+    boolean updateItemCount(long itemId, @IntRange(from = 1) int count) {
         try {
             itemCountMap.put(String.valueOf(itemId), count);
             save();

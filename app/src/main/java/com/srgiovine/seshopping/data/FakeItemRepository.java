@@ -176,7 +176,7 @@ class FakeItemRepository implements ItemRepository {
 
         private List<Item> itemsInCategoriesAndGenders() {
             List<Item> items = new ArrayList<>();
-            for (Item item : items) {
+            for (Item item : ITEMS.values()) {
                 if (genders.contains(item.gender()) && categories.contains(item.category())) {
                     items.add(item);
                 }
