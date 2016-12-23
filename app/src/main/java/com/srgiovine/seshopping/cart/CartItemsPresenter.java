@@ -53,7 +53,7 @@ class CartItemsPresenter {
         }
     }
 
-    void onDestroy() {
+    void onPause() {
         if (getCartItemsTask != null) {
             getCartItemsTask.cancel();
             getCartItemsTask = null;

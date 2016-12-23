@@ -16,7 +16,7 @@ import java.util.Set;
 
 import srgiovine.com.seshopping.R;
 
-// TODO replace with real implementation
+// TODO replace fakeItemRepository
 class FakeItemRepository implements ItemRepository {
 
     @Override

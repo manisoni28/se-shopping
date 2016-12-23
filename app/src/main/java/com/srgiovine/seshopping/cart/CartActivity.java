@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 
 import com.srgiovine.seshopping.SEActivity;
+import com.srgiovine.seshopping.details.DetailsActivity;
 import com.srgiovine.seshopping.settings.SettingsActivity;
 import com.srgiovine.seshopping.util.ItemsLoaderView;
 
@@ -32,8 +34,6 @@ public class CartActivity extends SEActivity implements CartItemsAdapter.EventLi
 
         cartItemsPresenter = new CartItemsPresenter(cartItemsAdapter, cartManager(),
                 new ItemsLoaderView(contentView));
-        cartItemsPresenter.loadCartItems();
-
         checkoutPresenter = new CheckoutPresenter(contentView, cartManager(), this);
 
         cartItemsAdapter.initialize();
@@ -42,29 +42,37 @@ public class CartActivity extends SEActivity implements CartItemsAdapter.EventLi
     @Override
     protected void onResume() {
         super.onResume();
+        cartItemsPresenter.loadCartItems();
         checkoutPresenter.validateUserPaymentInfo();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        cartItemsPresenter.onPause();
         checkoutPresenter.onPause();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        cartItemsPresenter.onDestroy();
+        checkoutPresenter.onDestroy();
     }
 
     @Override
-    public void onTotalPriceChanged(int totalPrice) {
-        checkoutPresenter.updateTotalPrice(totalPrice);
+    public void onPurchaseComplete() {
+        Toast.makeText(this, "Successfully purchased items", Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     @Override
     public void onUpdateSettingsClicked() {
         startActivity(new Intent(this, SettingsActivity.class));
+    }
+
+    @Override
+    public void onTotalPriceChanged(int totalPrice) {
+        checkoutPresenter.updateTotalPrice(totalPrice);
     }
 
     @Override
@@ -76,5 +84,12 @@ public class CartActivity extends SEActivity implements CartItemsAdapter.EventLi
     public void onItemRemoved(CartItem item) {
         cartManager().removeItemFromCart(item.item().id());
         cartItemsPresenter.onItemRemoved();
+    }
+
+    @Override
+    public void onItemClicked(CartItem item) {
+        Intent intent = new Intent(this, DetailsActivity.class);
+        intent.putExtra(DetailsActivity.EXTRA_ITEM_ID, item.item().id());
+        startActivity(intent);
     }
 }

@@ -13,6 +13,7 @@ import com.srgiovine.seshopping.model.Name;
 import com.srgiovine.seshopping.model.User;
 import com.srgiovine.seshopping.task.BackgroundTask;
 import com.srgiovine.seshopping.task.Callback;
+import com.srgiovine.seshopping.task.SimpleCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,11 +33,15 @@ public class CartManager {
     }
 
     BackgroundTask validateUserPaymentInfo(Callback<Void> callback) {
-        return accountManager.getLoggedInUser(new GetLoggedInUserCallback(callback));
+        return accountManager.getLoggedInUser(new ValidateUserPaymentInfo(callback));
+    }
+
+    BackgroundTask purchaseItemsInCart(Callback<Void> callback) {
+        return validateUserPaymentInfo(new PurchaseItemsInCartCallback(callback));
     }
 
     BackgroundTask getItemsInCart(Callback<List<CartItem>> callback) {
-        return itemRepository.getItemsWithIds(cart.ids(), new GetItemsWithIdsCallback(callback));
+        return itemRepository.getItemsWithIds(cart.ids(), new GetItemsInCartCallback(callback));
     }
 
     public boolean addItemToCart(long itemId, @IntRange(from = 1) int count) {
@@ -90,11 +95,11 @@ public class CartManager {
         return true;
     }
 
-    private class GetLoggedInUserCallback implements Callback<User> {
+    private class ValidateUserPaymentInfo implements Callback<User> {
 
         private final Callback<Void> callback;
 
-        private GetLoggedInUserCallback(Callback<Void> callback) {
+        private ValidateUserPaymentInfo(Callback<Void> callback) {
             this.callback = callback;
         }
 
@@ -118,11 +123,44 @@ public class CartManager {
         }
     }
 
-    private class GetItemsWithIdsCallback implements Callback<List<Item>> {
+    private class PurchaseItemsInCartCallback implements Callback<Void> {
+
+        private final Callback<Void> callback;
+
+        private final Callback<List<CartItem>> getItemsInCartCallback = new SimpleCallback<List<CartItem>>() {
+            @Override
+            public void onSuccess(List<CartItem> result) {
+                // TODO send receipt email
+            }
+        };
+
+        private PurchaseItemsInCartCallback(Callback<Void> callback) {
+            this.callback = callback;
+        }
+
+        @Override
+        public void onSuccess(Void v) {
+            getItemsInCart(getItemsInCartCallback);
+            clearCart();
+            callback.onSuccess(v);
+        }
+
+        @Override
+        public void onFailed() {
+            callback.onFailed();
+        }
+
+        @Override
+        public void onCancelled() {
+            callback.onCancelled();
+        }
+    }
+
+    private class GetItemsInCartCallback implements Callback<List<Item>> {
 
         private final Callback<List<CartItem>> callback;
 
-        private GetItemsWithIdsCallback(Callback<List<CartItem>> callback) {
+        private GetItemsInCartCallback(Callback<List<CartItem>> callback) {
             this.callback = callback;
         }
 

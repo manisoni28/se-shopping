@@ -1,11 +1,13 @@
 package com.srgiovine.seshopping.cart;
 
+import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.TextView;
 
 import com.srgiovine.seshopping.task.BackgroundTask;
 import com.srgiovine.seshopping.task.Callback;
 import com.srgiovine.seshopping.task.SimpleCallback;
+import com.srgiovine.seshopping.util.LoadingIndicatorDialog;
 
 import java.util.Locale;
 
@@ -14,14 +16,16 @@ import srgiovine.com.seshopping.R;
 class CheckoutPresenter {
 
     private final CartManager cartManager;
+    private final EventListener eventListener;
 
     private final TextView totalPrice;
-
-    private final View buy;
-
+    private final View checkout;
     private final View updateSettings;
 
+    private final LoadingIndicatorDialog loadingIndicator = new LoadingIndicatorDialog();
+
     private BackgroundTask validateUserPaymentTask;
+    private BackgroundTask purchaseItemsTask;
 
     private final Callback<Void> validateUserPaymentCallback = new SimpleCallback<Void>() {
         @Override
@@ -35,17 +39,36 @@ class CheckoutPresenter {
         }
     };
 
+    private final Callback<Void> purchaseItemsCallback = new SimpleCallback<Void>() {
+        @Override
+        public void onSuccess(Void result) {
+            onPurchaseComplete();
+        }
+
+        @Override
+        public void onFailed() {
+            loadingIndicator.dismiss();
+            Snackbar.make(checkout, "Failed to complete purchase", Snackbar.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onCancelled() {
+            loadingIndicator.dismiss();
+        }
+    };
+
     CheckoutPresenter(View contentView, CartManager cartManager, final EventListener eventListener) {
         this.cartManager = cartManager;
+        this.eventListener = eventListener;
 
         totalPrice = (TextView) contentView.findViewById(R.id.total_price);
-        buy = contentView.findViewById(R.id.buy);
+        checkout = contentView.findViewById(R.id.checkout);
         updateSettings = contentView.findViewById(R.id.update_settings);
 
-        buy.setOnClickListener(new View.OnClickListener() {
+        checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBuyClicked();
+                onPurchaseClicked();
             }
         });
 
@@ -57,6 +80,15 @@ class CheckoutPresenter {
         });
     }
 
+    void validateUserPaymentInfo() {
+        validateUserPaymentTask = cartManager.validateUserPaymentInfo(validateUserPaymentCallback);
+    }
+
+    void updateTotalPrice(int totalPriceInt) {
+        totalPrice.setText(String.format(Locale.US, "Total\n$%d", totalPriceInt));
+        checkout.setEnabled(totalPriceInt != 0);
+    }
+
     void onPause() {
         if (validateUserPaymentTask != null) {
             validateUserPaymentTask.cancel();
@@ -64,30 +96,37 @@ class CheckoutPresenter {
         }
     }
 
-    void onBuyClicked() {
-        // TODO onBuyClicked
+    void onDestroy() {
+        loadingIndicator.dismiss();
+        if (purchaseItemsTask != null) {
+            purchaseItemsTask.cancel();
+            purchaseItemsTask = null;
+        }
     }
 
-    void validateUserPaymentInfo() {
-        validateUserPaymentTask = cartManager.validateUserPaymentInfo(validateUserPaymentCallback);
+    private void onPurchaseClicked() {
+        loadingIndicator.show(checkout.getContext(), "Performing checkout transaction...");
+        purchaseItemsTask = cartManager.purchaseItemsInCart(purchaseItemsCallback);
     }
 
-    void updateTotalPrice(int totalPriceInt) {
-        totalPrice.setText(String.format(Locale.US, "Total\n$%d", totalPriceInt));
-        buy.setEnabled(totalPriceInt != 0);
+    private void onPurchaseComplete() {
+        loadingIndicator.dismiss();
+        eventListener.onPurchaseComplete();
     }
 
     private void onReadyToBuy() {
-        buy.setVisibility(View.VISIBLE);
+        checkout.setVisibility(View.VISIBLE);
         updateSettings.setVisibility(View.GONE);
     }
 
     private void onUpdateInfoRequired() {
-        buy.setVisibility(View.GONE);
+        checkout.setVisibility(View.GONE);
         updateSettings.setVisibility(View.VISIBLE);
     }
 
     interface EventListener {
         void onUpdateSettingsClicked();
+
+        void onPurchaseComplete();
     }
 }

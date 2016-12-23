@@ -24,13 +24,13 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/buy"
+            android:id="@+id/checkout"
             style="@style/Input.Cart"
             android:layout_width="0dp"
             android:layout_weight="2"
             android:background="@drawable/button_background"
             android:gravity="center"
-            android:text="Buy"
+            android:text="Purchase"
             android:textStyle="bold" />
 
         <TextView

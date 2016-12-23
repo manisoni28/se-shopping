@@ -70,8 +70,8 @@ class DetailsViewPresenter implements CounterViewPresenter.EventListener {
             return;
         }
 
-        price.setText(String.format(Locale.US, "Price:\n$%d", item.price()));
-        totalPrice.setText(String.format(Locale.US, "Total:\n$%d", item.price() * countInt));
+        price.setText(String.format(Locale.US, "Price\n$%d", item.price()));
+        totalPrice.setText(String.format(Locale.US, "Total\n$%d", item.price() * countInt));
     }
 
     private void addCategory(String category) {

@@ -69,7 +69,8 @@ class CartItemsAdapter extends RecyclerView.Adapter<CartItemsAdapter.ViewHolder>
         eventListener.onTotalPriceChanged(total);
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements CounterViewPresenter.EventListener {
+    class ViewHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener, CounterViewPresenter.EventListener {
 
         private final ImageView icon;
         private final TextView name;
@@ -87,6 +88,7 @@ class CartItemsAdapter extends RecyclerView.Adapter<CartItemsAdapter.ViewHolder>
             price = (TextView) itemView.findViewById(R.id.price);
             totalPrice = (TextView) itemView.findViewById(R.id.total_price);
 
+            itemView.setOnClickListener(this);
             itemView.findViewById(R.id.remove).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -95,6 +97,11 @@ class CartItemsAdapter extends RecyclerView.Adapter<CartItemsAdapter.ViewHolder>
             });
 
             counterViewPresenter = new CounterViewPresenter(itemView, this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            eventListener.onItemClicked(item);
         }
 
         @Override
@@ -129,5 +136,7 @@ class CartItemsAdapter extends RecyclerView.Adapter<CartItemsAdapter.ViewHolder>
         void onItemCountUpdated(CartItem item, int newCount);
 
         void onItemRemoved(CartItem item);
+
+        void onItemClicked(CartItem item);
     }
 }

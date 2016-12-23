@@ -20,7 +20,7 @@ public class AccountManager {
     }
 
     public BackgroundTask requestPasswordRecovery(String email, Callback<Void> callback) {
-        // TODO replace with real code
+        // TODO requestPasswordRecovery
         BackgroundAsyncTask<Void> backgroundTask = new BackgroundAsyncTask<Void>(callback) {
             @Override
             protected Void doInBackground() {
@@ -56,6 +56,10 @@ public class AccountManager {
         return loggedInUser.isPresent();
     }
 
+    private void onUserSignupSuccess() {
+        // TODO send signup email
+    }
+
     private class AuthenticatUserCallback implements Callback<User> {
 
         private final Callback<User> callback;
@@ -82,14 +86,14 @@ public class AccountManager {
     }
 
     private class SignupUserCallback extends AuthenticatUserCallback {
-        public SignupUserCallback(Callback<User> callback) {
+        private SignupUserCallback(Callback<User> callback) {
             super(callback);
         }
 
         @Override
         public void onSuccess(User user) {
             super.onSuccess(user);
-            // TODO send signup success email
+            onUserSignupSuccess();
         }
     }
 
