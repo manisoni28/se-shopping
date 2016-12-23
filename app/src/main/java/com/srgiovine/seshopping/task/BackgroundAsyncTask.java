@@ -13,6 +13,7 @@ public abstract class BackgroundAsyncTask<T> extends AsyncTask<Void, Void, T> im
     @Override
     protected final T doInBackground(Void... voids) {
         try {
+            // FIXME remove this artificial delay when replacing with network calls
             Thread.sleep(500L);
         } catch (InterruptedException ie) {
         }

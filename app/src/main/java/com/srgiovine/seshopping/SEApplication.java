@@ -23,7 +23,7 @@ public class SEApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        UserRepository userRepository = UserRepositoryFactory.create();
+        UserRepository userRepository = UserRepositoryFactory.create(this);
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS_NAME, MODE_PRIVATE);
 
         accountManager = AccountManager.create(userRepository, sharedPreferences);

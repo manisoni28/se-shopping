@@ -1,7 +1,6 @@
 package com.srgiovine.seshopping.splash;
 
 import android.content.Context;
-import android.support.design.widget.Snackbar;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -54,7 +53,7 @@ class ForgotPasswordFormDialog extends FormDialog {
     @Override
     protected void onConfirmActionFailed() {
         super.onConfirmActionFailed();
-        Snackbar.make(contentView, "Failed to find email", Snackbar.LENGTH_SHORT).show();
+        Toast.makeText(context, "Failed to find email", Toast.LENGTH_SHORT).show();
     }
 
     @Override

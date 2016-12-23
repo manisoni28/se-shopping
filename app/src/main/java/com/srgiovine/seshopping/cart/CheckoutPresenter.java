@@ -1,8 +1,8 @@
 package com.srgiovine.seshopping.cart;
 
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.srgiovine.seshopping.task.BackgroundTask;
 import com.srgiovine.seshopping.task.Callback;
@@ -48,7 +48,7 @@ class CheckoutPresenter {
         @Override
         public void onFailed() {
             loadingIndicator.dismiss();
-            Snackbar.make(checkout, "Failed to complete purchase", Snackbar.LENGTH_SHORT).show();
+            Toast.makeText(checkout.getContext(), "Failed to complete purchase", Toast.LENGTH_SHORT).show();
         }
 
         @Override

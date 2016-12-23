@@ -39,12 +39,6 @@ class DBItemRepository extends SQLiteOpenHelper implements ItemRepository {
     }
 
     @Override
-    public void onOpen(SQLiteDatabase db) {
-        super.onOpen(db);
-        onUpgrade(db, 1, 2);
-    }
-
-    @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Upgrade will delete old db and create a new one
         db.beginTransaction();
@@ -204,7 +198,7 @@ class DBItemRepository extends SQLiteOpenHelper implements ItemRepository {
         List<Item> doInBackground(SQLiteDatabase db) {
             List<Item> items = null;
             Cursor cursor = db.query(ItemContract.TABLE_NAME, null,
-                    ItemContract.ITEM_ID + " IN (" + createCSVPlaceholders("?", itemIds.size()) + ")",
+                    ItemContract.ID + " IN (" + createCSVPlaceholders("?", itemIds.size()) + ")",
                     toStringArray(itemIds),
                     null, null, null);
             if (cursor.moveToFirst()) {
@@ -227,7 +221,7 @@ class DBItemRepository extends SQLiteOpenHelper implements ItemRepository {
         @Override
         Item doInBackground(SQLiteDatabase db) {
             Item item = null;
-            Cursor cursor = db.query(ItemContract.TABLE_NAME, null, ItemContract.ITEM_ID + " = ?",
+            Cursor cursor = db.query(ItemContract.TABLE_NAME, null, ItemContract.ID + " = ?",
                     new String[]{String.valueOf(itemId)},
                     null, null, null);
             if (cursor.moveToFirst()) {

@@ -1,7 +1,6 @@
 package com.srgiovine.seshopping.splash;
 
 import android.content.Context;
-import android.support.design.widget.Snackbar;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -73,7 +72,8 @@ class SignupFormDialog extends FormDialog {
     @Override
     protected void onConfirmActionFailed() {
         super.onConfirmActionFailed();
-        Snackbar.make(contentView, "Failed to sign up", Snackbar.LENGTH_SHORT).show();
+        Toast.makeText(context, "Failed to sign up. Email may already be taken.",
+                Toast.LENGTH_SHORT).show();
     }
 
     @Override

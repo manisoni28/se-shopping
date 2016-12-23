@@ -9,6 +9,8 @@ final class UserContract implements BaseColumns {
 
     static final String TABLE_NAME = "USER";
 
+    static final String ID = _ID;
+
     static final String EMAIL = "Email";
     static final String PASSWORD = "Password";
 
@@ -22,13 +24,16 @@ final class UserContract implements BaseColumns {
     static final String COUNTRY = "Country";
 
     static final String CARD_NUMBER = "CardNumber";
-    static final String CARD_HOLDER_NAME = "CardHolderName";
+    static final String CARD_HOLDER_FIRST_NAME = "CardHolderFirstName";
+    static final String CARD_HOLDER_LAST_NAME = "CardHolderLastName";
     static final String CARD_EXPIRATION_DATE = "CardExpirationDate";
     static final String CARD_SECURITY_CODE = "CardSecurityCode";
 
     static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" +
 
-            EMAIL + " TEXT PRIMARY KEY NOT NULL," +
+            ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+
+            EMAIL + " TEXT NOT NULL," +
             PASSWORD + " TEXT NOT NULL," +
 
             FIRST_NAME + " TEXT," +
@@ -41,10 +46,12 @@ final class UserContract implements BaseColumns {
             COUNTRY + " TEXT," +
 
             CARD_NUMBER + " TEXT," +
-            CARD_HOLDER_NAME + " TEXT," +
+            CARD_HOLDER_FIRST_NAME + " TEXT," +
+            CARD_HOLDER_LAST_NAME + " TEXT," +
             CARD_EXPIRATION_DATE + " TEXT," +
-            CARD_SECURITY_CODE + " INTEGER" +
-            
+            CARD_SECURITY_CODE + " INTEGER," +
+
+            " UNIQUE (" + EMAIL + ")" +
             " )";
 
     static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;

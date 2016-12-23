@@ -1,5 +1,6 @@
 package com.srgiovine.seshopping.settings;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -85,16 +86,27 @@ class SettingsViewPresenter {
             street.setText(address.street());
             city.setText(address.city());
             state.setText(address.state());
-            zip.setText(String.valueOf(address.zip()));
             country.setText(address.country());
+
+            if (!TextUtils.isEmpty(address.zip())) {
+                zip.setText(String.valueOf(address.zip()));
+            }
         }
 
         CreditCardInfo creditCardInfo = user.creditCardInfo();
         if (creditCardInfo != null) {
             creditCardNumber.setText(creditCardInfo.cardNumber());
-            cardHolderName.setText(creditCardInfo.cardHolderName().toString());
             expirationDate.setText(creditCardInfo.expirationDate());
-            securityCode.setText(String.valueOf(creditCardInfo.securityCode()));
+
+            int securityCodeInt = creditCardInfo.securityCode();
+            if (securityCodeInt > 0) {
+                securityCode.setText(String.valueOf(securityCodeInt));
+            }
+
+            String cardHolderNameStr = creditCardInfo.cardHolderName().toString();
+            if (!TextUtils.isEmpty(cardHolderNameStr)) {
+                cardHolderName.setText(cardHolderNameStr);
+            }
         }
     }
 
@@ -111,6 +123,10 @@ class SettingsViewPresenter {
     }
 
     boolean validateCreditCardInfo() {
+        if (!Name.isValidFullName(cardHolderName.getText().toString())) {
+            cardHolderName.setError("Must have first and last name");
+            return false;
+        }
         return validateAllOrNoFieldsFilled(creditCardNumber, cardHolderName, expirationDate, securityCode);
     }
 

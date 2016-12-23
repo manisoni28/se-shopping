@@ -1,5 +1,7 @@
 package com.srgiovine.seshopping.model;
 
+import android.text.TextUtils;
+
 import java.util.Arrays;
 
 public class Name {
@@ -22,11 +24,18 @@ public class Name {
 
     @Override
     public String toString() {
-        return first + " " + last;
+        if (!TextUtils.isEmpty(first) && !TextUtils.isEmpty(last)) {
+            return first + " " + last;
+        }
+        return "";
     }
 
     public static Builder builder() {
         return new Builder();
+    }
+
+    public static boolean isValidFullName(String fullName) {
+        return fullName.split(" ").length > 1;
     }
 
     public static Name fromFullName(String fullName) {

@@ -1,7 +1,6 @@
 package com.srgiovine.seshopping.data;
 
 import android.database.Cursor;
-import android.util.Log;
 
 import com.srgiovine.seshopping.model.Category;
 import com.srgiovine.seshopping.model.Gender;
@@ -17,7 +16,7 @@ final class ItemContentValues {
 
     static Item toItem(Cursor cursor) {
         return Item.builder()
-                .setId(cursor.getInt(cursor.getColumnIndexOrThrow(ItemContract.ITEM_ID)))
+                .setId(cursor.getInt(cursor.getColumnIndexOrThrow(ItemContract.ID)))
                 .setName(cursor.getString(cursor.getColumnIndexOrThrow(ItemContract.NAME)))
                 .setDescription(cursor.getString(cursor.getColumnIndexOrThrow(ItemContract.DESCRIPTION)))
                 .setGender(Gender.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(ItemContract.GENDER))))
@@ -30,12 +29,10 @@ final class ItemContentValues {
 
     static List<Item> toItems(Cursor cursor) {
         List<Item> items = new ArrayList<>();
-        Log.d("YOLO", "count = " + cursor.getCount());
         do {
             items.add(toItem(cursor));
             cursor.moveToNext();
         } while (!cursor.isAfterLast());
-
         return items;
     }
 }

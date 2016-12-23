@@ -11,7 +11,7 @@ final class ItemContract implements BaseColumns {
 
     static final String TABLE_NAME = "ITEM";
 
-    static final String ITEM_ID = _ID;
+    static final String ID = _ID;
     static final String NAME = "Name";
     static final String DESCRIPTION = "Description";
     static final String GENDER = "Gender";
@@ -22,7 +22,7 @@ final class ItemContract implements BaseColumns {
 
     static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" +
 
-            ITEM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+            ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
             NAME + " TEXT NOT NULL," +
             DESCRIPTION + " TEXT NOT NULL," +
             GENDER + " TEXT NOT NULL," +
@@ -55,7 +55,7 @@ final class ItemContract implements BaseColumns {
 
             "('Pokemon Trainer Cap', " +
             "'Pokemon Trainer is the term commonly used for a person who catches, " +
-            "occasionally names, and trains several different kinds and types of Pokémon. " +
+            "occasionally names, and trains several different kinds and types of Pokemon. " +
             "Pokemon Trainers generally start their journey at the age of 10.', " +
             "'Mens', 'Hats', 19, " + R.drawable.hat_pokemon + ", " + R.drawable.hat_pokemon_icon + ")," +
 
