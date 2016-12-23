@@ -26,12 +26,13 @@ class Cart {
     Cart(SharedPreferences sharedPreferences) {
         this.sharedPreferences = sharedPreferences;
         restore();
-
     }
 
     boolean addItem(long itemId, @IntRange(from = 0) int count) {
+        String itemIdStr = String.valueOf(itemId);
+        int currentCount = itemCountMap.optInt(itemIdStr);
         try {
-            itemCountMap.put(String.valueOf(itemId), count);
+            itemCountMap.put(itemIdStr, currentCount + count);
             save();
         } catch (JSONException e) {
             return false;
@@ -60,15 +61,6 @@ class Cart {
 
     int itemCount(long itemId) {
         return itemCountMap.optInt(String.valueOf(itemId));
-    }
-
-    int totalCount() {
-        int count = 0;
-        Iterator<String> keys = itemCountMap.keys();
-        while (keys.hasNext()) {
-            count += itemCountMap.optInt(keys.next());
-        }
-        return count;
     }
 
     private void save() {

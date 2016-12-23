@@ -30,15 +30,18 @@ import srgiovine.com.seshopping.R;
 
 public class BrowseActivity extends SEActivity implements NavigationAdapter.EventListener, BrowseItemsAdapter.EventListener {
 
+    protected BrowseItemsManager browseItemsManager;
+
     @Nullable
     private NavigationDrawerToggle navigationDrawerToggle;
 
-    protected BrowseItemsManager browseItemsManager;
+    private View contentView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(layoutRes());
+        contentView = getLayoutInflater().inflate(layoutRes(), null);
+        setContentView(contentView);
         setupBrowseListView();
         if (hasNavigationDrawer()) {
             setupNavigationDrawer();
@@ -150,15 +153,14 @@ public class BrowseActivity extends SEActivity implements NavigationAdapter.Even
     private void setupBrowseListView() {
         BrowseItemsAdapter browseItemsAdapter = new BrowseItemsAdapter(this);
 
-        RecyclerView resultsView = (RecyclerView) findViewById(R.id.browse_items);
+        RecyclerView resultsView = (RecyclerView) findViewById(R.id.items);
         resultsView.setLayoutManager(new LinearLayoutManager(this));
         resultsView.setAdapter(browseItemsAdapter);
 
         View loadingIndicator = findViewById(R.id.progress);
         View emptyIndicator = findViewById(R.id.empty);
 
-        browseItemsManager = new BrowseItemsManager(browseItemsAdapter, itemRepository(),
-                resultsView, loadingIndicator, emptyIndicator);
+        browseItemsManager = new BrowseItemsManager(contentView, browseItemsAdapter, itemRepository());
         onInitializeBrowseItemsManager(browseItemsManager);
     }
 

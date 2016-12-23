@@ -15,11 +15,11 @@
             android:visibility="invisible" />
 
         <ProgressBar
-            android:id="@+id/progress"
+            android:id="@+id/loading_indicator"
             style="@style/ProgressBar" />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/browse_items"
+            android:id="@+id/items"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </FrameLayout>

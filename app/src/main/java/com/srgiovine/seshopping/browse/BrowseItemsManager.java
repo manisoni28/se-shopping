@@ -9,22 +9,17 @@ import com.srgiovine.seshopping.model.Item;
 import com.srgiovine.seshopping.task.BackgroundTask;
 import com.srgiovine.seshopping.task.Callback;
 import com.srgiovine.seshopping.task.SimpleCallback;
+import com.srgiovine.seshopping.util.ViewItemsManager;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class BrowseItemsManager {
+public class BrowseItemsManager extends ViewItemsManager {
 
     private final ItemRepository itemRepository;
 
     private final BrowseItemsAdapter adapter;
-
-    private final View resultsView;
-
-    private final View loadingIndicator;
-
-    private final View emptyIndicator;
 
     private final Set<Gender> genders = new HashSet<>();
 
@@ -40,31 +35,24 @@ public class BrowseItemsManager {
                 return;
             }
 
-            setLoading(false);
-            setEmpty(false);
             adapter.setItems(result);
-            showResults();
+            showItems();
         }
 
         @Override
         public void onFailed() {
-            setLoading(false);
-            setEmpty(true);
+            showEmptyIndicator();
         }
     };
 
-    BrowseItemsManager(BrowseItemsAdapter adapter, ItemRepository itemRepository,
-                       View resultsView, View loadingIndicator, View emptyIndicator) {
+    BrowseItemsManager(View contentView, BrowseItemsAdapter adapter, ItemRepository itemRepository) {
+        super(contentView);
         this.adapter = adapter;
         this.itemRepository = itemRepository;
-        this.resultsView = resultsView;
-        this.loadingIndicator = loadingIndicator;
-        this.emptyIndicator = emptyIndicator;
     }
 
     public void initializeWithNoItems() {
-        setLoading(false);
-        setEmpty(true);
+        showEmptyIndicator();
     }
 
     void initializeWithNoFilters() {
@@ -104,10 +92,8 @@ public class BrowseItemsManager {
     }
 
     private void onPreStartBackgroundTask() {
+        showLoadingIndicator();
         cancelBackgroundTasks();
-        hideResults();
-        setLoading(true);
-        setEmpty(false);
     }
 
     private void cancelBackgroundTasks() {
@@ -115,21 +101,5 @@ public class BrowseItemsManager {
             getItemsTask.cancel();
             getItemsTask = null;
         }
-    }
-
-    private void showResults() {
-        resultsView.setVisibility(View.VISIBLE);
-    }
-
-    private void hideResults() {
-        resultsView.setVisibility(View.INVISIBLE);
-    }
-
-    private void setLoading(boolean loading) {
-        loadingIndicator.setVisibility(loading ? View.VISIBLE : View.INVISIBLE);
-    }
-
-    private void setEmpty(boolean empty) {
-        emptyIndicator.setVisibility(empty ? View.VISIBLE : View.INVISIBLE);
     }
 }

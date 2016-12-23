@@ -38,10 +38,6 @@ public class CartManager {
         cart.clear();
     }
 
-    public int cartItemCount() {
-        return cart.totalCount();
-    }
-
     public static CartManager create(ItemRepository itemRepository, SharedPreferences sharedPreferences) {
         return new CartManager(new Cart(sharedPreferences), itemRepository);
     }

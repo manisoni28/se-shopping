@@ -72,7 +72,7 @@
     <style name="Input.Search">
         <item name="android:drawableRight">@drawable/ic_clear_search_field</item>
         <item name="android:hint">@string/search</item>
-        <item name="android:imeOptions">actionSearch</item>
+        <item name="android:imeOptions">actionDone</item>
     </style>
 
     <style name="Input.Settings">
